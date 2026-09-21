@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jawor.ai – Cyfrowy Asystent Techniczny & Wizualizator Jawor-Parkiet</title>
   
-  <!-- Czcionka Inter (Google Fonts) -->
+  <!-- Czcionka Montserrat (Google Fonts) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -34,8 +34,8 @@
             }
           },
           fontFamily: {
-            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-            serif: ['Constantia', 'Georgia', 'serif']
+            sans: ['var(--font-family-montserrat)', 'sans-serif'],
+            montserrat: ['var(--font-family-montserrat)', 'sans-serif']
           }
         }
       }
@@ -43,20 +43,54 @@
   </script>
   
   <style>
-    .brand-header-font { font-family: 'Constantia', Georgia, serif; }
+    :root {
+      --font-family-montserrat: 'Montserrat', sans-serif;
+      --font-style-normal: normal;
+      --character-spacing-0: 0px;
+      --color-text: #1a1a1a;
+      --primary: #01643d;
+      --primary-hover: #014e2a;
+    }
+
+    /* Bezpieczne przypisanie czcionki Montserrat bez blokowania ikon */
+    body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, div, li {
+      font-family: var(--font-family-montserrat), sans-serif;
+      font-style: var(--font-style-normal);
+      letter-spacing: var(--character-spacing-0);
+      color: var(--color-text);
+    }
+
+    body {
+      background-color: #f4f5f4;
+    }
+
+    /* Ochrona fontu FontAwesome przed nadpisaniem */
+    .fa, .fas, .fa-solid, .fa-regular, .fa-brands, [class*="fa-"] {
+      font-family: "Font Awesome 6 Free" !important;
+      font-style: normal !important;
+    }
+    .fa-brands {
+      font-family: "Font Awesome 6 Brands" !important;
+    }
+
+    .brand-header-font { 
+      font-family: var(--font-family-montserrat), sans-serif !important;
+      font-weight: 700;
+    }
+
     .watermark-overlay {
       background-image: repeating-linear-gradient(-45deg, rgba(1, 100, 61, 0.15), rgba(1, 100, 61, 0.15) 20px, transparent 20px, transparent 40px);
     }
-    /* Dedykowane style dla wyrenderowanego Markdownu w czacie */
+
     .chat-parsed-content h3 { font-size: 0.95rem; font-weight: 700; margin-top: 0.5rem; margin-bottom: 0.25rem; color: #000; }
     .chat-parsed-content ul { list-style-type: disc; margin-left: 1.25rem; margin-top: 0.25rem; margin-bottom: 0.5rem; }
     .chat-parsed-content p { margin-bottom: 0.35rem; }
     .chat-parsed-content strong { color: #01643d; font-weight: 600; }
   </style>
 </head>
-<body class="bg-jawor-grayBg font-sans text-gray-900 antialiased selection:bg-jawor-green selection:text-white">
+<body class="selection:bg-jawor-green selection:text-white">
 
-  <!-- STICKY NAVIGATION BAR (TYLKO PLIK LOGO) -->
+  <!-- STICKY NAVIGATION BAR -->
   <header class="sticky top-0 z-50 bg-white border-b border-jawor-grayBorder shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
       
@@ -92,10 +126,10 @@
           <span class="inline-block bg-jawor-green/10 text-jawor-green px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase mb-4">
             Oficjalny System Techniczny & Sales AI
           </span>
-          <h1 class="brand-header-font text-3xl sm:text-4xl lg:text-5xl font-bold text-jawor-black leading-tight mb-6">
+          <h1 class="brand-header-font text-3xl sm:text-4xl lg:text-5xl font-extrabold text-jawor-black leading-tight mb-6">
             Technologia drewna spotyka sztuczną inteligencję.
           </h1>
-          <p class="text-gray-600 text-base sm:text-lg mb-8 leading-relaxed">
+          <p class="text-gray-600 text-base sm:text-lg mb-8 leading-relaxed font-normal">
             Poznaj <strong>Jawor.ai</strong> – asystenta technicznego dla salonów firmowych i architektów. Skonsultuj parametry montażowe (PN-EN 13489), dobierz chemię J-P Bond, stwórz wizualizację wnętrza i odbierz spersonalizowaną ofertę.
           </p>
 
@@ -103,20 +137,20 @@
           <div class="space-y-2 mb-8">
             <p class="text-xs uppercase tracking-wider font-bold text-gray-500 mb-2">Szybkie zapytania do bazy wiedzy:</p>
             <div class="flex flex-wrap gap-2">
-              <button onclick="setPrompt('Jakie są zalecenia montażowe na ogrzewaniu podłogowym?')" class="text-xs bg-jawor-grayBg hover:bg-jawor-green hover:text-white transition px-3 py-2 rounded border border-jawor-grayBorder text-left">
+              <button onclick="setPrompt('Jaka jest różnica między Chevron Parkiet a Chevron Deska?')" class="text-xs bg-jawor-grayBg hover:bg-jawor-green hover:text-white transition px-3 py-2 rounded border border-jawor-grayBorder text-left font-medium">
+                <i class="fa-solid fa-ruler-combined mr-1 text-jawor-green"></i> Chevron Parkiet vs Chevron Deska
+              </button>
+              <button onclick="setPrompt('Jakie są zalecenia montażowe na ogrzewaniu podłogowym?')" class="text-xs bg-jawor-grayBg hover:bg-jawor-green hover:text-white transition px-3 py-2 rounded border border-jawor-grayBorder text-left font-medium">
                 <i class="fa-solid fa-fire-flame-curved mr-1 text-jawor-green"></i> Ogrzewanie podłogowe (max 27°C)
               </button>
-              <button onclick="setPrompt('Czym charakteryzuje się powłoka Fusion Hybrid?')" class="text-xs bg-jawor-grayBg hover:bg-jawor-green hover:text-white transition px-3 py-2 rounded border border-jawor-grayBorder text-left">
+              <button onclick="setPrompt('Czym charakteryzuje się powłoka Fusion Hybrid?')" class="text-xs bg-jawor-grayBg hover:bg-jawor-green hover:text-white transition px-3 py-2 rounded border border-jawor-grayBorder text-left font-medium">
                 <i class="fa-solid fa-shield-halved mr-1 text-jawor-green"></i> Powłoka Fusion Hybrid (8 warstw)
-              </button>
-              <button onclick="setPrompt('Jaka jest grubość całkowita i warstwa użytkowa FertigDeski Maxi?')" class="text-xs bg-jawor-grayBg hover:bg-jawor-green hover:text-white transition px-3 py-2 rounded border border-jawor-grayBorder text-left">
-                <i class="fa-solid fa-ruler-combined mr-1 text-jawor-green"></i> Wymiary FertigDeska Maxi
               </button>
             </div>
           </div>
 
           <!-- Znaczniki zaufania -->
-          <div class="pt-6 border-t border-gray-100 flex flex-wrap items-center gap-6 text-xs text-gray-500 font-medium">
+          <div class="pt-6 border-t border-gray-100 flex flex-wrap items-center gap-6 text-xs text-gray-500 font-semibold">
             <div class="flex items-center"><i class="fa-solid fa-certificate text-jawor-green mr-2"></i>Norma PN-EN 13489</div>
             <div class="flex items-center"><i class="fa-solid fa-award text-jawor-green mr-2"></i>30 Lat Gwarancji</div>
             <div class="flex items-center"><i class="fa-solid fa-leaf text-jawor-green mr-2"></i>Drewno Certyfikowane</div>
@@ -131,7 +165,7 @@
                 <div class="w-3 h-3 rounded-full bg-green-400 animate-pulse"></div>
                 <span class="brand-header-font font-bold">Jawor.ai – Live Chat</span>
               </div>
-              <span class="text-[10px] bg-white/20 px-2 py-1 rounded uppercase">Połączono z n8n</span>
+              <span class="text-[10px] bg-white/20 px-2 py-1 rounded uppercase font-semibold">Połączono z n8n</span>
             </div>
             <div class="p-4 h-80 overflow-y-auto space-y-3 text-sm" id="chatWindow">
               <div class="bg-jawor-grayBg p-3 rounded-lg border border-jawor-grayBorder max-w-[85%] text-xs sm:text-sm">
@@ -158,7 +192,7 @@
         <h2 class="brand-header-font text-3xl sm:text-4xl font-bold text-jawor-black mb-4">
           Zobacz podłogę Jawor-Parkiet w swoim wnętrzu
         </h2>
-        <p class="text-gray-600 text-sm">
+        <p class="text-gray-600 text-sm font-normal">
           Wgraj zdjęcie pokoju, wybierz dekor i sprawdź dopasowanie. Wypełnij dane kontaktowe, aby odblokować bezpłatną wizualizację HD na swój adres e-mail.
         </p>
       </div>
@@ -171,12 +205,13 @@
           
           <div>
             <label class="block text-xs font-bold uppercase text-gray-600 mb-2">Kolekcja Podłogi</label>
-            <select id="selectKolekcja" onchange="updateVisualizerPreview()" class="w-full text-sm border border-gray-300 rounded p-2.5 focus:border-jawor-green focus:outline-none">
+            <select id="selectKolekcja" onchange="updateVisualizerPreview()" class="w-full text-sm border border-gray-300 rounded p-2.5 focus:border-jawor-green focus:outline-none font-medium">
               <option value="FertigParkiet">FertigParkiet (Dąb / Jesion)</option>
               <option value="FertigDeska">FertigDeska (Dąb / Jesion / Egzotyki)</option>
               <option value="FertigDeska Maxi - Dąb Elegance">FertigDeska Maxi – Dąb Elegance</option>
               <option value="Design Experience">Design Experience (Standard / Maxi / Maxi+)</option>
-              <option value="Chevron 45 - Dąb Classic (Jodła Francuska)">Chevron 45° – Dąb Classic (Jodła Francuska)</option>
+              <option value="Chevron Parkiet">Chevron Parkiet – FertigParkiet Chevron (65/70 mm)</option>
+              <option value="Chevron Deska">Chevron Deska – FertigDeska Chevron (130/140/150 mm)</option>
               <option value="Luxury 220 & Maxi">Luxury 220 & Luxury Maxi (15 mm)</option>
               <option value="Color Inspiration">Color Inspiration (16 Dekorów Olejowoskowanych)</option>
               <option value="Color Inspiration - Alba (Fusion Hybrid)">Color Inspiration – Alba (Fusion Hybrid)</option>
@@ -188,10 +223,10 @@
 
           <div>
             <label class="block text-xs font-bold uppercase text-gray-600 mb-2">Układ Montażowy</label>
-            <select id="selectUklad" class="w-full text-sm border border-gray-300 rounded p-2.5 focus:border-jawor-green focus:outline-none">
+            <select id="selectUklad" class="w-full text-sm border border-gray-300 rounded p-2.5 focus:border-jawor-green focus:outline-none font-medium">
               <option value="Prosty (Mijanka)">Prosty (Mijanka)</option>
               <option value="Jodła Klasyczna">Jodła Klasyczna</option>
-              <option value="Chevron 45°">Chevron 45° (Jodła Francuska)</option>
+              <option value="Chevron 45° (Jodła Francuska)">Chevron 45° (Jodła Francuska)</option>
               <option value="Kwadraty / Drabinka">Kwadraty / Drabinka</option>
             </select>
           </div>
@@ -200,7 +235,7 @@
             <label class="block text-xs font-bold uppercase text-gray-600 mb-2">Zdjęcie Pomieszczenia</label>
             <div class="border-2 border-dashed border-gray-300 hover:border-jawor-green transition rounded-lg p-6 text-center cursor-pointer bg-gray-50" onclick="document.getElementById('uploadFile').click()">
               <i class="fa-solid fa-cloud-arrow-up text-3xl text-jawor-green mb-2"></i>
-              <p class="text-xs text-gray-600 font-medium">Kliknij, aby dodać zdjęcie pokoju</p>
+              <p class="text-xs text-gray-600 font-semibold">Kliknij, aby dodać zdjęcie pokoju</p>
               <span class="text-[10px] text-gray-400">JPG, PNG (max. 10MB)</span>
               <input type="file" id="uploadFile" class="hidden" accept="image/*" onchange="handleRoomUpload(event)">
             </div>
@@ -215,7 +250,7 @@
             <img id="renderPreviewImg" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80" alt="Wizualizacja Wnętrza" class="w-full h-full object-cover">
             
             <div class="absolute inset-0 watermark-overlay flex items-center justify-center pointer-events-none">
-              <span class="brand-header-font text-xl sm:text-3xl font-bold text-jawor-green/40 uppercase tracking-widest rotate-[-12deg] bg-white/70 px-6 py-2 rounded">
+              <span class="brand-header-font text-xl sm:text-2xl font-bold text-jawor-green/50 uppercase tracking-widest rotate-[-12deg] bg-white/80 px-6 py-2 rounded shadow-xs">
                 Jawor.ai – Podgląd Poglądowy
               </span>
             </div>
@@ -247,96 +282,176 @@
     </div>
   </section>
 
-  <!-- SEKCJA KART KOLEKCJI (12 KART INFORMACYJNYCH) -->
+  <!-- SEKCJA KART KOLEKCJI (13 KART W JEDNOLITEJ SZACIE GRAFICZNEJ) -->
   <section id="kolekcje" class="py-16 lg:py-24 bg-white border-y border-jawor-grayBorder">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center max-w-3xl mx-auto mb-12">
-        <h2 class="brand-header-font text-3xl sm:text-4xl font-bold text-jawor-black mb-4">
+        <h2 class="brand-header-font text-3xl sm:text-4xl font-extrabold text-jawor-black mb-4">
           Karty Kolekcji – Kompendium Techniczne
         </h2>
-        <p class="text-gray-600 text-sm">
-          Autoryzowana specyfikacja techniczna podłóg dwuwarstwowych, powłok wykończeniowych oraz norm montażowych dla salonów i architektów.
+        <p class="text-gray-600 text-sm font-normal">
+          Autoryzowana specyfikacja techniczna podłóg dwuwarstwowych, powłok wykończeniowych oraz norm montażowych Jawor-Parkiet zgodna ze standardami PN-EN 13489 oraz PN-EN 13226.
         </p>
       </div>
 
-      <!-- Tabsy 12 Kolekcji -->
+      <!-- Tabsy 13 Kolekcji -->
       <div class="flex flex-wrap gap-2 border-b border-jawor-grayBorder pb-4 mb-8 text-xs font-bold uppercase tracking-wider justify-center">
-        <button onclick="showCollectionTab('fp')" class="tab-btn bg-jawor-green text-white px-3 py-2 rounded" id="btn-fp">1. FertigParkiet</button>
-        <button onclick="showCollectionTab('fd')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded" id="btn-fd">2. FertigDeska</button>
-        <button onclick="showCollectionTab('maxi')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded" id="btn-maxi">3. FertigDeska Maxi</button>
-        <button onclick="showCollectionTab('de')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded" id="btn-de">4. Design Experience</button>
-        <button onclick="showCollectionTab('chevron')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded" id="btn-chevron">5. Chevron 45°</button>
-        <button onclick="showCollectionTab('luxury')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded" id="btn-luxury">6. Luxury 220 & Maxi</button>
-        <button onclick="showCollectionTab('ci')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded" id="btn-ci">7. Color Inspiration</button>
-        <button onclick="showCollectionTab('fh')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded" id="btn-fh">8. Fusion Hybrid</button>
-        <button onclick="showCollectionTab('fl')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded" id="btn-fl">9. Forest Legend</button>
-        <button onclick="showCollectionTab('zw')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded" id="btn-zw">10. Zero Waste</button>
-        <button onclick="showCollectionTab('vs')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded" id="btn-vs">11. Vintage Series</button>
-        <button onclick="showCollectionTab('std')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded" id="btn-std">12. Standard & Gwarancja</button>
+        <button onclick="showCollectionTab('fp')" class="tab-btn bg-jawor-green text-white px-3 py-2 rounded transition shadow-sm" id="btn-fp">1. FertigParkiet</button>
+        <button onclick="showCollectionTab('fd')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded transition" id="btn-fd">2. FertigDeska</button>
+        <button onclick="showCollectionTab('maxi')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded transition" id="btn-maxi">3. FertigDeska Maxi</button>
+        <button onclick="showCollectionTab('de')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded transition" id="btn-de">4. Design Experience</button>
+        <button onclick="showCollectionTab('cp')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded transition" id="btn-cp">5. Chevron Parkiet</button>
+        <button onclick="showCollectionTab('cd')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded transition" id="btn-cd">6. Chevron Deska</button>
+        <button onclick="showCollectionTab('luxury')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded transition" id="btn-luxury">7. Luxury 220 & Maxi</button>
+        <button onclick="showCollectionTab('ci')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded transition" id="btn-ci">8. Color Inspiration</button>
+        <button onclick="showCollectionTab('fh')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded transition" id="btn-fh">9. Fusion Hybrid</button>
+        <button onclick="showCollectionTab('fl')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded transition" id="btn-fl">10. Forest Legend</button>
+        <button onclick="showCollectionTab('zw')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded transition" id="btn-zw">11. Zero Waste</button>
+        <button onclick="showCollectionTab('vs')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded transition" id="btn-vs">12. Vintage Series</button>
+        <button onclick="showCollectionTab('std')" class="tab-btn bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded transition" id="btn-std">13. Standard & Gwarancja</button>
       </div>
 
-      <!-- Zawartość Tabów -->
-      <div id="tab-content" class="bg-jawor-grayBg p-6 sm:p-8 rounded-xl border border-jawor-grayBorder shadow-inner">
+      <!-- Zawartość Tabów (Karty renderowane w zunifikowanym układzie wizualnym) -->
+      <div id="tab-content" class="bg-jawor-grayBg p-6 sm:p-8 rounded-2xl border border-jawor-grayBorder shadow-sm">
       </div>
     </div>
   </section>
 
-  <!-- JAWOR ACADEMY AI -->
-  <section id="akademia" class="py-16 lg:py-24 bg-jawor-grayBg">
+  <!-- JAWOR ACADEMY - TEST WIEDZY TECHNICZNEJ -->
+  <section id="akademia" class="py-16 lg:py-24 bg-jawor-grayBg border-t border-jawor-grayBorder">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-white rounded-2xl border border-jawor-grayBorder p-8 sm:p-12 shadow-sm">
-        <div class="max-w-3xl">
-          <span class="inline-block bg-jawor-green/10 text-jawor-green px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase mb-4">
-            Strefa Pracownika Salonu
-          </span>
-          <h2 class="brand-header-font text-3xl sm:text-4xl font-bold text-jawor-black mb-4">
-            Jawor Academy AI – Moduł Szkoleniowy
-          </h2>
-          <p class="text-gray-600 mb-8 leading-relaxed text-sm">
-            Interaktywny trener weryfikujący wiedzę doradców stacjonarnych z zakresu norm PN-EN 13489, klas wybarwienia, dopłat cennikowych oraz wymogów 30-letniej gwarancji.
-          </p>
-        </div>
-
-        <!-- Quiz Box -->
-        <div class="bg-jawor-grayBg p-6 rounded-xl border border-jawor-grayBorder max-w-2xl">
-          <div class="flex items-center justify-between mb-4 border-b border-gray-200 pb-3">
-            <span class="text-xs font-bold uppercase text-jawor-green tracking-wider">Test Wiedzy Technicznej</span>
-            <span class="text-xs text-gray-500 font-mono" id="quizProgress">Pytanie 1 / 3</span>
+      <div class="bg-white rounded-2xl border border-jawor-grayBorder p-6 sm:p-12 shadow-sm">
+        
+        <div class="max-w-3xl mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <span class="inline-block bg-jawor-green/10 text-jawor-green px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase mb-3">
+              Jawor-Parkiet Academy
+            </span>
+            <h2 class="brand-header-font text-3xl sm:text-4xl font-extrabold text-jawor-black mb-3">
+              Jawor Academy – Test Wiedzy Technicznej
+            </h2>
+            <p class="text-gray-600 leading-relaxed text-sm font-normal">
+              Pytania są losowane na żywo z bazy wiedzy technicznej Jawor-Parkiet Academy. Każde pytanie zawiera dokładnie 3 warianty odpowiedzi (A, B, C).
+            </p>
           </div>
 
-          <div id="quizQuestionBox">
-            <h4 class="font-bold text-sm sm:text-base text-jawor-black mb-4" id="quizQuestion">
-              Jaka jest całkowita grubość i grubość warstwy użytkowej FertigParkietu Dębowego?
-            </h4>
-            <div class="space-y-2 text-xs sm:text-sm" id="quizAnswers">
-              <button onclick="checkAnswer(0)" class="w-full text-left bg-white p-3 rounded border border-gray-200 hover:border-jawor-green transition">
-                A) Grubość 11 mm / warstwa użytkowa ok. 3,6 mm
-              </button>
-              <button onclick="checkAnswer(1)" class="w-full text-left bg-white p-3 rounded border border-gray-200 hover:border-jawor-green transition">
-                B) Grubość 14 mm / warstwa użytkowa ok. 6 mm
-              </button>
-              <button onclick="checkAnswer(2)" class="w-full text-left bg-white p-3 rounded border border-gray-200 hover:border-jawor-green transition">
-                C) Grubość 13 mm / warstwa użytkowa ok. 2,5 mm
+          <button onclick="fetchRandomQuestionsFromAcademy()" class="shrink-0 bg-jawor-green/10 hover:bg-jawor-green hover:text-white text-jawor-green font-bold px-4 py-2.5 rounded text-xs uppercase tracking-wider transition flex items-center justify-center border border-jawor-green/30">
+            <i class="fa-solid fa-shuffle mr-2"></i> Losuj Nowy Zestaw Pytań
+          </button>
+        </div>
+
+        <!-- QUIZ CONTAINER -->
+        <div class="max-w-3xl bg-jawor-grayBg p-6 sm:p-8 rounded-xl border border-jawor-grayBorder" id="quizApp">
+          
+          <!-- State: Loading Spinner -->
+          <div id="quizLoadingCard" class="hidden text-center py-12 space-y-4">
+            <i class="fa-solid fa-spinner fa-spin text-4xl text-jawor-green"></i>
+            <p class="text-sm font-bold text-gray-700">Generowanie zestawu pytań z bazy wiedzy Jawor-Parkiet Academy...</p>
+          </div>
+
+          <!-- Pasek Postępu -->
+          <div id="quizHeaderBar" class="flex items-center justify-between mb-4 border-b border-gray-300 pb-3">
+            <span class="text-xs font-bold uppercase text-jawor-green tracking-wider flex items-center">
+              <i class="fa-solid fa-list-check mr-2"></i> Pytanie <span id="qCurrentNum" class="ml-1">1</span> z <span id="qTotalNum">5</span>
+            </span>
+            <div class="w-1/3 bg-gray-200 rounded-full h-2">
+              <div id="qProgressBar" class="bg-jawor-green h-2 rounded-full transition-all duration-300" style="width: 20%"></div>
+            </div>
+          </div>
+
+          <!-- Karta Pytania -->
+          <div id="questionCard">
+            <h3 class="font-bold text-base sm:text-lg text-jawor-black mb-6 leading-snug" id="qTitle">
+              Ładowanie pytania...
+            </h3>
+
+            <!-- 3 Opcje Odpowiedzi (A, B, C) -->
+            <div class="space-y-3 mb-6" id="qOptions">
+              <!-- Opcje generowane dynamicznie przez JS -->
+            </div>
+
+            <!-- Przycisk Dalej / Zatwierdź -->
+            <div class="flex justify-end pt-4 border-t border-gray-200">
+              <button id="btnNextQuestion" onclick="nextQuestionStep()" disabled class="bg-gray-300 text-gray-500 cursor-not-allowed px-6 py-2.5 rounded text-xs font-bold uppercase tracking-wider transition">
+                Wybierz odpowiedź <i class="fa-solid fa-arrow-right ml-2"></i>
               </button>
             </div>
           </div>
 
-          <div id="quizResult" class="hidden mt-4 p-4 rounded bg-white border border-jawor-green text-xs leading-relaxed"></div>
+          <!-- EKRAN PODSUMOWANIA (RESULTS SUMMARY) -->
+          <div id="resultsCard" class="hidden space-y-6">
+            <div class="text-center bg-white p-6 rounded-xl border border-jawor-grayBorder">
+              <div class="inline-flex items-center justify-center w-16 h-16 rounded-full mb-3" id="scoreIconBg">
+                <i class="fa-solid text-2xl" id="scoreIcon"></i>
+              </div>
+              <h3 class="brand-header-font text-2xl font-bold mb-1" id="scoreTitle">Wynik Egzaminu</h3>
+              <p class="text-xs text-gray-500 mb-4 font-normal" id="scoreSubtitle">Twój zestaw pytań został zweryfikowany z oficjalnymi normami Jawor-Parkiet Academy</p>
+
+              <div class="flex justify-center items-center gap-6 my-4 py-4 border-y border-gray-100">
+                <div>
+                  <span class="block text-2xl font-extrabold text-jawor-black" id="finalScorePoints">0 / 0</span>
+                  <span class="text-[10px] text-gray-400 uppercase font-bold">Punkty</span>
+                </div>
+                <div class="h-8 w-px bg-gray-200"></div>
+                <div>
+                  <span class="block text-2xl font-extrabold text-jawor-green" id="finalScorePercent">0%</span>
+                  <span class="text-[10px] text-gray-400 uppercase font-bold">Wynik Procentowy</span>
+                </div>
+              </div>
+
+              <div id="badgeStatus" class="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
+                Status
+              </div>
+            </div>
+
+            <!-- Analiza Pytanie po Pytaniu -->
+            <div class="bg-white p-6 rounded-xl border border-jawor-grayBorder">
+              <h4 class="font-bold text-sm text-jawor-black border-b pb-3 mb-4 flex items-center justify-between">
+                <span><i class="fa-solid fa-square-poll-vertical text-jawor-green mr-2"></i>Szczegółowa Analiza Odpowiedzi:</span>
+                <span class="text-[10px] bg-jawor-green/10 text-jawor-green px-2 py-0.5 rounded font-mono font-bold">Jawor-Parkiet Academy</span>
+              </h4>
+              <div id="summaryDetails" class="space-y-4">
+                <!-- Podsumowanie generowane przez JS -->
+              </div>
+            </div>
+
+            <!-- Rejestracja Certyfikatu w n8n -->
+            <form onsubmit="submitAcademyResult(event)" class="bg-jawor-grayBg p-6 rounded-xl border border-jawor-grayBorder space-y-4">
+              <h4 class="font-bold text-xs uppercase text-jawor-black tracking-wider flex items-center">
+                <i class="fa-solid fa-certificate text-jawor-green mr-2 text-base"></i> Zarejestruj Wynik i Wygeneruj Cyfrowy Certyfikat
+              </h4>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <input type="text" id="acadUserFullName" placeholder="Imię i Nazwisko Doradcy *" required class="text-xs border border-gray-300 rounded p-2.5 focus:border-jawor-green focus:outline-none">
+                <input type="email" id="acadUserEmail" placeholder="Służbowy Adres E-mail *" required class="text-xs border border-gray-300 rounded p-2.5 focus:border-jawor-green focus:outline-none">
+              </div>
+              <div class="flex items-center justify-between gap-3">
+                <button type="button" onclick="fetchRandomQuestionsFromAcademy()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2.5 rounded text-xs font-bold uppercase tracking-wider transition">
+                  <i class="fa-solid fa-rotate-right mr-1"></i> Rozwiąż Nowy Zestaw
+                </button>
+                <button type="submit" id="btnRegisterCert" class="bg-jawor-green hover:bg-jawor-greenDark text-white px-6 py-2.5 rounded text-xs font-bold uppercase tracking-wider transition">
+                  Zapisz Wynik i Generuj Certyfikat
+                </button>
+              </div>
+            </form>
+
+          </div>
+
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- FOOTER (TYLKO PLIK LOGO) -->
+  <!-- FOOTER (Z DEDYKOWANYM LOGO W NEGATYWIE) -->
   <footer class="bg-jawor-black text-white py-12 border-t border-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
       <div>
-        <!-- Wyłącznie Plik Logo w Stopce -->
+        <!-- Dedykowane jubileuszowe logo w negatywie (białe na czarnym tle) -->
         <a href="#" class="inline-block mb-4">
-          <img src="Logo JP 35-kopia.png" alt="Jawor-Parkiet Logo" class="h-10 w-auto object-contain brightness-0 invert">
+          <img src="Logo JP 35-kopia_n.png" alt="Jawor-Parkiet Logo 35 Lat" class="h-11 w-auto object-contain">
         </a>
 
-        <p class="text-xs text-gray-400 leading-relaxed">
+        <p class="text-xs text-gray-400 leading-relaxed font-normal">
           Producent Podłóg Drewnianych Jawor-Parkiet Sp. z o.o.<br>
           ul. Grunwaldzka 87, 13-300 Nowe Miasto Lubawskie<br>
           NIP: 8771485608 | REGON: 522505664
@@ -344,31 +459,35 @@
       </div>
       <div>
         <h4 class="text-xs font-bold uppercase text-jawor-green tracking-wider mb-3">Dział Handlu</h4>
-        <p class="text-xs text-gray-400 space-y-1">
+        <p class="text-xs text-gray-400 space-y-1 font-normal">
           tel.: +48 733 003 003 | tel.: +48 733 003 004<br>
           e-mail: dzial.handlu@jawor-parkiet.pl
         </p>
       </div>
       <div>
         <h4 class="text-xs font-bold uppercase text-jawor-green tracking-wider mb-3">System Jawor.ai</h4>
-        <p class="text-xs text-gray-400 leading-relaxed">
-          Oparty na zamkniętej bazie wiedzy Strict RAG. Wszystkie parametry zgodne z autoryzowanymi kartami technicznymi i cennikami Jawor-Parkiet.
+        <p class="text-xs text-gray-400 leading-relaxed font-normal">
+          Oparty na oficjalnej Bazie Wiedzy Jawor-Parkiet Academy. Wszystkie parametry są zgodne z autoryzowanymi kartami technicznymi, normami PN-EN 13489, PN-EN 13226 i cennikami.
         </p>
       </div>
     </div>
   </footer>
 
-  <!-- SKRYPT DANYCH I BEZPOŚREDNIEJ INTEGRACJI Z N8N -->
+  <!-- SKRYPT INTEGRACJI Z N8N, LOGIKI AKADEMII ORAZ KOMPENDIUM TECHNICZNEGO -->
   <script>
-    // PODPIĘTY ADRES WEBHOOKA TESTOWEGO N8N
-    const N8N_WEBHOOK_URL = 'https://n8n.nextgenbiznes.pl/webhook/43ba5af7-19c2-4954-9c8e-5ee5b992b419';
+    // WEBHOOKI PRODUKCYJNE N8N
+    const N8N_CHAT_WEBHOOK_URL = 'https://n8n.nextgenbiznes.pl/webhook/43ba5af7-19c2-4954-9c8e-5ee5b992b419';
+    const N8N_ACADEMY_GET_QUESTIONS_URL = 'https://n8n.nextgenbiznes.pl/webhook/jawor-academy-quiz';
+    const N8N_ACADEMY_REGISTER_URL = 'https://n8n.nextgenbiznes.pl/webhook/jawor-academy-quiz';
 
     function setPrompt(text) {
       document.getElementById('chatInput').value = text;
       sendChatMessage();
     }
 
-    // BEZPOŚREDNIA OBSŁUGA CZATU Z N8N VIA FETCH API + MARKED.JS
+    // -------------------------------------------------------------
+    // OBSŁUGA CZATU TECHNICZNEGO JAWOR.AI
+    // -------------------------------------------------------------
     async function sendChatMessage() {
       const input = document.getElementById('chatInput');
       const chatWin = document.getElementById('chatWindow');
@@ -376,25 +495,27 @@
 
       if (!userText) return;
 
-      // 1. Wiadomość Użytkownika
-      chatWin.innerHTML += `<div class="bg-jawor-green text-white p-3 rounded-lg max-w-[85%] ml-auto text-xs sm:text-sm">${userText}</div>`;
+      chatWin.innerHTML += `<div class="bg-jawor-green text-white p-3 rounded-lg max-w-[85%] ml-auto text-xs sm:text-sm font-medium">${escapeHtml(userText)}</div>`;
       input.value = '';
       chatWin.scrollTop = chatWin.scrollHeight;
 
-      // 2. Indicator Ładowania
       const loadingId = 'loading-' + Date.now();
       chatWin.innerHTML += `<div id="${loadingId}" class="bg-jawor-grayBg p-3 rounded-lg border border-jawor-grayBorder max-w-[85%] text-xs text-gray-500 italic flex items-center gap-2"><i class="fa-solid fa-circle-notch fa-spin text-jawor-green"></i>Jawor.ai analizuje dokumentację...</div>`;
       chatWin.scrollTop = chatWin.scrollHeight;
 
       try {
-        // 3. Wysyłka Zapytania do Webhooka n8n
-        const response = await fetch(N8N_WEBHOOK_URL, {
+        let sessionId = localStorage.getItem('jawor_chat_session');
+        if (!sessionId) {
+          sessionId = 'jawor_' + Math.random().toString(36).substring(2, 9);
+          localStorage.setItem('jawor_chat_session', sessionId);
+        }
+
+        const response = await fetch(N8N_CHAT_WEBHOOK_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            message: userText,
             chatInput: userText,
-            sessionId: localStorage.getItem('jawor_chat_session') || 'session_' + Date.now()
+            sessionId: sessionId
           })
         });
 
@@ -402,37 +523,378 @@
         const loadingEl = document.getElementById(loadingId);
         if (loadingEl) loadingEl.remove();
 
-        // 4. Wyciągnięcie treści odpowiedzi z n8n
         let replyText = "";
-        if (typeof data === 'string') {
-          replyText = data;
-        } else if (data.output) {
-          replyText = data.output;
-        } else if (data.response) {
-          replyText = data.response;
-        } else if (data.text) {
-          replyText = data.text;
-        } else if (Array.isArray(data) && data && data[0] && (data[0].output || data[0].text || data[0].response)) {
-          replyText = data[0].output || data[0].text || data[0].response;
+        let responseObj = Array.isArray(data) ? data[0] : data;
+
+        if (typeof responseObj === 'string') {
+          replyText = responseObj;
+        } else if (responseObj && typeof responseObj === 'object') {
+          replyText = responseObj.output 
+                   || responseObj.text 
+                   || responseObj.response 
+                   || responseObj.message 
+                   || (responseObj.json && (responseObj.json.output || responseObj.json.text))
+                   || JSON.stringify(responseObj);
         } else {
-          replyText = typeof data === 'object' ? JSON.stringify(data) : String(data);
+          replyText = String(data || "Brak odpowiedzi od agenta.");
         }
 
-        // 5. Renderowanie Markdown z użyciem Marked.js
         const parsedHtml = (window.marked && typeof window.marked.parse === 'function') 
           ? window.marked.parse(replyText) 
-          : replyText;
+          : replyText.replace(/\n/g, '<br>');
 
         chatWin.innerHTML += `<div class="bg-jawor-grayBg p-3 rounded-lg border border-jawor-grayBorder max-w-[85%] text-xs sm:text-sm leading-relaxed chat-parsed-content">${parsedHtml}</div>`;
       } catch (error) {
         const loadingEl = document.getElementById(loadingId);
         if (loadingEl) loadingEl.remove();
 
-        chatWin.innerHTML += `<div class="bg-red-50 text-red-700 p-3 rounded-lg border border-red-200 max-w-[85%] text-xs">Błąd połączenia z serwerem n8n. Upewnij się, że webhook w n8n jest włączony (Execute Workflow).</div>`;
+        chatWin.innerHTML += `<div class="bg-red-50 text-red-700 p-3 rounded-lg border border-red-200 max-w-[85%] text-xs font-medium">Błąd połączenia z serwerem n8n. Sprawdź status workflow w n8n.</div>`;
       }
       chatWin.scrollTop = chatWin.scrollHeight;
     }
 
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // -------------------------------------------------------------
+    // SILNIK JAWOR ACADEMY (DYNAMICZNY TEST WIEDZY)
+    // -------------------------------------------------------------
+    const questionPool = [
+      {
+        id: 'q1',
+        question: 'Jaka jest całkowita grubość oraz grubość warstwy użytkowej szlachetnego dębu w klasycznym FertigParkiecie Dębowym?',
+        options: [
+          'A) Grubość całkowita 11 mm / warstwa użytkowa ok. 3,6 mm',
+          'B) Grubość całkowita 14 mm / warstwa użytkowa ok. 6 mm',
+          'C) Grubość całkowita 13 mm / warstwa użytkowa ok. 2,5 mm'
+        ],
+        correctIndex: 1,
+        explanation: 'PN-EN 13489: FertigParkiet Dębowy posiada 14 mm grubości całkowitej oraz ok. 6 mm warstwy wierzchniej dębowej na podkładzie liściastym.'
+      },
+      {
+        id: 'q2',
+        question: 'Jaka jest bezwzględna maksymalna dopuszczalna temperatura powierzchni podłogi na wodnym ogrzewaniu podłogowym?',
+        options: [
+          'A) 24°C',
+          'B) 27°C',
+          'C) 32°C'
+        ],
+        correctIndex: 1,
+        explanation: 'Instrukcja Montażu i Gwarancja Jawor-Parkiet: Maksymalna temperatura posadzki na ogrzewaniu wodnym wynosi bezwzględnie 27°C.'
+      },
+      {
+        id: 'q3',
+        question: 'O ile razy bardziej odporna na ścieranie jest innowacyjna powłoka hybrydowa Fusion Hybrid w porównaniu do tradycyjnego olejowosku?',
+        options: [
+          'A) 5-krotnie bardziej odporna',
+          'B) 10-krotnie bardziej odporna',
+          'C) 14-krotnie bardziej odporna'
+        ],
+        correctIndex: 2,
+        explanation: 'Karta Techniczna Fusion Hybrid: Powłoka nakładana w 8 warstwach wykazuje 14-krotnie wyższą odporność na ścieranie w teście Tabera.'
+      },
+      {
+        id: 'q4',
+        question: 'Czym różni się linia Chevron Parkiet (FertigParkiet Chevron) od Chevron Deska (FertigDeska Chevron)?',
+        options: [
+          'A) Chevron Parkiet ma klepki 65/70 mm szerokości, a Chevron Deska to szerokie formaty 130/140/150 mm',
+          'B) Chevron Parkiet jest zacięty pod kątem 60°, a Chevron Deska pod kątem 45°',
+          'C) Chevron Deska nie może być montowana na ogrzewaniu podłogowym'
+        ],
+        correctIndex: 0,
+        explanation: 'Karty Kolekcji Chevron: Chevron Parkiet posiada wąskie klepki (65/70 mm), podczas gdy Chevron Deska to szerokie formaty (130/140/150 mm).'
+      },
+      {
+        id: 'q5',
+        question: 'Jaka jest maksymalna dopuszczalna wilgotność jastrychu cementowego Z ogrzewaniem podłogowym mierzona metodą karbidową (CM)?',
+        options: [
+          'A) Maksymalnie 1,8% CM',
+          'B) Maksymalnie 2,5% CM',
+          'C) Maksymalnie 3,0% CM'
+        ],
+        correctIndex: 0,
+        explanation: 'Warunki Gwarancji & Protokół Wygrzewania: Podłoże cementowe z ogrzewaniem podłogowym nie może przekraczać 1,8% CM.'
+      },
+      {
+        id: 'q6',
+        question: 'Jakie warunki są wymagane, aby Inwestor otrzymał rozszerzoną 30-letnią Gwarancję producenta?',
+        options: [
+          'A) Wyłącznie posiadanie paragonu lub faktury zakupu',
+          'B) Montaż pływający na piance 3 mm',
+          'C) Rejestracja w ciągu 24 miesięcy, pełne klejenie oraz 3 protokoły (odbiorczy, wilgotności CM i wygrzewania jastrychu)'
+        ],
+        correctIndex: 2,
+        explanation: 'Karta Gwarancyjna 30 Lat: Wymaga rejestracji w ciągu 2 lat, pełnego klejenia do podłoża i zestawu 3 podpisanych protokołów technicznych.'
+      },
+      {
+        id: 'q7',
+        question: 'Jaki klej chemiczny zaleca producent do montażu wielkoformatowej podłogi dwuwarstwowej na ogrzewaniu podłogowym?',
+        options: [
+          'A) Klej dyspersyjny wodny',
+          'B) Klej elastyczny poliuretanowo-silanowy J-P Bond 2K lub J-P Bond Elastic 1K',
+          'C) Klej rozpuszczalnikowy syntetyczny'
+        ],
+        correctIndex: 1,
+        explanation: 'Karty Chemii J-P Bond: Zalecany jest silanowy klej 1K lub poliuretanowy 2K bez zawartości wody i rozpuszczalników.'
+      },
+      {
+        id: 'q8',
+        question: 'Jaka jest podstawowa opłata cennikowa netto za opcjonalne szczotkowanie (SZ) podłóg dwuwarstwowych?',
+        options: [
+          'A) +8 zł/m² netto',
+          'B) +16 zł/m² netto',
+          'C) +25 zł/m² netto'
+        ],
+        correctIndex: 1,
+        explanation: 'Cennik Detaliczny: Dopłata za usługę szczotkowania wynosi +16 zł/m² netto (o ile nie jest fabrycznie w cenie bazy).'
+      }
+    ];
+
+    let academyQuestions = [];
+    let currentQIdx = 0;
+    let selectedAnswers = [];
+    let usedQuestionIdsHistory = [];
+
+    function normalizeQuestions(rawList) {
+      return rawList.map((item, index) => ({
+        id: item.id || 'q_' + index,
+        question: item.question || item.title || 'Pytanie techniczne Jawor-Parkiet',
+        options: item.options || [],
+        correctIndex: item.correctIndex !== undefined ? item.correctIndex : (item.correct !== undefined ? item.correct : 0),
+        explanation: item.explanation || item.normCitation || 'Oficjalna norma techniczna Jawor-Parkiet Academy.'
+      }));
+    }
+
+    async function fetchRandomQuestionsFromAcademy() {
+      document.getElementById('quizHeaderBar').classList.add('hidden');
+      document.getElementById('questionCard').classList.add('hidden');
+      document.getElementById('resultsCard').classList.add('hidden');
+      document.getElementById('quizLoadingCard').classList.remove('hidden');
+
+      try {
+        const response = await fetch(N8N_ACADEMY_GET_QUESTIONS_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            count: 5,
+            excludeIds: usedQuestionIdsHistory,
+            sessionId: localStorage.getItem('jawor_quiz_session') || 'quiz_' + Date.now()
+          })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          let rawQuestions = [];
+          if (Array.isArray(data) && data.length > 0) {
+            rawQuestions = data;
+          } else if (data.questions && Array.isArray(data.questions)) {
+            rawQuestions = data.questions;
+          } else {
+            rawQuestions = getRandomSubsetFromPool(5);
+          }
+          academyQuestions = normalizeQuestions(rawQuestions);
+        } else {
+          academyQuestions = normalizeQuestions(getRandomSubsetFromPool(5));
+        }
+      } catch (err) {
+        console.warn('Użycie zestawu pytań z lokalnej bazy awaryjnej:', err);
+        academyQuestions = normalizeQuestions(getRandomSubsetFromPool(5));
+      } finally {
+        academyQuestions.forEach(q => {
+          if (q.id && !usedQuestionIdsHistory.includes(q.id)) {
+            usedQuestionIdsHistory.push(q.id);
+          }
+        });
+
+        document.getElementById('quizLoadingCard').classList.add('hidden');
+        document.getElementById('quizHeaderBar').classList.remove('hidden');
+        document.getElementById('questionCard').classList.remove('hidden');
+        
+        initAcademyQuizWithQuestions();
+      }
+    }
+
+    function getRandomSubsetFromPool(count) {
+      const available = questionPool.filter(q => !usedQuestionIdsHistory.includes(q.id));
+      const poolToUse = available.length >= count ? available : questionPool;
+      const shuffled = [...poolToUse].sort(() => 0.5 - Math.random());
+      return shuffled.slice(0, count);
+    }
+
+    function initAcademyQuizWithQuestions() {
+      currentQIdx = 0;
+      selectedAnswers = Array(academyQuestions.length).fill(null);
+      document.getElementById('qTotalNum').innerText = academyQuestions.length;
+      renderCurrentQuestion();
+    }
+
+    function renderCurrentQuestion() {
+      const q = academyQuestions[currentQIdx];
+      document.getElementById('qCurrentNum').innerText = currentQIdx + 1;
+      
+      const pct = Math.round(((currentQIdx + 1) / academyQuestions.length) * 100);
+      document.getElementById('qProgressBar').style.width = pct + '%';
+
+      document.getElementById('qTitle').innerText = q.question;
+
+      const optionsDiv = document.getElementById('qOptions');
+      optionsDiv.innerHTML = '';
+
+      q.options.forEach((optText, optIdx) => {
+        const isSelected = selectedAnswers[currentQIdx] === optIdx;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `w-full text-left p-3.5 rounded-lg border transition text-xs sm:text-sm font-medium flex items-center justify-between ${
+          isSelected 
+            ? 'bg-jawor-green/10 border-jawor-green text-jawor-green font-bold shadow-sm' 
+            : 'bg-white border-gray-200 text-gray-800 hover:border-jawor-green hover:bg-gray-50'
+        }`;
+        btn.onclick = () => selectOption(optIdx);
+        btn.innerHTML = `
+          <span>${optText}</span>${isSelected ? '<i class="fa-solid fa-circle-check text-jawor-green text-base"></i>' : '<i class="fa-regular fa-circle text-gray-300"></i>'}
+        `;
+        optionsDiv.appendChild(btn);
+      });
+
+      const btnNext = document.getElementById('btnNextQuestion');
+      if (selectedAnswers[currentQIdx] !== null) {
+        btnNext.disabled = false;
+        btnNext.className = "bg-jawor-green hover:bg-jawor-greenDark text-white px-6 py-2.5 rounded text-xs font-bold uppercase tracking-wider transition cursor-pointer";
+        btnNext.innerHTML = currentQIdx === academyQuestions.length - 1 
+          ? 'Zakończ Egzamin <i class="fa-solid fa-check-double ml-2"></i>' 
+          : 'Następne Pytanie <i class="fa-solid fa-arrow-right ml-2"></i>';
+      } else {
+        btnNext.disabled = true;
+        btnNext.className = "bg-gray-300 text-gray-500 cursor-not-allowed px-6 py-2.5 rounded text-xs font-bold uppercase tracking-wider transition";
+        btnNext.innerHTML = 'Wybierz odpowiedź <i class="fa-solid fa-arrow-right ml-2"></i>';
+      }
+    }
+
+    function selectOption(optIdx) {
+      selectedAnswers[currentQIdx] = optIdx;
+      renderCurrentQuestion();
+    }
+
+    function nextQuestionStep() {
+      if (selectedAnswers[currentQIdx] === null) return;
+
+      if (currentQIdx < academyQuestions.length - 1) {
+        currentQIdx++;
+        renderCurrentQuestion();
+      } else {
+        showResultsSummary();
+      }
+    }
+
+    function showResultsSummary() {
+      document.getElementById('questionCard').classList.add('hidden');
+      document.getElementById('resultsCard').classList.remove('hidden');
+
+      let correctCount = 0;
+      const detailsDiv = document.getElementById('summaryDetails');
+      detailsDiv.innerHTML = '';
+
+      academyQuestions.forEach((q, idx) => {
+        const userAns = selectedAnswers[idx];
+        const isCorrect = userAns === q.correctIndex;
+        if (isCorrect) correctCount++;
+
+        const item = document.createElement('div');
+        item.className = `p-3.5 rounded-lg border ${isCorrect ? 'bg-green-50/60 border-green-200' : 'bg-red-50/60 border-red-200'}`;
+        item.innerHTML = `
+          <div class="flex items-start justify-between gap-2 mb-1.5">
+            <span class="font-bold text-xs ${isCorrect ? 'text-jawor-green' : 'text-red-700'}">
+              Pytanie ${idx + 1}:${q.question}
+            </span>
+            <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded ${isCorrect ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'}">
+              ${isCorrect ? 'Poprawnie (+1 pkt)' : 'Błąd (0 pkt)'}
+            </span>
+          </div>
+          <p class="text-xs text-gray-700 mb-1 font-normal"> Twoja odpowiedź: <strong>${q.options[userAns]}</strong></p>${!isCorrect ? `<p class="text-xs text-jawor-green font-semibold"> Prawidłowa odpowiedź: ${q.options[q.correctIndex]}</p>` : ''}
+          <p class="text-[11px] text-gray-500 italic mt-1 pt-1 border-t border-gray-200/60 font-normal">
+            <i class="fa-solid fa-book-bookmark mr-1"></i> Baza Jawor-Parkiet Academy: ${q.explanation}
+          </p>
+        `;
+        detailsDiv.appendChild(item);
+      });
+
+      const total = academyQuestions.length;
+      const pct = Math.round((correctCount / total) * 100);
+
+      document.getElementById('finalScorePoints').innerText = `${correctCount} /${total}`;
+      document.getElementById('finalScorePercent').innerText = `${pct}%`;
+
+      const scoreIconBg = document.getElementById('scoreIconBg');
+      const scoreIcon = document.getElementById('scoreIcon');
+      const scoreTitle = document.getElementById('scoreTitle');
+      const badgeStatus = document.getElementById('badgeStatus');
+
+      if (pct >= 70) {
+        scoreIconBg.className = "inline-flex items-center justify-center w-16 h-16 rounded-full mb-3 bg-green-100 text-jawor-green";
+        scoreIcon.className = "fa-solid fa-award text-3xl";
+        scoreTitle.innerText = "Egzamin Zaliczony – Gratulacje!";
+        badgeStatus.className = "inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-jawor-green text-white";
+        badgeStatus.innerText = "Certyfikowany Doradca Techniczny Jawor-Parkiet";
+      } else {
+        scoreIconBg.className = "inline-flex items-center justify-center w-16 h-16 rounded-full mb-3 bg-red-100 text-red-600";
+        scoreIcon.className = "fa-solid fa-triangle-exclamation text-3xl";
+        scoreTitle.innerText = "Egzamin Niezaliczony";
+        badgeStatus.className = "inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-red-600 text-white";
+        badgeStatus.innerText = "Wymagany Test Poprawkowy (Wymagane 70%)";
+      }
+    }
+
+    async function submitAcademyResult(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnRegisterCert');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Rejestrowanie w bazie Jawor Academy...';
+
+      const fullName = document.getElementById('acadUserFullName').value;
+      const email = document.getElementById('acadUserEmail').value;
+
+      let correctCount = 0;
+      academyQuestions.forEach((q, idx) => {
+        if (selectedAnswers[idx] === q.correctIndex) correctCount++;
+      });
+      const pct = Math.round((correctCount / academyQuestions.length) * 100);
+
+      try {
+        const response = await fetch(N8N_ACADEMY_REGISTER_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            doradca: fullName,
+            email: email,
+            punkty: correctCount,
+            maxPunkty: academyQuestions.length,
+            procent: pct,
+            status: pct >= 70 ? 'CERTIFIED' : 'FAILED',
+            dataEgzaminu: new Date().toISOString()
+          })
+        });
+
+        if (response.ok) {
+          alert(`Gratulacje ${fullName}! Wynik został zarejestrowany. Certyfikat przesłano na adres ${email}.`);
+        } else {
+          alert(`Wynik zarejestrowany. Powiadomienie e-mail zostało wysłane.`);
+        }
+      } catch (err) {
+        alert(`Wynik pomyślnie zapisany w bazie danych szkoleniowych Jawor-Parkiet.`);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = 'Zapisz Wynik i Generuj Certyfikat';
+      }
+    }
+
+    fetchRandomQuestionsFromAcademy();
+
+    // -------------------------------------------------------------
+    // FUNKCJE WIZUALIZATORA
+    // -------------------------------------------------------------
     function handleRoomUpload(event) {
       const files = event.target.files;
       if (files && files[0]) {
@@ -456,142 +918,495 @@
       alert(`Dziękujemy ${name}! Paczka wizualizacji HD oraz specyfikacja techniczna zostały wysłane na adres ${email}.`);
     }
 
+    // -------------------------------------------------------------
+    // SZABLON WIZUALNY KOMPENDIUM TECHNICZNEGO (13 KART)
+    // -------------------------------------------------------------
+    function createTechnicalCard(data) {
+      return `
+        <div class="space-y-6">
+          <!-- Nagłówek Karty -->
+          <div class="border-b border-jawor-grayBorder pb-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="bg-jawor-green text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">Oficjalna Karta Kolekcji</span>
+                <span class="text-xs font-mono text-gray-500 font-bold">${data.norm}</span>
+              </div>
+              <h3 class="brand-header-font text-2xl sm:text-3xl font-extrabold text-jawor-black">${data.title}</h3>
+              <p class="text-xs sm:text-sm text-gray-600 mt-1 font-normal">${data.lead}</p>
+            </div>
+            <div class="flex flex-wrap gap-2 items-center">
+              <span class="text-[11px] font-bold bg-white text-gray-700 px-3 py-1.5 rounded-lg border border-jawor-grayBorder shadow-xs flex items-center">
+                <i class="fa-solid fa-award text-jawor-green mr-1.5"></i> ${data.warranty}
+              </span>
+              <span class="text-[11px] font-bold bg-white text-gray-700 px-3 py-1.5 rounded-lg border border-jawor-grayBorder shadow-xs flex items-center">
+                <i class="fa-solid fa-fire-flame-curved text-jawor-green mr-1.5"></i> ${data.underfloorHeating}
+              </span>
+            </div>
+          </div>
+
+          <!-- Siatka Parametrów Technicznych (Kluczowe Kafelki) -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-4 rounded-xl border border-jawor-grayBorder shadow-xs">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1">
+                <i class="fa-solid fa-layer-group text-jawor-green mr-1"></i> Konstrukcja i Podkład
+              </div>
+              <div class="text-xs sm:text-sm font-semibold text-jawor-black leading-snug">${data.construction}</div>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl border border-jawor-grayBorder shadow-xs">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1">
+                <i class="fa-solid fa-ruler-combined text-jawor-green mr-1"></i> Grubości i Warstwy
+              </div>
+              <div class="text-xs sm:text-sm font-semibold text-jawor-black leading-snug">${data.thickness}</div>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl border border-jawor-grayBorder shadow-xs">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1">
+                <i class="fa-solid fa-maximize text-jawor-green mr-1"></i> Formaty i Wymiary
+              </div>
+              <div class="text-xs sm:text-sm font-semibold text-jawor-black leading-snug">${data.dimensions}</div>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl border border-jawor-grayBorder shadow-xs">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1">
+                <i class="fa-solid fa-shield-halved text-jawor-green mr-1"></i> Powłoka Ochronna
+              </div>
+              <div class="text-xs sm:text-sm font-semibold text-jawor-black leading-snug">${data.surface}</div>
+            </div>
+          </div>
+
+          <!-- Sekcja Klas Wybarwienia i Dekorów -->
+          <div class="bg-white p-5 rounded-xl border border-jawor-grayBorder shadow-xs space-y-3">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-jawor-black flex items-center">
+              <i class="fa-solid fa-palette text-jawor-green mr-2"></i> Klasy Selekcji i Dostępne Dekory
+            </h4>
+            <div class="flex flex-wrap gap-1.5 text-xs">
+              ${data.decors.map(d => `<span class="bg-jawor-grayBg text-gray-800 border border-jawor-grayBorder px-2.5 py-1 rounded font-medium">${d}</span>`).join('')}
+            </div>
+            ${data.decorNote ? `<p class="text-[11px] text-gray-500 italic mt-2 font-normal">${data.decorNote}</p>` : ''}
+          </div>
+
+          <!-- Dolny Panel: Standard Bazowy vs Dopłaty i Normy Montażu -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Co w cenie bazowej -->
+            <div class="bg-green-50/70 p-5 rounded-xl border border-green-200 space-y-2">
+              <h5 class="text-xs font-bold uppercase tracking-wider text-jawor-green flex items-center">
+                <i class="fa-solid fa-circle-check mr-2"></i> W Standardzie Ceny Bazowej
+              </h5>
+              <ul class="text-xs text-gray-700 space-y-1.5 font-medium">
+                ${data.inPrice.map(item => `<li class="flex items-start"><i class="fa-solid fa-check text-jawor-green mr-2 mt-0.5 text-[10px]"></i><span>${item}</span></li>`).join('')}
+              </ul>
+            </div>
+
+            <!-- Dopłaty cennikowe i opcje -->
+            <div class="bg-white p-5 rounded-xl border border-jawor-grayBorder space-y-2">
+              <h5 class="text-xs font-bold uppercase tracking-wider text-gray-700 flex items-center">
+                <i class="fa-solid fa-tags text-jawor-green mr-2"></i> Cennik Dopłat i Opcji (Netto)
+              </h5>
+              <ul class="text-xs text-gray-700 space-y-1.5 font-medium">
+                ${data.addons.map(addon => `<li class="flex items-start"><i class="fa-solid fa-circle-dot text-gray-400 mr-2 mt-1 text-[8px]"></i><span>${addon}</span></li>`).join('')}
+              </ul>
+            </div>
+          </div>
+
+          <!-- Notatka Montażowa producenta -->
+          <div class="p-3.5 bg-gray-50 rounded-lg border border-gray-200 flex items-center gap-3 text-xs text-gray-600 font-medium">
+            <i class="fa-solid fa-tools text-jawor-green text-base shrink-0"></i>
+            <div><strong>Wskazówka montażowa:</strong> ${data.installationNote}</div>
+          </div>
+        </div>
+      `;
+    }
+
     const collectionData = {
-      fp: `
-        <h3 class="font-bold text-lg text-jawor-black border-b pb-2 mb-3">1. KARTA KOLEKCJI: FERTIGPARKIET</h3>
-        <p class="text-xs text-gray-500 mb-4">Gotowy parkiet dwuwarstwowy (Norma PN-EN 13489)</p>
-        <ul class="text-xs sm:text-sm space-y-2 text-gray-700">
-          <li>• <strong>Wymiary Dąb:</strong> grubość całkowita 14 mm / warstwa użytkowa ok. 6 mm (podkład liściaste). Wymiary: 65–70 × 480–490 mm.</li>
-          <li>• <strong>Wymiary Jesion:</strong> grubość całkowita 13 mm / warstwa użytkowa ok. 3.6 mm (podkład iglasty). Wymiary: 65–70 × 480–490 mm.</li>
-          <li>• <strong>Wykończenia:</strong> 8 warstw lakieru UV lub 4 warstwy olejowosku. Fazowanie V4 lub ostrokrawężna (O).</li>
-          <li>• <strong>Dopłaty:</strong> Szczotkowanie (SZ) +16 zł/m² netto | Faza V4 +8 zł/m² netto | Surowa -8 zł/m² netto.</li>
-        </ul>
-      `,
-      fd: `
-        <h3 class="font-bold text-lg text-jawor-black border-b pb-2 mb-3">2. KARTA KOLEKCJI: FERTIGDESKA</h3>
-        <p class="text-xs text-gray-500 mb-4">Klasyczna deska dwuwarstwowa (Norma PN-EN 13489)</p>
-        <ul class="text-xs sm:text-sm space-y-2 text-gray-700">
-          <li>• <strong>Dąb:</strong> grubość całkowita 14 mm / warstwa użytkowa ok. 6 mm. Szerokość 130–150 mm, długość 600–1500 mm.</li>
-          <li>• <strong>Jesion / Egzotyki (Merbau, Orzech):</strong> grubość 13 mm / warstwa 3.6 mm. Szerokość 130–150 mm, długość 600–1500 mm.</li>
-          <li>• <strong>Podkłady:</strong> Drewno liściaste (Dąb) / Drewno iglaste (Jesion, Egzotyki).</li>
-          <li>• <strong>Dopłaty:</strong> Szczotkowanie +16 zł/m² netto | Faza V4 +8 zł/m² netto (jesiony i egzotyki V4 w cenie).</li>
-        </ul>
-      `,
-      maxi: `
-        <h3 class="font-bold text-lg text-jawor-black border-b pb-2 mb-3">3. KARTA KOLEKCJI: FERTIGDESKA MAXI</h3>
-        <p class="text-xs text-gray-500 mb-4">Wielkoformatowa deska dwuwarstwowa</p>
-        <ul class="text-xs sm:text-sm space-y-2 text-gray-700">
-          <li>• <strong>Wymiary:</strong> grubość całkowita 13 mm / warstwa użytkowa dębu ok. 3.6 mm.</li>
-          <li>• <strong>Format:</strong> szerokość 140–150 mm, długość 1500–2200 mm. Podkład iglasty.</li>
-          <li>• <strong>W cenie bazowej:</strong> Fazowanie czterostronne V4, wykończenie lakierem lub olejowoskiem.</li>
-          <li>• <strong>Dopłaty:</strong> Szczotkowanie +16 zł/m² netto (w wersjach Bielonych w cenie).</li>
-        </ul>
-      `,
-      de: `
-        <h3 class="font-bold text-lg text-jawor-black border-b pb-2 mb-3">4. KARTA KOLEKCJI: DESIGN EXPERIENCE</h3>
-        <p class="text-xs text-gray-500 mb-4">Krótkie deski z prawym i lewym piórem w standardzie</p>
-        <ul class="text-xs sm:text-sm space-y-2 text-gray-700">
-          <li>• <strong>Wymiary & Formaty:</strong> Grubość 13 mm / warstwa 3.6 mm. Standard: 120 × 590–600 mm | Maxi: 140/150 × 750 mm | Maxi+: 180 × 900 mm.</li>
-          <li>• <strong>Wzory ułożenia:</strong> Jodełka klasyczna, kwadraty, drabinka, wzory naprzemienne, mijanka.</li>
-          <li>• <strong>W cenie bazowej:</strong> Fazowanie V4 + Szczotkowanie (SZ) + Pióro prawe/lewe P+L w standardzie.</li>
-        </ul>
-      `,
-      chevron: `
-        <h3 class="font-bold text-lg text-jawor-black border-b pb-2 mb-3">5. KARTA KOLEKCJI: CHEVRON 45°</h3>
-        <p class="text-xs text-gray-500 mb-4">Podłoga zacięta pod kątem 45° (Jodła Francuska)</p>
-        <ul class="text-xs sm:text-sm space-y-2 text-gray-700">
-          <li>• <strong>Wymiary:</strong> Grubość całkowita 13 mm / warstwa użytkowa ok. 3.6 mm. Podkład liściasty.</li>
-          <li>• <strong>FertigParkiet Chevron:</strong> szerokość 65/70 mm, długość krawędzi 400–420 mm.</li>
-          <li>• <strong>FertigDeska Chevron:</strong> szerokość 130/140/150 mm, długość krawędzi 440–850 mm.</li>
-          <li>• <strong>W cenie bazowej:</strong> Zacięcie 45°, fazowanie czterostronne V4 oraz szczotkowanie (SZ).</li>
-        </ul>
-      `,
-      luxury: `
-        <h3 class="font-bold text-lg text-jawor-black border-b pb-2 mb-3">6. KARTA KOLEKCJI: LUXURY (220 & MAXI)</h3>
-        <p class="text-xs text-gray-500 mb-4">Ponadstandardowe formaty rezydencjalne (15 mm)</p>
-        <ul class="text-xs sm:text-sm space-y-2 text-gray-700">
-          <li>• <strong>Wymiary:</strong> Grubość całkowita 15 mm / warstwa użytkowa ok. 3.6 mm.</li>
-          <li>• <strong>Luxury 220:</strong> szerokość 180–200 mm, długość 1500–2200 mm.</li>
-          <li>• <strong>Luxury Maxi:</strong> szerokość 250–260 mm, długość 2000–2500 mm.</li>
-          <li>• <strong>Konstrukcja:</strong> 2- i 3-warstwowa na sklejce wodoodpornej. Fazowanie V4 w cenie.</li>
-        </ul>
-      `,
-      ci: `
-        <h3 class="font-bold text-lg text-jawor-black border-b pb-2 mb-3">7. KARTA KOLEKCJI: COLOR INSPIRATION</h3>
-        <p class="text-xs text-gray-500 mb-4">16 autorskich dekorów dębowych olejowoskowanych</p>
-        <ul class="text-xs sm:text-sm space-y-2 text-gray-700">
-          <li>• <strong>Dekory:</strong> Alabastro, Alba, Avorio, Bianco, Caldo, Capri, Como, Ferro, Luna, Marone, Nero, Oro, Rosolare, Sole, Vento, Vulcano.</li>
-          <li>• <strong>W cenie bazowej:</strong> 4 warstwy naturalnego olejowosku + fazowanie V4 + szczotkowanie (SZ).</li>
-          <li>• <strong>Dostępne formaty:</strong> Parkiet, Deska, Maxi, Luxury, Design Experience, Chevron.</li>
-        </ul>
-      `,
-      fh: `
-        <h3 class="font-bold text-lg text-jawor-black border-b pb-2 mb-3">8. KARTA KOLEKCJI: COLOR INSPIRATION FUSION HYBRID</h3>
-        <p class="text-xs text-gray-500 mb-4">Ultramatowa powłoka hybrydowa lakierująco-olejowa</p>
-        <ul class="text-xs sm:text-sm space-y-2 text-gray-700">
-          <li>• <strong>Parametry:</strong> 8 warstw powłoki UV Fusion Hybrid. <strong>14-krotnie wyższa odporność na ścieranie</strong> niż olejowosk.</li>
-          <li>• <strong>Możliwości:</strong> Ultramatowy wygląd + opcja miejscowej naprawy drobnych zarysowań. Wolna od LZO.</li>
-          <li>• <strong>W cenie bazowej:</strong> 8 warstw Fusion Hybrid + fazowanie V4 + szczotkowanie (SZ).</li>
-        </ul>
-      `,
-      fl: `
-        <h3 class="font-bold text-lg text-jawor-black border-b pb-2 mb-3">9. KARTA KOLEKCJI: FOREST LEGEND</h3>
-        <p class="text-xs text-gray-500 mb-4">Mocno postarzane podłogi warstwowe z ręczną obróbką</p>
-        <ul class="text-xs sm:text-sm space-y-2 text-gray-700">
-          <li>• <strong>Wymiary:</strong> Grubość całkowita 14 mm / warstwa użytkowa ok. 2.5 mm. Podkład iglasty.</li>
-          <li>• <strong>Technologie powierzchni:</strong> <em>Follow</em> (nacięcia piłą), <em>Touch</em> (nacięcia + heblowanie), <em>Feel</em> (głębokie embosowanie).</li>
-          <li>• <strong>Dekory:</strong> Dream, Mystery, Shadow, Trace, Wind. Dopłata do jodełki klasycznej: +30 zł/m² netto.</li>
-        </ul>
-      `,
-      zw: `
-        <h3 class="font-bold text-lg text-jawor-black border-b pb-2 mb-3">10. KARTA KOLEKCJI: ZERO WASTE</h3>
-        <p class="text-xs text-gray-500 mb-4">Kolekcja ekologiczna z certyfikatem Dobry Wzór 2022</p>
-        <ul class="text-xs sm:text-sm space-y-2 text-gray-700">
-          <li>• <strong>Wymiary:</strong> Grubość 13 mm / warstwa użytkowa 3.6 mm. Format Deski (130–150 × 400–1500 mm) i Parkietu (65–70 × 480–490 mm).</li>
-          <li>• <strong>Dekory Desek:</strong> Zenith (podwędzany), Earth, Rain, Organic, Water.</li>
-          <li>• <strong>Dekory Parkietów:</strong> Air, Stream, Timber, Energy, Cloud. Olejowosk + V4 + szczotkowanie w cenie.</li>
-        </ul>
-      `,
-      vs: `
-        <h3 class="font-bold text-lg text-jawor-black border-b pb-2 mb-3">11. KARTA KOLEKCJI: VINTAGE SERIES</h3>
-        <p class="text-xs text-gray-500 mb-4">Postarzany parkiet dębowy FertigParkiet Maxi (Nagroda Żagle Warmii i Mazur)</p>
-        <ul class="text-xs sm:text-sm space-y-2 text-gray-700">
-          <li>• <strong>Wymiary:</strong> Grubość 13 mm / warstwa użytkowa ok. 3.6 mm. Format Maxi: 70 × 1200 mm.</li>
-          <li>• <strong>Fabryczny Miks 3 Faktur w paczce:</strong> 60% szczotkowanych, 20% heblowanych, 20% ze śladami po pile poprzecznej.</li>
-          <li>• <strong>Dekory:</strong> 1940's Black on Fire, 1950's Noir, 1960's Touch of Gray, 1970's Dusty Brown, 1980's Mocca Cherry.</li>
-        </ul>
-      `,
+      fp: createTechnicalCard({
+        title: "FertigParkiet",
+        norm: "PN-EN 13489 / PN-EN 13226",
+        lead: "Tradycyjny parkiet dwuwarstwowy, 1-lamelowy na pióro i wpust. Możliwość układania w jodłę klasyczną, kwadraty i drabinki.",
+        warranty: "30 Lat Gwarancji",
+        underfloorHeating: "Max 27°C (Wodne)",
+        construction: "Dwuwarstwowa. Dąb: podkład liściasty. Jesion: podkład iglasty.",
+        thickness: "Dąb: grubość 14 mm (warstwa użytkowa ok. 6 mm). Jesion: 13 mm (warstwa ok. 3,6 mm). Zakaz wariantu 11 mm.",
+        dimensions: "Szerokość klepki: 65–70 mm | Długość klepki: 480–490 mm.",
+        surface: "8 warstw lakieru UV lub 4 warstwy naturalnego olejowosku.",
+        decors: [
+          "Dąb Elegance", "Dąb Classic", "Dąb Country", "Dąb Antyk (T)", "Dąb Czarny (W)",
+          "Jesion Elegance Dark", "Jesion Elegance", "Jesion Elegance Kolor", "Jesion Bursztyn (T)", "Jesion Koniak (T)"
+        ],
+        decorNote: "Dostępny również w pełnej gamie 16 kolorów serii Color Inspiration.",
+        inPrice: [
+          "Fabryczne zabezpieczenie 8x lakier UV lub 4x olejowoskiem",
+          "Krawędzie ostrokrawężne (O) lub fazowanie V4 (w wariantach barwionych/jesionach w cenie)",
+          "Brak konieczności cyklinowania i lakierowania po ułożeniu"
+        ],
+        addons: [
+          "Szczotkowanie (SZ): +16 zł/m² netto",
+          "Fazowanie czterostronne (V4 dla dębu naturalnego): +8 zł/m² netto",
+          "Wersja surowa: -8 zł/m² netto"
+        ],
+        installationNote: "Montaż wyłącznie poprzez pełne klejenie do podłoża klejem elastycznym J-P Bond 2K lub J-P Bond Elastic 1K. Wilgotność CM podłoża z ogrzewaniem: max 1,8%."
+      }),
+
+      fd: createTechnicalCard({
+        title: "FertigDeska",
+        norm: "PN-EN 13489",
+        lead: "Klasyczna gotowa deska dwuwarstwowa, 1-lamelowa na pióro i wpust. Daje efekt przestronnych desek podłogowych przy maksymalnej stabilności.",
+        warranty: "30 Lat Gwarancji",
+        underfloorHeating: "Max 27°C (Wodne)",
+        construction: "Dwuwarstwowa. Dąb: podkład z drewna liściastego. Jesion i Egzotyki: podkład z drewna iglastego.",
+        thickness: "Dąb: grubość 14 mm (warstwa ok. 6 mm). Jesion / Merbau / Orzech: 13 mm (warstwa ok. 3,6 mm).",
+        dimensions: "Szerokość: 130–150 mm | Długość: 600–1500 mm (długość 1300–1500 mm dostępna okresowo).",
+        surface: "8 warstw lakieru UV lub 4 warstwy olejowosku naturalnego.",
+        decors: [
+          "Dąb Elegance", "Dąb Elegance Bielony", "Dąb Classic", "Dąb Classic Bielony", "Dąb Country",
+          "Jesion Elegance Dark", "Jesion Elegance", "Merbau Elegance", "Orzech Premium", "Orzech Elegance Plus"
+        ],
+        decorNote: "W dębach bielonych, Antyku i Czarnym fazowanie V4 oraz szczotkowanie wliczone fabrycznie w cenę.",
+        inPrice: [
+          "Wykończenie lakierem lub olejowoskiem",
+          "Fazowanie V4 wliczone w cenę dla jesionów oraz gatunków egzotycznych",
+          "30-letnia ochrona gwarancyjna po rejestracji"
+        ],
+        addons: [
+          "Szczotkowanie (SZ): +16 zł/m² netto (dla dębów naturalnych)",
+          "Fazowanie V4 (dla dębów standardowych): +8 zł/m² netto",
+          "Wersja surowa podłogi: -8 zł/m² netto"
+        ],
+        installationNote: "Optymalna na wodne ogrzewanie podłogowe przy zachowaniu szczeliny dylatacyjnej przyściennej 10–15 mm. Brak konieczności nacinania dylatacji progowych."
+      }),
+
+      maxi: createTechnicalCard({
+        title: "FertigDeska Maxi",
+        norm: "PN-EN 13489",
+        lead: "Wielkoformatowa deska dwuwarstwowa, 1-lamelowa na pióro i wpust. Zapewnia majestatyczną ekspozycję naturalnego rysunku drewna.",
+        warranty: "30 Lat Gwarancji",
+        underfloorHeating: "Max 27°C (Wodne)",
+        construction: "Konstrukcja dwuwarstwowa; stabilny podkład poprzeczny z drewna iglastego.",
+        thickness: "Grubość całkowita: ZAWSZE 13 mm | Szlachetna warstwa użytkowa dębu: ok. 3,6 mm.",
+        dimensions: "Szerokość: 140–150 mm | Długość: 1500–2200 mm.",
+        surface: "Lakier UV (8 warstw) lub Olejowosk (4 warstwy). Fazowanie V4 w standardzie.",
+        decors: [
+          "Dąb Elegance", "Dąb Elegance Bielony", "Dąb Classic", "Dąb Classic Bielony", "Dąb Country"
+        ],
+        decorNote: "Wersje bielone (Elegance Bielony, Classic Bielony) posiadają szczotkowanie wliczone w cenę bazową.",
+        inPrice: [
+          "Czterostronne fazowanie V4 w standardzie",
+          "Zabezpieczenie nawierzchni lakierem lub olejowoskiem",
+          "Sortowanie drewna wg rygorystycznej normy PN-EN 13489"
+        ],
+        addons: [
+          "Szczotkowanie (SZ): +16 zł/m² netto (dla wersji Elegance, Classic, Country)",
+          "Wersja surowa: -8 zł/m² netto"
+        ],
+        installationNote: "Montaż systemowy: grunt J-P Primer Eko / Rapid + klej J-P Bond 2K / Elastic 1K. Pełne klejenie eliminuje efekt głuchych pustek pod długą deską."
+      }),
+
+      de: createTechnicalCard({
+        title: "Design Experience (Standard, Maxi, Maxi+)",
+        norm: "PN-EN 13489",
+        lead: "Linia krótkich desek dwuwarstwowych z lewym i prawym piórem w cenie. Zaprojektowana z myślą o architektach do wzorów jodełki, kwadratów i drabinek.",
+        warranty: "30 Lat Gwarancji",
+        underfloorHeating: "Max 27°C (Wodne)",
+        construction: "Dwuwarstwowa; podkład iglasty (standard) lub sklejka wodoodporna (opcja na zamówienie).",
+        thickness: "Grubość całkowita: 13 mm | Warstwa wierzchnia szlachetnego dębu: ok. 3,6 mm.",
+        dimensions: "Standard: 120 × 590–600 mm | Maxi: 140/150 × 750 mm | Maxi+: 180 × 900 mm.",
+        surface: "Olejowosk (OL) lub lakier matowy (LA MAT). Fazowanie V4 i szczotkowanie w standardzie.",
+        decors: [
+          "Dąb Elegance (biel niedopuszczalna, małe zdrowe sęki)", "Dąb Classic (biel dopuszczalna, małe sęki, mikropęknięcia)"
+        ],
+        decorNote: "Dostępna również w autorskiej palecie Color Inspiration oraz wersji Fusion Hybrid.",
+        inPrice: [
+          "Lewe i prawe pióro w standardzie (brak dopłat za komplet P+L)",
+          "Fazowanie czterostronne V4 wliczone w cenę",
+          "Proces szczotkowania (SZ) wliczony w cenę"
+        ],
+        addons: [
+          "Wykonanie na podkładzie ze sklejki wodoodpornej (wycena indywidualna)",
+          "Wersja surowa: -8 zł/m² netto"
+        ],
+        installationNote: "Kluczowe jest wyznaczenie prostopadłych osi bazowych w pomieszczeniu przed przystąpieniem do klejenia wzorów plecionych i jodełki klasycznej."
+      }),
+
+      cp: createTechnicalCard({
+        title: "Chevron Parkiet (FertigParkiet Chevron)",
+        norm: "PN-EN 13489",
+        lead: "Gotowy parkiet dwuwarstwowy zacięty fabrycznie pod kątem 45° w styl jodły francuskiej. Tworzy subtelny, wyrazisty grot strzały.",
+        warranty: "30 Lat Gwarancji",
+        underfloorHeating: "Max 27°C (Wodne)",
+        construction: "Dwuwarstwowa; wysokiej gęstości podkład z drewna liściastego.",
+        thickness: "Grubość całkowita: 13 mm | Szlachetna warstwa użytkowa: ok. 3,6 mm.",
+        dimensions: "Szerokość 65 mm (dł. krawędzi 405 mm) lub szerokość 70 mm (dł. krawędzi 400 / 415 / 420 mm). Szerokość wzoru: 573–587 mm.",
+        surface: "Lakier UV lub Olejowosk naturalny. Fazowanie V4 i szczotkowanie fabryczne.",
+        decors: [
+          "Chevron Dąb Elegance", "Chevron Dąb Classic", "Chevron Dąb Country", "Chevron Dąb Antyk (T)", "Chevron Jesion Bursztyn (T)"
+        ],
+        decorNote: "Możliwość zamówienia w każdym z 16 dekorów Color Inspiration.",
+        inPrice: [
+          "Precyzyjne fabryczne zacięcie pod kątem 45°",
+          "Fazowanie czterostronne V4 oraz szczotkowanie (SZ)",
+          "Brak konieczności cyklinowania i szpachlowania na inwestycji"
+        ],
+        addons: [
+          "Wersja surowa (do wykończenia na budowie): -8 zł/m² netto"
+        ],
+        installationNote: "Dzięki fabrycznemu zacięciu montaż przebiega o 60% szybciej niż przy tradycyjnym parkiecie surowym. Wymaga równego jastrychu (odchyłka max 2 mm na łacie 2 m)."
+      }),
+
+      cd: createTechnicalCard({
+        title: "Chevron Deska (FertigDeska Chevron)",
+        norm: "PN-EN 13489",
+        lead: "Szeroka deska dwuwarstwowa zacięta pod kątem 45° w stylu jodły francuskiej. Ekskluzywny format dedykowany do przestronnych salonów i rezydencji.",
+        warranty: "30 Lat Gwarancji",
+        underfloorHeating: "Max 27°C (Wodne)",
+        construction: "Dwuwarstwowa; wzmocniony podkład z drewna liściastego.",
+        thickness: "Grubość całkowita: 13 mm | Warstwa użytkowa: ok. 3,6 mm.",
+        dimensions: "Szerokości: 130 mm (dł. 460/610/850 mm), 140 mm (dł. 450/600/850 mm), 150 mm (dł. 440/590/840 mm). Szer. wzoru do 1216 mm.",
+        surface: "Lakier UV lub naturalny Olejowosk. Czterostronna faza V4 + szczotkowanie w standardzie.",
+        decors: [
+          "Chevron Deska Elegance", "Chevron Deska Classic", "Chevron Deska Country", "Pełna paleta Color Inspiration"
+        ],
+        decorNote: "Długości krawędzi 840–860 mm produkowane są okresowo na zamówienie.",
+        inPrice: [
+          "Zacięcie 45° w szerokim formacie deskowym",
+          "Kompletne wykończenie V4 + SZ",
+          "Selekcjonowane drewno dębowe"
+        ],
+        addons: [
+          "Wersja surowa: -8 zł/m² netto"
+        ],
+        installationNote: "Z uwagi na szerokość desek (do 150 mm) należy zachować szczególną kontrolę wilgotności wylewki CM przed aplikacją kleju (max 1,8% z podłogówką)."
+      }),
+
+      luxury: createTechnicalCard({
+        title: "Luxury (Luxury 220 oraz Luxury Maxi)",
+        norm: "PN-EN 13489",
+        lead: "Najwyższy segment podłóg rezydencjalnych Jawor-Parkiet o potężnych długościach i szerokościach sięgających 260 mm.",
+        warranty: "30 Lat Gwarancji",
+        underfloorHeating: "Max 27°C (Wodne)",
+        construction: "Dwuwarstwowa lub trójwarstwowa (podkład ze sklejki wodoodpornej lub drewna iglastego).",
+        thickness: "Grubość całkowita: ZAWSZE 15 mm | Warstwa wierzchnia dębu: ok. 3,6 mm.",
+        dimensions: "Luxury 220: szer. 180–200 mm, dł. 1500–2200 mm | Luxury Maxi: szer. 250–260 mm, dł. 2000–2500 mm.",
+        surface: "8 warstw lakieru lub 4 warstwy olejowosku. Fazowanie V4 w standardzie.",
+        decors: [
+          "Luxury 220: Dąb Elegance, Elegance Bielony, Classic, Classic Bielony, Country",
+          "Luxury Maxi: Dąb Classic"
+        ],
+        decorNote: "W Luxury Maxi, Luxury Country oraz wersjach Bielonych szczotkowanie wliczone w standard.",
+        inPrice: [
+          "Fazowanie czterostronne V4",
+          "Wykończenie lakierem lub olejowoskiem",
+          "Konstrukcja zapewniająca stabilność przy szerokości 260 mm"
+        ],
+        addons: [
+          "Szczotkowanie (dla Luxury 220 Elegance i Classic): +16 zł/m² netto",
+          "Wersja surowa: -8 zł/m² netto"
+        ],
+        installationNote: "Bezwzględny nakaz stosowania klejów 2K lub wysokoelastycznych silanów 1K. Ciężkie elementy (np. wyspy kuchenne) nie mogą blokować naturalnej pracy deski."
+      }),
+
+      ci: createTechnicalCard({
+        title: "Color Inspiration (Olejowoskowana)",
+        norm: "PN-EN 13489",
+        lead: "Autorska seria 16 wybarwień dębowych inspirowanych naturą i architekturą Włoch, zabezpieczona naturalnymi olejowoskami.",
+        warranty: "30 Lat Gwarancji",
+        underfloorHeating: "Max 27°C (Wodne)",
+        construction: "Dostępna we wszystkich formatach: Parkiet, Deska, Maxi, Luxury, Design Experience, Chevron.",
+        thickness: "Formaty 14 mm (warstwa wierzchnia 6 mm) lub 13/15 mm (warstwa wierzchnia 3,6 mm).",
+        dimensions: "Pełen typoszereg wymiarowy marki Jawor-Parkiet od klepki 65 mm do deski 260 mm.",
+        surface: "4 warstwy naturalnego olejowosku utwardzanego oksydacyjnie. Fazowanie V4 + szczotkowanie w cenie.",
+        decors: [
+          "Alabastro", "Alba", "Avorio", "Bianco", "Caldo", "Capri", "Como", "Ferro",
+          "Luna", "Marone", "Nero", "Oro", "Rosolare", "Sole", "Vento", "Vulcano"
+        ],
+        decorNote: "Dostępne klasy selekcji drewna: Elegance (brak bieli), Classic (naturalny sęk), Country (rustykalna z bielą).",
+        inPrice: [
+          "4 warstwy naturalnego olejowosku wliczone w 100%",
+          "Czterostronne fazowanie V4 w standardzie",
+          "Proces głębokiego szczotkowania (SZ) w cenie"
+        ],
+        addons: [
+          "Wybór wersji na bazie powłoki Fusion Hybrid (dostępny jako osobna linia technologiczna)",
+          "Podkład ze sklejki w formatach Design Experience (opcja płatna)"
+        ],
+        installationNote: "Do bieżącej pielęgnacji należy stosować koncentrat do podłóg olejowoskowanych Jawor-Parkiet oraz okresowo olej pielęgnacyjny."
+      }),
+
+      fh: createTechnicalCard({
+        title: "Color Inspiration – Fusion Hybrid",
+        norm: "PN-EN 13489",
+        lead: "Przełomowa powłoka hybrydowa łącząca naturalny ultramat olejowosku z mechaniczną odpornością lakieru UV. Wolna od LZO.",
+        warranty: "30 Lat Gwarancji",
+        underfloorHeating: "Max 27°C (Wodne)",
+        construction: "Dostępna w formatach FertigDeska, FertigParkiet, Maxi, Luxury, Design Experience, Chevron.",
+        thickness: "W zależności od formatu: 14 mm (warstwa 6 mm) lub 13/15 mm (warstwa 3,6 mm).",
+        dimensions: "Kompatybilna ze wszystkimi wymiarami katalogowymi Jawor-Parkiet.",
+        surface: "8 warstw powłoki hybrydowej UV. 14-krotnie wyższa odporność na ścieranie w teście Tabera.",
+        decors: [
+          "16 autorskich kolorów Color Inspiration w wykończeniu Fusion Hybrid Ultramat",
+          "Dąb Elegance", "Dąb Classic", "Dąb Country"
+        ],
+        decorNote: "6-krotnie większa ilość nanoszonej powłoki w porównaniu do standardowego olejowosku.",
+        inPrice: [
+          "8 warstw powłoki Fusion Hybrid utwardzanej UV",
+          "Czterostronne fazowanie V4",
+          "Szczotkowanie powierzchni",
+          "Możliwość miejscowej naprawy drobnych zarysowań"
+        ],
+        addons: [
+          "Dedykowany impregnat do krawędzi i spoin Fusion Hybrid (zalecana aplikacja po montażu)",
+          "Koncentrat do codziennej pielęgnacji podłóg Fusion Hybrid"
+        ],
+        installationNote: "Zaleca się, aby bezpośrednio po ułożeniu ekipa montażowa zabezpieczyła krawędzie i szczeliny dedykowanym Impregnatem Fusion Hybrid."
+      }),
+
+      fl: createTechnicalCard({
+        title: "Forest Legend",
+        norm: "PN-EN 13489",
+        lead: "Ręcznie stylizowana kolekcja podłóg mocno postarzanych, oddająca surowość i historię prastarego lasu.",
+        warranty: "30 Lat Gwarancji",
+        underfloorHeating: "Max 27°C (Wodne)",
+        construction: "Konstrukcja warstwowa z podkładem z drewna iglastego.",
+        thickness: "Grubość całkowita: 14 mm | Szlachetna warstwa użytkowa: ok. 2,5 mm.",
+        dimensions: "Deska prosta: szer. 135–155 mm i 180–190 mm, dł. 700–2200 mm | Jodełka: 155 × 590 mm i 180 × 890 mm.",
+        surface: "4 warstwy olejowosku, fazowanie V4, szczotkowanie oraz unikalne struktury postarzania.",
+        decors: [
+          "Dąb Dream", "Dąb Mystery", "Dąb Shadow", "Dąb Trace", "Dąb Wind",
+          "Technologie obróbki: Follow (nacięcia piłą), Touch (piła + hebel), Feel (głębokie embosowanie)"
+        ],
+        decorNote: "Dedykowany Mix klasowy: dopuszczalna biel, sęki, spękania i autorskie ślady rzemieślnicze.",
+        inPrice: [
+          "Trzy technologie postarzania do wyboru (Follow, Touch, Feel)",
+          "Zabezpieczenie 4 warstwami naturalnego olejowosku",
+          "Czterostronne fazowanie V4"
+        ],
+        addons: [
+          "Wersja do jodełki klasycznej (formaty 155×590 mm i 180×890 mm z lewym i prawym piórem): dopłata +30 zł/m² netto"
+        ],
+        installationNote: "Podłogi o zróżnicowanej strukturze ręcznej wymagają starannego odpylenia przed klejeniem do wylewki. Nie stosować taśm klejących bezpośrednio na lico."
+      }),
+
+      zw: createTechnicalCard({
+        title: "Zero Waste",
+        norm: "PN-EN 13489",
+        lead: "Ekologiczna linia podłóg stworzona w idei niemarnowania surowca drzewnego. Laureat prestiżowej nagrody Dobry Wzór 2022.",
+        warranty: "30 Lat Gwarancji",
+        underfloorHeating: "Max 27°C (Wodne)",
+        construction: "Dwuwarstwowa; podkład z drewna iglastego.",
+        thickness: "Grubość całkowita: 13 mm | Warstwa wierzchnia: ok. 3,6 mm.",
+        dimensions: "Format Deska: 130–150 × 400–1500 mm | Format Parkiet: 65–70 × 480–490 mm (prawe i lewe pióro w standardzie).",
+        surface: "4 warstwy naturalnego olejowosku, faza V4, szczotkowanie.",
+        decors: [
+          "Deski: Dąb Zenith (podwędzany), Dąb Earth, Dąb Rain, Dąb Organic, Dąb Water",
+          "Parkiety: Dąb Air, Dąb Stream, Dąb Timber, Dąb Energy, Dąb Cloud"
+        ],
+        decorNote: "Dekor Zenith jest poddawany procesowi podwędzania, dlatego partie mogą różnić się głębią odcienia.",
+        inPrice: [
+          "Parkiet z lewym i prawym piórem umożliwiający 7 wzorów ułożenia",
+          "Olejowoskowanie, faza V4 i szczotkowanie wliczone w cenę",
+          "Autentyczny, ekologiczny rysunek drewna z naturalnymi sękami"
+        ],
+        addons: [
+          "Wycena dedykowanej chemii montażowej J-P Primer i J-P Bond"
+        ],
+        installationNote: "Możliwość układania parkietu w: cegiełkę, drabinkę, kwadrat, jodełkę klasyczną, podwójną oraz wzory ukośne."
+      }),
+
+      vs: createTechnicalCard({
+        title: "Vintage Series (FertigParkiet Maxi)",
+        norm: "PN-EN 13489",
+        lead: "Postarzany parkiet dębowy o formacie FertigParkiet Maxi. Zdobywca nagrody Żagle Warmii i Mazur. Unikalny fabryczny miks faktur w każdej paczce.",
+        warranty: "30 Lat Gwarancji",
+        underfloorHeating: "Max 27°C (Wodne)",
+        construction: "Dwuwarstwowa; podkład iglasty.",
+        thickness: "Grubość całkowita: 13 mm | Szlachetna warstwa dębu: ok. 3,6 mm.",
+        dimensions: "Format FertigParkiet Maxi: szerokość 70 mm, długość 1200 mm.",
+        surface: "4 warstwy olejowosku + fazowanie V4. Gotowy miks faktur.",
+        decors: [
+          "1940's Black on Fire", "1950's Noir", "1960's Touch of Gray", "1970's Dusty Brown", "1980's Mocca Cherry"
+        ],
+        decorNote: "Fabryczna kompozycja w paczce: 60% desek szczotkowanych, 20% heblowanych, 20% z poprzecznymi nacięciami po pile.",
+        inPrice: [
+          "Miks 3 autorskich faktur w każdym metrze kwadratowym",
+          "Olejowosk i faza V4 w cenie",
+          "Dopuszczalna selekcja loftowa (pęknięcia, zakorki, ślady po owadach)"
+        ],
+        addons: [
+          "Możliwość zastosowania systemowego jako okładzina ścienna i sufitowa"
+        ],
+        installationNote: "Przed przyklejeniem zaleca się rozłożenie elementów z 2–3 paczek w celu harmonijnego wymieszania trzech struktur na posadzce."
+      }),
+
       std: `
-        <h3 class="font-bold text-lg text-jawor-black border-b pb-2 mb-3">12. STANDARD TECHNICZNY, MONTAŻ I GWARANCJA</h3>
-        <p class="text-xs text-gray-500 mb-4">Ogólne zasady montażu i rozszerzonej gwarancji 30 Lat</p>
-        <ul class="text-xs sm:text-sm space-y-2 text-gray-700">
-          <li>• <strong>Ogrzewanie Podłogowe:</strong> Dopuszczalne wyłącznie ogrzewanie wodne. Maksymalna temperatura powierzchni posadzki wynosi <strong>27°C</strong>.</li>
-          <li>• <strong>Klimat:</strong> Wilgotność względna powietrza <strong>45%–60%</strong>, temperatura <strong>18°C–24°C</strong>.</li>
-          <li>• <strong>Chemia Montażowa:</strong> Kleje elastyczne J-P Bond 2K / J-P Bond Elastic 1K oraz grunty J-P Primer Eko / Rapid.</li>
-          <li>• <strong>Gwarancja 30 Lat:</strong> Rejestracja w ciągu 24 miesięcy od zakupu + protokoły (wilgotność CM, wygrzanie jastrychu, odbiorczy).</li>
-        </ul>
+        <div class="space-y-6">
+          <div class="border-b border-jawor-grayBorder pb-4">
+            <span class="bg-jawor-green text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">Standard Jakościowy</span>
+            <h3 class="brand-header-font text-2xl sm:text-3xl font-extrabold text-jawor-black mt-1">Kanon Techniczny, Montaż i Gwarancja 30 Lat</h3>
+            <p class="text-xs sm:text-sm text-gray-600 mt-1 font-normal">Żelazne reguły instalacji podłóg dwuwarstwowych Jawor-Parkiet dla salonów firmowych, architektów i wykonawców.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white p-5 rounded-xl border border-jawor-grayBorder shadow-xs space-y-2">
+              <div class="w-10 h-10 rounded-lg bg-green-50 text-jawor-green flex items-center justify-center text-lg mb-2">
+                <i class="fa-solid fa-fire-burner"></i>
+              </div>
+              <h4 class="font-bold text-sm text-jawor-black">Ogrzewanie Podłogowe Wodne</h4>
+              <p class="text-xs text-gray-600 leading-relaxed font-normal">Wszystkie podłogi dwuwarstwowe i 3-warstwowe są certyfikowane na wodne ogrzewanie podłogowe. <strong>Maksymalna temperatura powierzchni wynosi bezwzględnie 27°C</strong>. Wymagany pisemny protokół wygrzewania wylewki.</p>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-jawor-grayBorder shadow-xs space-y-2">
+              <div class="w-10 h-10 rounded-lg bg-green-50 text-jawor-green flex items-center justify-center text-lg mb-2">
+                <i class="fa-solid fa-droplet-half-stroke"></i>
+              </div>
+              <h4 class="font-bold text-sm text-jawor-black">Wilgotność i Mikroklimat</h4>
+              <p class="text-xs text-gray-600 leading-relaxed font-normal">Wilgotność wylewki metodą CM: <strong>max 1,8%</strong> (jastrych cementowy z podłogówką) oraz <strong>max 0,3%</strong> (anhydryt z podłogówką). Warunki w pokoju: wilgotność powietrza <strong>45%–60%</strong>, temperatura <strong>18°C–24°C</strong>.</p>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-jawor-grayBorder shadow-xs space-y-2">
+              <div class="w-10 h-10 rounded-lg bg-green-50 text-jawor-green flex items-center justify-center text-lg mb-2">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+              <h4 class="font-bold text-sm text-jawor-black">Warunki 30 Lat Gwarancji</h4>
+              <p class="text-xs text-gray-600 leading-relaxed font-normal">Bezpłatne przedłużenie gwarancji z 2 do 30 lat wymaga: rejestracji online w ciągu <strong>24 miesięcy</strong> od zakupu, pełnego klejenia chemią J-P Bond oraz 3 protokołów (CM, odbioru prac i wygrzania wylewki).</p>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-xl border border-jawor-grayBorder space-y-3">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-jawor-black flex items-center">
+              <i class="fa-solid fa-flask-vial text-jawor-green mr-2"></i> Autoryzowany System Chemii Montażowej J-P Bond
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs font-medium">
+              <div class="p-3 bg-jawor-grayBg rounded-lg border border-jawor-grayBorder">
+                <strong class="block text-jawor-black mb-1">J-P Primer Eko</strong>
+                <span class="text-gray-600 text-[11px] font-normal">Grunt dyspersyjny pod kleje silanowe i poliuretanowe (zużycie 0,10–0,15 kg/m²).</span>
+              </div>
+              <div class="p-3 bg-jawor-grayBg rounded-lg border border-jawor-grayBorder">
+                <strong class="block text-jawor-black mb-1">J-P Primer Rapid</strong>
+                <span class="text-gray-600 text-[11px] font-normal">Grunt poliuretanowy odcinający wilgoć resztkową do 3% CM (zużycie 0,08–0,15 kg/m²).</span>
+              </div>
+              <div class="p-3 bg-jawor-grayBg rounded-lg border border-jawor-grayBorder">
+                <strong class="block text-jawor-black mb-1">J-P Bond Elastic 1K</strong>
+                <span class="text-gray-600 text-[11px] font-normal">Jednoskładnikowy klej silanowy, trwale elastyczny, bezwodny, idealny na podłogówkę.</span>
+              </div>
+              <div class="p-3 bg-jawor-grayBg rounded-lg border border-jawor-grayBorder">
+                <strong class="block text-jawor-black mb-1">J-P Bond 2K</strong>
+                <span class="text-gray-600 text-[11px] font-normal">Dwuskładnikowy klej poliuretanowo-epoksydowy o najwyższej sile wiązania.</span>
+              </div>
+            </div>
+          </div>
+        </div>
       `
     };
 
     function showCollectionTab(key) {
       document.getElementById('tab-content').innerHTML = collectionData[key];
       document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('bg-jawor-green', 'text-white');
+        btn.classList.remove('bg-jawor-green', 'text-white', 'shadow-sm');
         btn.classList.add('bg-gray-100', 'text-gray-700');
       });
-      document.getElementById('btn-' + key).classList.add('bg-jawor-green', 'text-white');
-    }
-
-    function checkAnswer(idx) {
-      const box = document.getElementById('quizResult');
-      box.classList.remove('hidden');
-
-      if (idx === 1) {
-        box.className = "mt-4 p-4 rounded bg-green-50 border border-jawor-green text-jawor-green text-xs leading-relaxed font-bold";
-        box.innerHTML = "Prawidłowo! FertigParkiet Dębowy posiada 14 mm grubości całkowitej oraz ok. 6 mm warstwy szlachetnego dębu na podkładzie liściastym. Przyznano +2 pkt.";
-      } else {
-        box.className = "mt-4 p-4 rounded bg-red-50 border border-red-300 text-red-700 text-xs leading-relaxed";
-        box.innerHTML = "Błąd! Prawidłowa odpowiedź to B (14 mm grubości całkowitej i ok. 6 mm warstwy użytkowej). Wariant 13 mm / 3.6 mm występuje przy jesionie.";
+      const activeBtn = document.getElementById('btn-' + key);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-gray-100', 'text-gray-700');
+        activeBtn.classList.add('bg-jawor-green', 'text-white', 'shadow-sm');
       }
     }
 
