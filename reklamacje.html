@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asystent Działu Reklamacji – Jawor-Parkiet</title>
+  
+  <!-- Czcionka Montserrat (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- FontAwesome 6 Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Parser Markdown marked.js -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            jawor: {
+              green: '#01643d',
+              greenDark: '#014e2a',
+              greenLight: '#018552',
+              black: '#000000',
+              grayBg: '#f4f5f4',
+              grayBorder: '#e0e4e0'
+            }
+          },
+          fontFamily: {
+            sans: ['Montserrat', 'sans-serif'],
+            montserrat: ['Montserrat', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    body, input, textarea, select, button {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    /* Ochrona czcionki ikon przed nadpisaniem przez krój Montserrat */
+    .fa-solid, .fa-regular, .fa-brands, [class*="fa-"] {
+      font-family: "Font Awesome 6 Free" !important;
+    }
+
+    body {
+      color: #1a1a1a;
+      background-color: #f4f5f4;
+    }
+
+    .brand-header-font { 
+      font-weight: 700;
+    }
+
+    .prose-analysis p {
+      margin-bottom: 0.65rem;
+      line-height: 1.55;
+    }
+    .prose-analysis ul {
+      list-style-type: disc;
+      padding-left: 1.25rem;
+      margin-bottom: 0.65rem;
+    }
+    .prose-analysis li {
+      margin-bottom: 0.25rem;
+    }
+    .prose-analysis strong {
+      color: #01643d;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body class="selection:bg-jawor-green selection:text-white flex flex-col min-h-screen">
+
+  <!-- GÓRNY PASEK NAWIGACYJNY ZE ZNACZNIKAMI -->
+  <header class="sticky top-0 z-50 bg-white border-b border-jawor-grayBorder shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <div class="flex items-center space-x-4">
+        <a href="index.html" class="flex items-center">
+          <img src="Logo JP 35-kopia.png" alt="Jawor-Parkiet Logo" class="h-12 w-auto object-contain">
+        </a>
+        <span class="hidden sm:inline-block h-6 w-px bg-gray-200"></span>
+        <div class="hidden sm:flex items-center text-xs font-bold uppercase tracking-wider text-gray-500">
+          <i class="fa-solid fa-shield-halved text-jawor-green mr-2"></i>
+          Panel Orzekania i Obsługi Reklamacji
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <a href="mailing.html" class="inline-flex items-center text-xs font-semibold text-gray-600 hover:text-jawor-green px-3 py-2 transition">
+          <i class="fa-solid fa-envelope mr-1.5 text-jawor-green"></i> Mailing
+        </a>
+        <a href="index.html" class="inline-flex items-center border border-jawor-green text-jawor-green hover:bg-jawor-green hover:text-white transition px-4 py-2 rounded text-xs font-bold uppercase tracking-wider">
+          <i class="fa-solid fa-robot mr-1.5"></i> Agent Techniczny AI
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- GŁÓWNA PRZESTRZEŃ ROBOCZA -->
+  <main class="flex-grow py-10 lg:py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- BANER NAGŁÓWKA I ZNACZNIKI ZAUFANIA (WZÓR Z AGENTA) -->
+      <div class="mb-8">
+        <span class="inline-flex items-center bg-jawor-green/10 text-jawor-green px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
+          <i class="fa-solid fa-microchip mr-1.5"></i> Inteligentny Moduł Orzeczniczy
+        </span>
+        <h1 class="brand-header-font text-2xl sm:text-3xl font-extrabold text-jawor-black">
+          Asystent Reklamacji Działu Jakości
+        </h1>
+        <p class="text-xs sm:text-sm text-gray-500 mt-1 max-w-3xl font-normal">
+          Weryfikacja roszczeń w oparciu o normę PN-EN 13489, Ogólne Warunki Gwarancji oraz bazę historycznych decyzji orzeczniczych. System przygotowuje sugestię, uzupełnia plik DOCX i przesyła go na adres: <strong>reklamacje@jawor-parkiet.pl</strong>.
+        </p>
+
+        <!-- ZNACZNIKI ZAUFANIA Z AGENTA -->
+        <div class="pt-4 mt-4 border-t border-gray-200 flex flex-wrap items-center gap-6 text-xs text-gray-500 font-semibold">
+          <div class="flex items-center">
+            <i class="fa-solid fa-certificate text-jawor-green mr-2"></i> Norma PN-EN 13489
+          </div>
+          <div class="flex items-center">
+            <i class="fa-solid fa-gavel text-jawor-green mr-2"></i> Warunki Gwarancji (§ 2, § 4, § 5)
+          </div>
+          <div class="flex items-center">
+            <i class="fa-solid fa-database text-jawor-green mr-2"></i> Baza Orzeczeń Archiwalnych
+          </div>
+          <div class="flex items-center">
+            <i class="fa-solid fa-envelope-circle-check text-jawor-green mr-2"></i> reklamacje@jawor-parkiet.pl
+          </div>
+        </div>
+      </div>
+
+      <!-- UKŁAD 2-KOLUMNOWY -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- KOLUMNA 1: FORMULARZ DANYCH ZGŁOSZENIA (5 KOLUMN) -->
+        <div class="lg:col-span-5 bg-white rounded-2xl border border-jawor-grayBorder p-6 shadow-xs">
+          
+          <div class="flex items-center space-x-2 border-b border-gray-100 pb-3 mb-5">
+            <span class="w-7 h-7 rounded-lg bg-jawor-green/10 text-jawor-green flex items-center justify-center text-xs font-bold">
+              <i class="fa-solid fa-file-circle-plus"></i>
+            </span>
+            <h2 class="text-sm font-bold text-jawor-black uppercase tracking-wider">
+              1. Dane i Załączniki Zgłoszenia
+            </h2>
+          </div>
+
+          <form id="claimInputForm" onsubmit="handleAnalyzeClaim(event)" class="space-y-4 text-xs">
+            
+            <!-- Numer RMA -->
+            <div>
+              <label class="block font-bold text-gray-700 mb-1 flex items-center">
+                <i class="fa-solid fa-barcode text-jawor-green mr-1.5"></i> Numer Zgłoszenia / RMA *
+              </label>
+              <input type="text" id="rmaId" required placeholder="np. RMA/2026/09/014" class="w-full border border-gray-300 rounded-lg p-2.5 focus:border-jawor-green focus:outline-none font-medium">
+            </div>
+
+            <!-- Salon i Produkt -->
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold text-gray-700 mb-1 flex items-center">
+                  <i class="fa-solid fa-store text-jawor-green mr-1.5"></i> Salon / Dystrybutor *
+                </label>
+                <input type="text" id="partnerName" required placeholder="np. Salon JP Poznań" class="w-full border border-gray-300 rounded-lg p-2.5 focus:border-jawor-green focus:outline-none font-medium">
+              </div>
+              <div>
+                <label class="block font-bold text-gray-700 mb-1 flex items-center">
+                  <i class="fa-solid fa-layer-group text-jawor-green mr-1.5"></i> Kolekcja i dekor *
+                </label>
+                <input type="text" id="productName" required placeholder="np. FertigDeska Maxi Dąb Elegance" class="w-full border border-gray-300 rounded-lg p-2.5 focus:border-jawor-green focus:outline-none font-medium">
+              </div>
+            </div>
+
+            <!-- Status montażowy -->
+            <div>
+              <label class="block font-bold text-gray-700 mb-1 flex items-center">
+                <i class="fa-solid fa-hammer text-jawor-green mr-1.5"></i> Status montażowy podłogi *
+              </label>
+              <div class="relative">
+                <select id="floorStatus" class="w-full border border-gray-300 rounded-lg p-2.5 bg-white focus:border-jawor-green focus:outline-none font-medium appearance-none pr-8">
+                  <option value="INSTALLED">Podłoga ułożona i przyklejona do podłoża</option>
+                  <option value="BEFORE_INSTALL">Przed montażem (weryfikacja partii w paczkach)</option>
+                  <option value="DURING_INSTALL">W trakcie montażu (prace wstrzymane)</option>
+                </select>
+                <i class="fa-solid fa-chevron-down absolute right-3 top-3 text-gray-400 pointer-events-none text-[10px]"></i>
+              </div>
+            </div>
+
+            <!-- Szybkie szablony zgłoszeń / pigułki jak w agencie -->
+            <div>
+              <span class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1.5 flex items-center">
+                <i class="fa-solid fa-wand-magic-sparkles text-jawor-green mr-1"></i> Wstaw typowy opis problemu:
+              </span>
+              <div class="flex flex-wrap gap-1.5">
+                <button type="button" onclick="setPresetDescription('Klient zgłasza rozsychanie desek i mikroszczeliny. Brak protokołu CM wygrzania wylewki. Posadzka z wodnym ogrzewaniem podłogowym.')" class="text-[10px] bg-gray-50 hover:bg-jawor-green hover:text-white transition px-2.5 py-1 rounded border border-gray-200 font-medium">
+                  <i class="fa-solid fa-fire-flame-curved text-jawor-green mr-1"></i> Ogrzewanie podłogowe / brak CM
+                </button>
+                <button type="button" onclick="setPresetDescription('Zgłoszenie różnic kolorystycznych i sęków (selekcja drewna) po ułożeniu i przyklejeniu 45 m2 podłogi do jastrychu.')" class="text-[10px] bg-gray-50 hover:bg-jawor-green hover:text-white transition px-2.5 py-1 rounded border border-gray-200 font-medium">
+                  <i class="fa-solid fa-eye text-jawor-green mr-1"></i> Selekcja po montażu (§ 4)
+                </button>
+                <button type="button" onclick="setPresetDescription('Klient reklamuje skrzypienie i miejscowe odspojenia desek. Montaż wykonany na klej nierenomowany bez protokołu odbioru.')" class="text-[10px] bg-gray-50 hover:bg-jawor-green hover:text-white transition px-2.5 py-1 rounded border border-gray-200 font-medium">
+                  <i class="fa-solid fa-flask-vial text-jawor-green mr-1"></i> Odspojenia / chemia
+                </button>
+              </div>
+            </div>
+
+            <!-- Opis wady -->
+            <div>
+              <label class="block font-bold text-gray-700 mb-1 flex items-center">
+                <i class="fa-solid fa-triangle-exclamation text-jawor-green mr-1.5"></i> Opis zarzutów klienta / stan faktyczny *
+              </label>
+              <textarea id="claimDescription" rows="4" required placeholder="Opisz dokładnie zarzuty klienta: np. skrzypienie, rozsychanie, odspojenia, odbarwienia, łódkowanie, pęknięcia powłoki..." class="w-full border border-gray-300 rounded-lg p-2.5 focus:border-jawor-green focus:outline-none leading-relaxed font-medium"></textarea>
+            </div>
+
+            <!-- Upload załączników -->
+            <div>
+              <label class="block font-bold text-gray-700 mb-1 flex items-center">
+                <i class="fa-solid fa-paperclip text-jawor-green mr-1.5"></i> Załączniki od klienta (zdjęcia wad, protokoły CM, karta gwarancyjna)
+              </label>
+              <div class="border-2 border-dashed border-gray-300 hover:border-jawor-green transition rounded-xl p-4 text-center cursor-pointer bg-gray-50" onclick="document.getElementById('claimFiles').click()">
+                <div class="w-10 h-10 rounded-full bg-jawor-green/10 text-jawor-green flex items-center justify-center mx-auto mb-2">
+                  <i class="fa-solid fa-cloud-arrow-up text-lg"></i>
+                </div>
+                <p id="filesLabel" class="text-gray-700 font-bold text-[11px]">Wgraj zdjęcia, protokoły CM lub skany PDF</p>
+                <span class="text-gray-400 text-[10px]">Maksymalnie 25 MB łącznie (JPG, PNG, PDF)</span>
+                <input type="file" id="claimFiles" multiple class="hidden" onchange="handleFilesSelection(event)">
+              </div>
+              <div id="fileListContainer" class="mt-2 space-y-1 text-[11px] text-gray-600"></div>
+            </div>
+
+            <button type="submit" id="btnAnalyze" class="w-full bg-jawor-green hover:bg-jawor-greenDark text-white py-3 rounded-lg font-bold uppercase tracking-wider transition shadow-xs flex items-center justify-center">
+              <i class="fa-solid fa-microchip mr-2 text-sm"></i> Analizuj w jawor.ai & Archiwum
+            </button>
+          </form>
+        </div>
+
+        <!-- KOLUMNA 2: WYNIK ANALIZY AI + EDYCJA + DOKUMENT DOC (7 KOLUMN) -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <!-- KARTA 1: SUGESTIA DECYZJI AGENTA -->
+          <div class="bg-white rounded-2xl border border-jawor-grayBorder p-6 shadow-xs">
+            <div class="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
+              <div class="flex items-center space-x-2">
+                <span class="w-7 h-7 rounded-lg bg-jawor-green/10 text-jawor-green flex items-center justify-center text-xs font-bold">
+                  <i class="fa-solid fa-scale-balanced"></i>
+                </span>
+                <h2 class="text-sm font-bold text-jawor-black uppercase tracking-wider">
+                  2. Sugestia Decyzji i Podstawa Techniczna
+                </h2>
+              </div>
+              <span id="badgeVerdict" class="hidden px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider flex items-center"></span>
+            </div>
+
+            <!-- Placeholder początkowy -->
+            <div id="aiPlaceholder" class="py-12 text-center text-gray-400">
+              <div class="w-14 h-14 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center mx-auto mb-3">
+                <i class="fa-solid fa-brain text-2xl opacity-50"></i>
+              </div>
+              <p class="text-xs font-medium">Uzupełnij formularz po lewej stronie i uruchom analizę.</p>
+              <p class="text-[11px] text-gray-400 mt-1">Agent zweryfikuje zgodność z PN-EN 13489, OWG oraz historycznymi orzeczeniami.</p>
+            </div>
+
+            <!-- Sekcja z wynikiem po analizie -->
+            <div id="aiResultArea" class="hidden">
+              <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 text-xs leading-relaxed max-h-96 overflow-y-auto prose-analysis mb-4" id="aiSuggestionOutput"></div>
+
+              <div>
+                <label class="block font-bold text-gray-700 mb-1 text-xs flex items-center">
+                  <i class="fa-solid fa-pen-to-square text-jawor-green mr-1.5"></i> Szkic uzasadnienia (edycja przed zapisem do DOCX):
+                </label>
+                <textarea id="editableDraft" rows="6" class="w-full text-xs border border-gray-300 rounded-lg p-3 font-sans focus:border-jawor-green focus:outline-none leading-relaxed font-medium"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- KARTA 2: MODYFIKACJA SZABLONU WORD I WYSYŁKA NA reklamacje@ -->
+          <div class="bg-white rounded-2xl border border-jawor-grayBorder p-6 shadow-xs">
+            <div class="flex items-center space-x-2 border-b border-gray-100 pb-3 mb-4">
+              <span class="w-7 h-7 rounded-lg bg-jawor-green/10 text-jawor-green flex items-center justify-center text-xs font-bold">
+                <i class="fa-solid fa-file-word"></i>
+              </span>
+              <h2 class="text-sm font-bold text-jawor-black uppercase tracking-wider">
+                3. Generowanie Pliku Word i Wysyłka Poczty
+              </h2>
+            </div>
+
+            <div class="space-y-4 text-xs">
+              <div>
+                <label class="block font-bold text-gray-700 mb-1 flex items-center">
+                  <i class="fa-solid fa-file-arrow-up text-jawor-green mr-1.5"></i> Wskaż bazowy plik .docx wzorca (lub zastosuj szablon firmowy):
+                </label>
+                <div class="border border-gray-300 hover:border-jawor-green rounded-lg p-3 bg-gray-50 flex items-center justify-between cursor-pointer" onclick="document.getElementById('docTemplateInput').click()">
+                  <span id="docTemplateLabel" class="text-gray-500 text-[11px] font-medium flex items-center">
+                    <i class="fa-solid fa-paperclip text-jawor-green mr-2"></i> Wybierz plik szablonu (.docx)
+                  </span>
+                  <button type="button" class="text-[10px] bg-white border border-gray-300 px-2.5 py-1 rounded font-bold uppercase text-gray-700 flex items-center">
+                    <i class="fa-solid fa-folder-open mr-1"></i> Wybierz
+                  </button>
+                  <input type="file" id="docTemplateInput" accept=".doc,.docx" class="hidden" onchange="handleDocTemplateChange(event)">
+                </div>
+              </div>
+
+              <!-- Pudełko informacyjne -->
+              <div class="bg-green-50 border border-green-200 rounded-lg p-3 text-[11px] text-green-900 flex items-start space-x-2.5">
+                <i class="fa-solid fa-circle-info text-jawor-green text-sm mt-0.5 shrink-0"></i>
+                <p class="font-normal leading-relaxed">
+                  Agent podmienia zmienne w pliku Word zgodnie z wytycznymi orzecznictwa archiwalnego, generuje gotowy dokument <strong>Decyzja_RMA.docx</strong> i wysyła załącznik na skrzynkę: <strong>reklamacje@jawor-parkiet.pl</strong>.
+                </p>
+              </div>
+
+              <button type="button" id="btnGenerateSend" onclick="handleGenerateAndSend()" disabled class="w-full bg-gray-300 cursor-not-allowed text-white py-3 rounded-lg font-bold uppercase tracking-wider transition shadow-xs flex items-center justify-center">
+                <i class="fa-solid fa-paper-plane mr-2 text-sm"></i> Wygeneruj Plik Word & Wyślij na reklamacje@jawor-parkiet.pl
+              </button>
+
+              <div id="statusSendNotification" class="hidden p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- STOPKA KORPORACYJNA 3-KOLUMNOWA Z IDENTYFIKACJĄ MARKI (WZÓR Z AGENTA) -->
+  <footer class="bg-jawor-black text-white py-12 border-t border-gray-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div>
+        <a href="#" class="inline-block mb-4">
+          <img src="Logo JP 35-kopia_n.png" alt="Jawor-Parkiet Logo 35 Lat" class="h-11 w-auto object-contain">
+        </a>
+        <p class="text-xs text-gray-400 leading-relaxed font-normal">
+          Producent Podłóg Drewnianych Jawor-Parkiet Sp. z o.o.<br>
+          ul. Grunwaldzka 87, 13-300 Nowe Miasto Lubawskie<br>
+          NIP: 8771485608 | REGON: 522505664
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-bold uppercase text-jawor-green tracking-wider mb-3 flex items-center">
+          <i class="fa-solid fa-headset mr-2"></i> Dział Reklamacji
+        </h4>
+        <p class="text-xs text-gray-400 space-y-1.5 font-normal leading-relaxed">
+          <span class="block"><i class="fa-solid fa-phone text-jawor-green mr-1.5"></i> tel.: +48 733 003 003 | +48 733 003 004</span>
+          <span class="block"><i class="fa-solid fa-envelope text-jawor-green mr-1.5"></i> e-mail: <a href="mailto:reklamacje@jawor-parkiet.pl" class="text-white hover:text-jawor-green transition">reklamacje@jawor-parkiet.pl</a></span>
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-bold uppercase text-jawor-green tracking-wider mb-3 flex items-center">
+          <i class="fa-solid fa-shield-halved mr-2"></i> System Jawor.ai
+        </h4>
+        <p class="text-xs text-gray-400 leading-relaxed font-normal">
+          Oparty na autoryzowanej Bazie Wiedzy Jawor-Parkiet Academy oraz Bazie Orzecznictwa Archiwalnego. Wszystkie parametry są weryfikowane z kartami technicznymi i normą PN-EN 13489.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SKRYPT LOGIKI ASYSTENTA REKLAMACJI -->
+  <script>
+    const N8N_RECLAMATION_ANALYZE_URL = 'https://n8n.nextgenbiznes.pl/webhook-test/jawor-reklamacja-analiza';
+    const N8N_RECLAMATION_GENERATE_URL = 'https://n8n.nextgenbiznes.pl/webhook/jawor-reklamacja-generuj-wyslij';
+
+    let claimFilesArray = [];
+    let templateFile = null;
+
+    function setPresetDescription(text) {
+      document.getElementById('claimDescription').value = text;
+    }
+
+    function handleFilesSelection(e) {
+      const files = Array.from(e.target.files);
+      claimFilesArray = files;
+      const container = document.getElementById('fileListContainer');
+      container.innerHTML = '';
+      
+      if (files.length > 0) {
+        document.getElementById('filesLabel').innerHTML = `<i class="fa-solid fa-circle-check text-jawor-green mr-1"></i> Dołączono plików: ${files.length}`;
+        files.forEach(file => {
+          container.innerHTML += `
+            <div class="flex items-center justify-between bg-white p-2 border border-gray-200 rounded-lg shadow-2xs">
+              <span class="truncate max-w-[260px] font-medium"><i class="fa-solid fa-file-shield text-jawor-green mr-1.5"></i> ${file.name}</span>
+              <span class="text-gray-400 text-[10px] font-mono">${(file.size / 1024 / 1024).toFixed(2)} MB</span>
+            </div>
+          `;
+        });
+      }
+    }
+
+    function handleDocTemplateChange(e) {
+      if (e.target.files && e.target.files[0]) {
+        templateFile = e.target.files[0];
+        document.getElementById('docTemplateLabel').innerHTML = `<span class="text-jawor-green font-bold"><i class="fa-solid fa-file-word mr-1.5"></i> ${templateFile.name}</span>`;
+      }
+    }
+
+    async function handleAnalyzeClaim(e) {
+      e.preventDefault();
+      
+      const btn = document.getElementById('btnAnalyze');
+      const placeholder = document.getElementById('aiPlaceholder');
+      const resultArea = document.getElementById('aiResultArea');
+      const output = document.getElementById('aiSuggestionOutput');
+      const editable = document.getElementById('editableDraft');
+      const generateBtn = document.getElementById('btnGenerateSend');
+      const badge = document.getElementById('badgeVerdict');
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Analizowanie dokumentacji technicznej i archiwum...';
+
+      try {
+        const formData = new FormData();
+        formData.append('rma', document.getElementById('rmaId').value);
+        formData.append('partner', document.getElementById('partnerName').value);
+        formData.append('product', document.getElementById('productName').value);
+        formData.append('floorStatus', document.getElementById('floorStatus').value);
+        formData.append('description', document.getElementById('claimDescription').value);
+
+        claimFilesArray.forEach(file => {
+          formData.append('attachments', file);
+        });
+
+        const response = await fetch(N8N_RECLAMATION_ANALYZE_URL, {
+          method: 'POST',
+          body: formData
+        });
+
+        const res = await response.json();
+
+        placeholder.classList.add('hidden');
+        resultArea.classList.remove('hidden');
+
+        const rawMarkdown = res.analysis || res.suggestion || res.output || "Analiza formalna wykonana.";
+        output.innerHTML = typeof marked !== 'undefined' ? marked.parse(rawMarkdown) : rawMarkdown.replace(/\n/g, '<br>');
+        
+        editable.value = res.officialDraft || rawMarkdown;
+
+        badge.classList.remove('hidden');
+        if (res.verdict === 'ACCEPT') {
+          badge.className = 'px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider bg-green-100 text-green-800 flex items-center';
+          badge.innerHTML = '<i class="fa-solid fa-circle-check mr-1.5 text-xs text-green-700"></i> Rekomendacja: Uznanie zgłoszenia';
+        } else if (res.verdict === 'REJECT') {
+          badge.className = 'px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider bg-red-100 text-red-800 flex items-center';
+          badge.innerHTML = '<i class="fa-solid fa-circle-xmark mr-1.5 text-xs text-red-700"></i> Rekomendacja: Odrzucenie (Bezzasadna)';
+        } else {
+          badge.className = 'px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-800 flex items-center';
+          badge.innerHTML = '<i class="fa-solid fa-user-check mr-1.5 text-xs text-amber-700"></i> Wymagane oględziny rzeczoznawcy SPP';
+        }
+
+        generateBtn.disabled = false;
+        generateBtn.className = 'w-full bg-jawor-green hover:bg-jawor-greenDark text-white py-3 rounded-lg font-bold uppercase tracking-wider transition shadow-xs flex items-center justify-center cursor-pointer';
+
+      } catch (err) {
+        console.error(err);
+        placeholder.classList.remove('hidden');
+        placeholder.innerHTML = `<span class="text-red-600 font-bold text-xs"><i class="fa-solid fa-triangle-exclamation mr-1.5 text-sm"></i> Błąd połączenia z serwerem analitycznym n8n. Sprawdź działanie webhooka.</span>`;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-microchip mr-2 text-sm"></i> Analizuj w jawor.ai & Archiwum';
+      }
+    }
+
+    async function handleGenerateAndSend() {
+      const btn = document.getElementById('btnGenerateSend');
+      const statusBox = document.getElementById('statusSendNotification');
+      const editedDraft = document.getElementById('editableDraft').value;
+      const rma = document.getElementById('rmaId').value;
+
+      if (!editedDraft.trim()) {
+        alert("Treść orzeczenia nie może być pusta.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Wypełnianie szablonu DOCX i wysyłka poczty...';
+
+      try {
+        const formData = new FormData();
+        formData.append('rma', rma);
+        formData.append('partner', document.getElementById('partnerName').value);
+        formData.append('product', document.getElementById('productName').value);
+        formData.append('finalText', editedDraft);
+        formData.append('recipient', 'reklamacje@jawor-parkiet.pl');
+        
+        if (templateFile) {
+          formData.append('docTemplate', templateFile);
+        }
+
+        const response = await fetch(N8N_RECLAMATION_GENERATE_URL, {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await response.json();
+
+        statusBox.className = 'mt-3 p-3 rounded-lg text-xs bg-green-50 border border-green-200 text-green-900 block space-y-1';
+        statusBox.innerHTML = `
+          <div class="font-bold flex items-center"><i class="fa-solid fa-circle-check text-jawor-green mr-1.5 text-sm"></i> Dokument wygenerowany i przesłany!</div>
+          <p class="font-normal flex items-center"><i class="fa-solid fa-file-word text-jawor-green mr-1.5"></i> Wygenerowano: <strong>Decyzja_${rma}.docx</strong></p>
+          <p class="font-normal flex items-center"><i class="fa-solid fa-paper-plane text-jawor-green mr-1.5"></i> Załącznik wysłano na skrzynkę: <strong>reklamacje@jawor-parkiet.pl</strong></p>
+        `;
+      } catch (err) {
+        console.error(err);
+        statusBox.className = 'mt-3 p-3 rounded-lg text-xs bg-red-50 border border-red-200 text-red-800 block';
+        statusBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1.5 text-sm"></i> Błąd podczas generowania pliku lub wysyłki poczty: ${err.message}`;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-paper-plane mr-2 text-sm"></i> Wygeneruj Plik Word & Wyślij na reklamacje@jawor-parkiet.pl';
+      }
+    }
+  </script>
+</body>
+</html>
