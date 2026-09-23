@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Mailingu Działu Handlowego – Jawor-Parkiet</title>
+  
+  <!-- Czcionka Montserrat (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            jawor: {
+              green: '#01643d',
+              greenDark: '#014e2a',
+              greenLight: '#018552',
+              black: '#000000',
+              grayBg: '#f4f5f4',
+              grayBorder: '#e0e4e0'
+            }
+          },
+          fontFamily: {
+            sans: ['Montserrat', 'sans-serif'],
+            montserrat: ['Montserrat', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: #1a1a1a;
+      background-color: #f4f5f4;
+    }
+    .brand-header-font { 
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body class="selection:bg-jawor-green selection:text-white flex flex-col min-h-screen">
+
+  <!-- NAGŁÓWEK NAWIGACYJNY -->
+  <header class="sticky top-0 z-50 bg-white border-b border-jawor-grayBorder shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo Jubileuszowe -->
+      <div class="flex items-center space-x-4">
+        <a href="index.html" class="flex items-center">
+          <img src="Logo JP 35-kopia.png" alt="Jawor-Parkiet Logo" class="h-12 w-auto object-contain">
+        </a>
+        <span class="hidden sm:inline-block h-6 w-px bg-gray-200"></span>
+        <span class="hidden sm:inline-block text-xs font-bold uppercase tracking-wider text-gray-500">
+          Strefa Działu Handlowego
+        </span>
+      </div>
+
+      <!-- Jedyny link: Powrót do Agenta AI -->
+      <div>
+        <a href="index.html" class="inline-flex items-center border border-jawor-green text-jawor-green hover:bg-jawor-green hover:text-white transition px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider shadow-xs">
+          <i class="fa-solid fa-robot mr-2"></i> Przejdź do Agenta AI
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- GŁÓWNA TREŚĆ: MODUŁ MAILINGOWY -->
+  <main class="flex-grow py-12 lg:py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Karta Informacyjna -->
+      <div class="mb-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-white p-4 rounded-xl border border-jawor-grayBorder shadow-xs flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-lg bg-green-50 text-jawor-green flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-table text-lg"></i>
+          </div>
+          <div>
+            <span class="block text-[10px] uppercase font-bold text-gray-400">Źródło Bazy</span>
+            <span class="text-xs font-bold text-jawor-black">Google Drive (2 Arkusze)</span>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border border-jawor-grayBorder shadow-xs flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-lg bg-green-50 text-jawor-green flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-reply text-lg"></i>
+          </div>
+          <div>
+            <span class="block text-[10px] uppercase font-bold text-gray-400">Odpowiedzi Trafią Na</span>
+            <span class="text-xs font-bold text-jawor-black truncate block max-w-[170px]" title="dzial.handlu@jawor-parkiet.pl">
+              dzial.handlu@...
+            </span>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border border-jawor-grayBorder shadow-xs flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-lg bg-green-50 text-jawor-green flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-filter text-lg"></i>
+          </div>
+          <div>
+            <span class="block text-[10px] uppercase font-bold text-gray-400">Segmentacja</span>
+            <span class="text-xs font-bold text-jawor-black">Kolumny C i E (Auto)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formularz Wysyłki -->
+      <div class="bg-white rounded-2xl border border-jawor-grayBorder p-6 sm:p-10 shadow-sm">
+        
+        <div class="border-b border-gray-200 pb-5 mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <span class="inline-block bg-jawor-green/10 text-jawor-green px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
+              Dystrybucja Komunikatów B2B
+            </span>
+            <h1 class="brand-header-font text-2xl sm:text-3xl font-extrabold text-jawor-black">
+              Mailing do Sieci Partnerskiej
+            </h1>
+            <p class="text-xs sm:text-sm text-gray-500 mt-1 font-normal">
+              Wysyłka newslettera handlowego. Baza pobierana automatycznie z Dysku Google.
+            </p>
+          </div>
+          <div class="hidden sm:block text-right">
+            <span class="text-[11px] font-mono bg-gray-100 text-gray-600 px-3 py-1.5 rounded border border-gray-200 font-bold">
+              <i class="fa-solid fa-server text-jawor-green mr-1"></i> n8n Connected
+            </span>
+          </div>
+        </div>
+
+        <form id="mailingForm" onsubmit="handleMailingSubmit(event)" class="space-y-6">
+          
+          <!-- 1. Wybór grupy odbiorców -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
+              1. Grupa docelowa odbiorców *
+            </label>
+            <div class="relative">
+              <select id="targetGroup" required class="w-full text-xs sm:text-sm border border-gray-300 rounded-lg p-3.5 bg-white focus:border-jawor-green focus:outline-none transition font-medium appearance-none">
+                <optgroup label="Wysyłka Całościowa">
+                  <option value="ALL">Wszyscy odbiorcy (Cała baza: Dystrybutorzy + Salony + Studia)</option>
+                </optgroup>
+                <optgroup label="Arkusz: DYSTRYBUTORZY">
+                  <option value="ALL_DYSTRYBUTORZY">Wszyscy Dystrybutorzy (Cały arkusz DYSTRYBUTORZY)</option>
+                  <option value="DYSTRYBUTOR">DYSTRYBUTOR (e-mail z kolumny C)</option>
+                  <option value="POLSKA_DESKA">POLSKA DESKA (e-mail z kolumny C)</option>
+                  <option value="RETRO">RETRO (e-mail z kolumny E)</option>
+                  <option value="RETRO_POLSKA_DESKA">RETRO + POLSKA DESKA (e-mail z kolumny E)</option>
+                </optgroup>
+                <optgroup label="Arkusz: SALONY + STUDIA">
+                  <option value="ALL_SALONY_STUDIA">Wszystkie Salony i Studia (Cały arkusz SALONY + STUDIA)</option>
+                  <option value="FRANCZYZA_RETRO_ZERO_WASTE">FRANCZYZA RETRO, ZERO WASTE (e-mail z kolumny C)</option>
+                  <option value="STUDIO_RETRO_ZERO_WASTE">STUDIO RETRO, ZERO WASTE (e-mail z kolumny C)</option>
+                </optgroup>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+              </div>
+            </div>
+            <span class="text-[11px] text-gray-400 mt-1.5 block font-normal">
+              System automatycznie filtruje wiersze według Kolumny A i pobiera adresy z Kolumny C lub E zgodnie ze specyfikacją.
+            </span>
+          </div>
+
+          <!-- 2. Tytuł mailingu -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
+              2. Tytuł mailingu (Temat e-mail) *
+            </label>
+            <input type="text" id="mailSubject" required placeholder="np. [KOMUNIKAT HANDLOWY] Nowe dekory FertigDeska oraz aktualizacja terminów realizacji 2026" class="w-full text-xs sm:text-sm border border-gray-300 rounded-lg p-3.5 focus:border-jawor-green focus:outline-none transition font-medium">
+          </div>
+
+          <!-- 3. Treść wiadomości -->
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-700">
+                3. Treść wiadomości *
+              </label>
+              <span class="text-[11px] text-gray-400 font-normal">Obsługa akapitów oraz znaczników HTML (&lt;b&gt;, &lt;ul&gt;, &lt;a&gt;)</span>
+            </div>
+            <textarea id="mailBody" rows="9" required placeholder="Szanowni Partnerzy,&#10;&#10;Przesyłamy bieżący komunikat Działu Handlowego dotyczący aktualizacji cennika...&#10;&#10;W razie pytań zapraszamy do bezpośredniego kontaktu zwrotnego." class="w-full text-xs sm:text-sm border border-gray-300 rounded-lg p-3.5 focus:border-jawor-green focus:outline-none transition leading-relaxed font-normal"></textarea>
+          </div>
+
+          <!-- 4. Opcjonalny załącznik -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
+              4. Opcjonalny załącznik (PDF, XLS, Oferta)
+            </label>
+            <div class="border-2 border-dashed border-gray-300 hover:border-jawor-green transition rounded-xl p-6 text-center cursor-pointer bg-gray-50" onclick="document.getElementById('mailAttachment').click()">
+              <i class="fa-solid fa-paperclip text-2xl text-jawor-green mb-1.5"></i>
+              <p id="attachmentLabel" class="text-xs text-gray-700 font-semibold">Kliknij, aby wybrać plik do wysyłki (max. 15 MB)</p>
+              <span class="text-[10px] text-gray-400 font-normal">Plik zostanie załączony do każdego wygenerowanego e-maila</span>
+              <input type="file" id="mailAttachment" class="hidden" onchange="updateAttachmentInfo(event)">
+            </div>
+            <div id="attachmentDetails" class="hidden mt-2.5 flex items-center justify-between bg-green-50 border border-green-200 text-jawor-green px-4 py-2 rounded-lg text-xs font-medium">
+              <span id="attachmentFileName"><i class="fa-solid fa-file mr-1"></i> plik.pdf</span>
+              <button type="button" onclick="removeAttachment()" class="text-red-500 hover:text-red-700 font-bold ml-2">Usuń plik</button>
+            </div>
+          </div>
+
+          <!-- Podgląd stałego podpisu handlowego -->
+          <div class="bg-gray-50 rounded-xl p-4 sm:p-5 border border-gray-200 text-xs text-gray-600">
+            <p class="font-bold text-jawor-black uppercase tracking-wider text-[11px] mb-2.5 flex items-center">
+              <i class="fa-solid fa-signature text-jawor-green mr-2 text-sm"></i> Do każdej wiadomości automatycznie dołączana jest stała stopka:
+            </p>
+            <div class="border-l-2 border-jawor-green pl-3.5 space-y-1 text-gray-500 font-normal">
+              <p class="font-bold text-jawor-black text-xs">Dział Handlu | Jawor-Parkiet Sp. z o.o.</p>
+              <p>ul. Grunwaldzka 87, 13-300 Nowe Miasto Lubawskie</p>
+              <p>tel.: <strong>+48 733 003 003</strong> | tel.: <strong>+48 733 003 004</strong></p>
+              <p>e-mail do odpowiedzi: <span class="text-jawor-green font-bold">dzial.handlu@jawor-parkiet.pl</span></p>
+              <p class="text-[10px] text-gray-400 pt-1">
+                Wiadomość z autoryzowanego serwera mailingowego. Kliknięcie „Odpowiedz” kieruje e-mail bezpośrednio do opiekunów handlowych.
+              </p>
+            </div>
+          </div>
+
+          <!-- Przyciski -->
+          <div class="pt-3 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <button type="reset" onclick="removeAttachment()" class="text-xs text-gray-500 hover:text-gray-800 uppercase tracking-wider font-semibold transition">
+              Wyczyść formularz
+            </button>
+            <button type="submit" id="btnSubmitMailing" class="w-full sm:w-auto bg-jawor-green hover:bg-jawor-greenDark text-white px-8 py-3.5 rounded-lg text-xs font-bold uppercase tracking-wider transition shadow-sm flex items-center justify-center">
+              <i class="fa-solid fa-paper-plane mr-2"></i> Wyślij Mailing do Partnerów
+            </button>
+          </div>
+
+        </form>
+
+        <!-- Status realizacji -->
+        <div id="mailingStatusBox" class="hidden mt-6 p-4 rounded-xl border text-xs leading-relaxed"></div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- STOPKA -->
+  <footer class="bg-jawor-black text-white py-10 border-t border-gray-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+      <div>
+        <a href="index.html" class="inline-block mb-3">
+          <img src="Logo JP 35-kopia_n.png" alt="Jawor-Parkiet Logo 35 Lat" class="h-10 w-auto object-contain">
+        </a>
+        <p class="text-xs text-gray-400 leading-relaxed font-normal">
+          Producent Podłóg Drewnianych Jawor-Parkiet Sp. z o.o.<br>
+          ul. Grunwaldzka 87, 13-300 Nowe Miasto Lubawskie<br>
+          NIP: 8771485608 | REGON: 522505664
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-bold uppercase text-jawor-green tracking-wider mb-2">Centrala Działu Handlu</h4>
+        <p class="text-xs text-gray-400 space-y-1 font-normal">
+          tel.: +48 733 003 003 | tel.: +48 733 003 004<br>
+          e-mail: dzial.handlu@jawor-parkiet.pl
+        </p>
+      </div>
+
+      <div class="md:text-right">
+        <a href="index.html" class="inline-flex items-center text-xs font-bold text-gray-300 hover:text-white transition">
+          <i class="fa-solid fa-arrow-left mr-2 text-jawor-green"></i> Powrót do Agenta AI
+        </a>
+        <p class="text-[11px] text-gray-500 mt-2 font-normal">
+          Autoryzowany moduł mailingowy n8n & Jawor-Parkiet
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const N8N_MAILING_WEBHOOK_URL = 'https://n8n.nextgenbiznes.pl/webhook-test/jawor-mailing-send';
+
+    function updateAttachmentInfo(e) {
+      const fileInput = e.target;
+      if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        if (file.size > 15 * 1024 * 1024) {
+          alert("Wybrany plik przekracza limit 15 MB.");
+          removeAttachment();
+          return;
+        }
+        document.getElementById('attachmentFileName').innerHTML = `<i class="fa-solid fa-paperclip mr-1.5"></i> ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+        document.getElementById('attachmentDetails').classList.remove('hidden');
+        document.getElementById('attachmentLabel').innerText = "Wybrano: " + file.name;
+      }
+    }
+
+    function removeAttachment() {
+      const fileInput = document.getElementById('mailAttachment');
+      fileInput.value = "";
+      document.getElementById('attachmentDetails').classList.add('hidden');
+      document.getElementById('attachmentLabel').innerText = "Kliknij, aby wybrać plik do wysyłki (max. 15 MB)";
+    }
+
+    async function handleMailingSubmit(e) {
+      e.preventDefault();
+
+      const groupSelect = document.getElementById('targetGroup');
+      const groupName = groupSelect.options[groupSelect.selectedIndex].text;
+      const subject = document.getElementById('mailSubject').value.trim();
+      const body = document.getElementById('mailBody').value.trim();
+      const fileInput = document.getElementById('mailAttachment');
+      const submitBtn = document.getElementById('btnSubmitMailing');
+      const statusBox = document.getElementById('mailingStatusBox');
+
+      const confirmed = confirm(
+        `Potwierdzenie uruchomienia mailingu:\n\n` +
+        `• Grupa docelowa: ${groupName}\n` +
+        `• Temat e-mail: ${subject}\n` +
+        `• Załącznik: ${fileInput.files[0] ? fileInput.files[0].name : 'Brak'}\n\n` +
+        `Czy na pewno chcesz wysłać tę wiadomość do wybranej grupy?`
+      );
+
+      if (!confirmed) return;
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Przetwarzanie i wysyłka mailingu...';
+      statusBox.className = 'mt-6 p-4 rounded-xl border bg-blue-50 border-blue-200 text-blue-800 text-xs block';
+      statusBox.innerHTML = '<i class="fa-solid fa-circle-info mr-2"></i> Trwa pobieranie arkuszy z Google Drive i uruchamianie kolejki wysyłkowej... Proszę nie zamykać tej strony.';
+
+      try {
+        const formData = new FormData();
+        formData.append('targetGroup', groupSelect.value);
+        formData.append('subject', subject);
+        formData.append('body', body);
+
+        if (fileInput.files && fileInput.files[0]) {
+          formData.append('attachment', fileInput.files[0]);
+        }
+
+        const response = await fetch(N8N_MAILING_WEBHOOK_URL, {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.status === 'success') {
+          statusBox.className = 'mt-6 p-4 rounded-xl border bg-green-50 border-green-200 text-green-900 text-xs block';
+          statusBox.innerHTML = `
+            <div class="flex items-center gap-2 font-bold mb-1.5">
+              <i class="fa-solid fa-circle-check text-jawor-green text-base"></i> Mailing został pomyślnie przekazany do wysyłki!
+            </div>
+            <p class="font-normal">• Liczba wyselekcjonowanych odbiorców: <strong>${result.sentCount || 'Zrealizowano'}</strong></p>
+            <p class="font-normal">• Wybrana grupa: <strong>${groupName}</strong></p>
+            <p class="font-normal">• Odpowiedzi partnerów trafią na: <strong>dzial.handlu@jawor-parkiet.pl</strong></p>
+          `;
+          document.getElementById('mailingForm').reset();
+          removeAttachment();
+        } else {
+          throw new Error(result.message || 'Wystąpił błąd po stronie serwera n8n.');
+        }
+      } catch (error) {
+        console.error('Błąd wysyłki mailingu:', error);
+        statusBox.className = 'mt-6 p-4 rounded-xl border bg-red-50 border-red-200 text-red-800 text-xs block';
+        statusBox.innerHTML = `
+          <div class="flex items-center gap-2 font-bold mb-1">
+            <i class="fa-solid fa-triangle-exclamation text-red-600 text-base"></i> Błąd podczas wysyłki
+          </div>
+          <p class="font-normal">${error.message || 'Sprawdź połączenie z n8n oraz czy plik na Dysku Google posiada arkusze DYSTRYBUTORZY i SALONY + STUDIA.'}</p>
+        `;
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i> Wyślij Mailing do Partnerów';
+      }
+    }
+  </script>
+</body>
+</html>
