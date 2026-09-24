@@ -68,7 +68,7 @@
         </span>
       </div>
 
-      <!-- Jedyny link: Powrót do Agenta AI -->
+      <!-- Link: Powrót do Agenta AI -->
       <div>
         <a href="index.html" class="inline-flex items-center border border-jawor-green text-jawor-green hover:bg-jawor-green hover:text-white transition px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider shadow-xs">
           <i class="fa-solid fa-robot mr-2"></i> Przejdź do Agenta AI
@@ -90,7 +90,7 @@
           </div>
           <div>
             <span class="block text-[10px] uppercase font-bold text-gray-400">Źródło Bazy</span>
-            <span class="text-xs font-bold text-jawor-black">Jawor-Parkiet Newsletter<br>(2 Arkusze)</span>
+            <span class="text-xs font-bold text-jawor-black">Jawor-Parkiet Newsletter</span>
           </div>
         </div>
 
@@ -108,11 +108,11 @@
 
         <div class="bg-white p-4 rounded-xl border border-jawor-grayBorder shadow-xs flex items-center space-x-3">
           <div class="w-10 h-10 rounded-lg bg-green-50 text-jawor-green flex items-center justify-center shrink-0">
-            <i class="fa-solid fa-filter text-lg"></i>
+            <i class="fa-solid fa-paperclip text-lg"></i>
           </div>
           <div>
-            <span class="block text-[10px] uppercase font-bold text-gray-400">Segmentacja</span>
-            <span class="text-xs font-bold text-jawor-black">Kolumny C i E (Auto)</span>
+            <span class="block text-[10px] uppercase font-bold text-gray-400">Załączniki</span>
+            <span class="text-xs font-bold text-jawor-black">Obsługa Wielu Plików</span>
           </div>
         </div>
       </div>
@@ -141,43 +141,44 @@
 
         <form id="mailingForm" onsubmit="handleMailingSubmit(event)" class="space-y-6">
           
-          <!-- Wybór grupy odbiorców -->
-<div>
-  <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-    1. Grupa docelowa odbiorców *
-  </label>
-  <div class="relative">
-    <select id="targetGroup" required class="w-full text-xs sm:text-sm border border-gray-300 rounded-lg p-3.5 bg-white focus:border-jawor-green focus:outline-none transition font-medium appearance-none">
-      <optgroup label="Wysyłka Całościowa">
-        <option value="ALL">Wszyscy odbiorcy (Dystrybutorzy + Salony + Studia)</option>
-      </optgroup>
-      <optgroup label="Arkusz: DYSTRYBUTORZY">
-        <option value="ALL_DYSTRYBUTORZY">Wszyscy Dystrybutorzy (Cały arkusz)</option>
-        <option value="DYSTRYBUTOR">DYSTRYBUTOR</option>
-        <option value="POLSKA_DESKA">POLSKA DESKA</option>
-        <option value="RETRO">RETRO</option>
-        <option value="RETRO_POLSKA_DESKA">RETRO, POLSKA DESKA</option>
-      </optgroup>
-      <optgroup label="Arkusz: SALONY + STUDIA">
-        <option value="ALL_SALONY_STUDIA">Wszystkie Salony i Studia (Cały arkusz)</option>
-        <option value="FRANCZYZA_RETRO_ZERO_WASTE">FRANCZYZA RETRO, ZERO WASTE</option>
-        <option value="STUDIO_RETRO_ZERO_WASTE">STUDIO RETRO, ZERO WASTE</option>
-      </optgroup>
-    </select>
-    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
-      <i class="fa-solid fa-chevron-down text-xs"></i>
-    </div>
-  </div>
-  <span class="text-[11px] text-gray-400 mt-1.5 block font-normal">
-    System automatycznie pobiera adresy z kolumny C lub E oraz rozbija wiele adresów w komórce.
-  </span>
-</div>
+          <!-- 1. Wybór grupy odbiorców -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
+              1. Grupa docelowa odbiorców *
+            </label>
+            <div class="relative">
+              <select id="targetGroup" required class="w-full text-xs sm:text-sm border border-gray-300 rounded-lg p-3.5 bg-white focus:border-jawor-green focus:outline-none transition font-medium appearance-none">
+                <optgroup label="Wysyłka Całościowa">
+                  <option value="ALL">Wszyscy odbiorcy (Dystrybutorzy + Salony + Studia)</option>
+                </optgroup>
+                <optgroup label="Arkusz: DYSTRYBUTORZY">
+                  <option value="ALL_DYSTRYBUTORZY">Wszyscy Dystrybutorzy</option>
+                  <option value="DYSTRYBUTOR">DYSTRYBUTOR</option>
+                  <option value="POLSKA_DESKA">POLSKA DESKA</option>
+                  <option value="RETRO">RETRO</option>
+                  <option value="RETRO_POLSKA_DESKA">RETRO, POLSKA DESKA</option>
+                </optgroup>
+                <optgroup label="Arkusz: SALONY + STUDIA">
+                  <option value="ALL_SALONY_STUDIA">Wszystkie Salony i Studia</option>
+                  <option value="FRANCZYZA_RETRO_ZERO_WASTE">FRANCZYZA RETRO, ZERO WASTE</option>
+                  <option value="STUDIO_RETRO_ZERO_WASTE">STUDIO RETRO, ZERO WASTE</option>
+                </optgroup>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+              </div>
+            </div>
+            <span class="text-[11px] text-gray-400 mt-1.5 block font-normal">
+              System automatycznie pobiera adresy oraz rozbija wiele adresów w komórce.
+            </span>
+          </div>
+
           <!-- 2. Tytuł mailingu -->
           <div>
             <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
               2. Tytuł mailingu (Temat e-mail) *
             </label>
-            <input type="text" id="mailSubject" required placeholder="np. [KOMUNIKAT HANDLOWY] Nowe dekory FertigDeska oraz aktualizacja terminów realizacji 2026" class="w-full text-xs sm:text-sm border border-gray-300 rounded-lg p-3.5 focus:border-jawor-green focus:outline-none transition font-medium">
+            <input type="text" id="mailSubject" required placeholder="np. [KOMUNIKAT HANDLOWY] Nowy cennik i katalog produktów 2026" class="w-full text-xs sm:text-sm border border-gray-300 rounded-lg p-3.5 focus:border-jawor-green focus:outline-none transition font-medium">
           </div>
 
           <!-- 3. Treść wiadomości -->
@@ -188,23 +189,29 @@
               </label>
               <span class="text-[11px] text-gray-400 font-normal">Obsługa akapitów oraz znaczników HTML (&lt;b&gt;, &lt;ul&gt;, &lt;a&gt;)</span>
             </div>
-            <textarea id="mailBody" rows="9" required placeholder="Szanowni Partnerzy,&#10;&#10;Przesyłamy bieżący komunikat Działu Handlowego dotyczący aktualizacji cennika...&#10;&#10;W razie pytań zapraszamy do bezpośredniego kontaktu zwrotnego." class="w-full text-xs sm:text-sm border border-gray-300 rounded-lg p-3.5 focus:border-jawor-green focus:outline-none transition leading-relaxed font-normal"></textarea>
+            <textarea id="mailBody" rows="9" required placeholder="Szanowni Partnerzy,&#10;&#10;W załączeniu przesyłamy aktualne materiały handlowe oraz cennik obowiązujący od bieżącego miesiąca...&#10;&#10;W razie pytań zapraszamy do bezpośredniego kontaktu zwrotnego." class="w-full text-xs sm:text-sm border border-gray-300 rounded-lg p-3.5 focus:border-jawor-green focus:outline-none transition leading-relaxed font-normal"></textarea>
           </div>
 
-          <!-- 4. Opcjonalny załącznik -->
+          <!-- 4. Wiele załączników -->
           <div>
             <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-              4. Opcjonalny załącznik (PDF, XLS, Oferta)
+              4. Opcjonalne załączniki (Możesz wybrać kilka plików: PDF, XLS, JPG)
             </label>
-            <div class="border-2 border-dashed border-gray-300 hover:border-jawor-green transition rounded-xl p-6 text-center cursor-pointer bg-gray-50" onclick="document.getElementById('mailAttachment').click()">
-              <i class="fa-solid fa-paperclip text-2xl text-jawor-green mb-1.5"></i>
-              <p id="attachmentLabel" class="text-xs text-gray-700 font-semibold">Kliknij, aby wybrać plik do wysyłki (max. 15 MB)</p>
-              <span class="text-[10px] text-gray-400 font-normal">Plik zostanie załączony do każdego wygenerowanego e-maila</span>
-              <input type="file" id="mailAttachment" class="hidden" onchange="updateAttachmentInfo(event)">
+            <div class="border-2 border-dashed border-gray-300 hover:border-jawor-green transition rounded-xl p-6 text-center cursor-pointer bg-gray-50" onclick="document.getElementById('mailAttachments').click()">
+              <i class="fa-solid fa-cloud-arrow-up text-2xl text-jawor-green mb-1.5"></i>
+              <p class="text-xs text-gray-700 font-semibold">Kliknij tutaj, aby wybrać jeden lub więcej plików</p>
+              <span class="text-[10px] text-gray-400 font-normal">Maksymalny łączny rozmiar załączników: 25 MB</span>
+              <!-- input z atrybutem multiple -->
+              <input type="file" id="mailAttachments" multiple class="hidden" onchange="handleFilesSelected(event)">
             </div>
-            <div id="attachmentDetails" class="hidden mt-2.5 flex items-center justify-between bg-green-50 border border-green-200 text-jawor-green px-4 py-2 rounded-lg text-xs font-medium">
-              <span id="attachmentFileName"><i class="fa-solid fa-file mr-1"></i> plik.pdf</span>
-              <button type="button" onclick="removeAttachment()" class="text-red-500 hover:text-red-700 font-bold ml-2">Usuń plik</button>
+
+            <!-- Kontener listy wybranych plików -->
+            <div id="attachmentsContainer" class="hidden mt-3 space-y-2">
+              <div class="flex items-center justify-between text-[11px] font-bold text-gray-500 uppercase px-1">
+                <span>Wybrane pliki (<span id="attachmentsCount">0</span>):</span>
+                <button type="button" onclick="clearAllAttachments()" class="text-red-600 hover:underline">Wyczyść wszystkie</button>
+              </div>
+              <div id="attachmentsList" class="space-y-1.5"></div>
             </div>
           </div>
 
@@ -226,7 +233,7 @@
 
           <!-- Przyciski -->
           <div class="pt-3 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <button type="reset" onclick="removeAttachment()" class="text-xs text-gray-500 hover:text-gray-800 uppercase tracking-wider font-semibold transition">
+            <button type="reset" onclick="clearAllAttachments()" class="text-xs text-gray-500 hover:text-gray-800 uppercase tracking-wider font-semibold transition">
               Wyczyść formularz
             </button>
             <button type="submit" id="btnSubmitMailing" class="w-full sm:w-auto bg-jawor-green hover:bg-jawor-greenDark text-white px-8 py-3.5 rounded-lg text-xs font-bold uppercase tracking-wider transition shadow-sm flex items-center justify-center">
@@ -280,26 +287,74 @@
   <script>
     const N8N_MAILING_WEBHOOK_URL = 'https://n8n.nextgenbiznes.pl/webhook/jawor-mailing-send';
 
-    function updateAttachmentInfo(e) {
-      const fileInput = e.target;
-      if (fileInput.files && fileInput.files[0]) {
-        const file = fileInput.files[0];
-        if (file.size > 15 * 1024 * 1024) {
-          alert("Wybrany plik przekracza limit 15 MB.");
-          removeAttachment();
-          return;
+    // Tablica przechowująca listę wybranych plików
+    let selectedFiles = [];
+
+    function handleFilesSelected(event) {
+      const incoming = Array.from(event.target.files);
+      if (!incoming.length) return;
+
+      // Dodajemy nowo wybrane pliki do istniejącej puli
+      incoming.forEach(file => {
+        // Unikamy dodawania dokładnie tego samego pliku dwukrotnie
+        const exists = selectedFiles.some(f => f.name === file.name && f.size === file.size);
+        if (!exists) {
+          selectedFiles.push(file);
         }
-        document.getElementById('attachmentFileName').innerHTML = `<i class="fa-solid fa-paperclip mr-1.5"></i> ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
-        document.getElementById('attachmentDetails').classList.remove('hidden');
-        document.getElementById('attachmentLabel').innerText = "Wybrano: " + file.name;
+      });
+
+      // Sprawdzenie łącznego rozmiaru (limit 25 MB)
+      const totalBytes = selectedFiles.reduce((acc, f) => acc + f.size, 0);
+      if (totalBytes > 25 * 1024 * 1024) {
+        alert("Łączny rozmiar załączników przekracza bezpieczny limit 25 MB. Usuń część plików.");
       }
+
+      renderAttachmentsList();
+      event.target.value = ""; // Reset inputa, by móc wybrać kolejne pliki
     }
 
-    function removeAttachment() {
-      const fileInput = document.getElementById('mailAttachment');
-      fileInput.value = "";
-      document.getElementById('attachmentDetails').classList.add('hidden');
-      document.getElementById('attachmentLabel').innerText = "Kliknij, aby wybrać plik do wysyłki (max. 15 MB)";
+    function removeAttachment(index) {
+      selectedFiles.splice(index, 1);
+      renderAttachmentsList();
+    }
+
+    function clearAllAttachments() {
+      selectedFiles = [];
+      renderAttachmentsList();
+      document.getElementById('mailAttachments').value = "";
+    }
+
+    function renderAttachmentsList() {
+      const container = document.getElementById('attachmentsContainer');
+      const list = document.getElementById('attachmentsList');
+      const countLabel = document.getElementById('attachmentsCount');
+
+      if (selectedFiles.length === 0) {
+        container.classList.add('hidden');
+        list.innerHTML = "";
+        return;
+      }
+
+      container.classList.remove('hidden');
+      countLabel.innerText = selectedFiles.length;
+      list.innerHTML = "";
+
+      selectedFiles.forEach((file, index) => {
+        const sizeMb = (file.size / (1024 * 1024)).toFixed(2);
+        const item = document.createElement('div');
+        item.className = "flex items-center justify-between bg-green-50/70 border border-green-200 px-3.5 py-2 rounded-lg text-xs text-gray-800";
+        item.innerHTML = `
+          <div class="flex items-center space-x-2 truncate">
+            <i class="fa-solid fa-file-lines text-jawor-green"></i>
+            <span class="font-medium truncate">${file.name}</span>
+            <span class="text-[10px] text-gray-500 font-mono">(${sizeMb} MB)</span>
+          </div>
+          <button type="button" onclick="removeAttachment(${index})" class="text-red-500 hover:text-red-700 ml-3 font-bold">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        `;
+        list.appendChild(item);
+      });
     }
 
     async function handleMailingSubmit(e) {
@@ -309,7 +364,6 @@
       const groupName = groupSelect.options[groupSelect.selectedIndex].text;
       const subject = document.getElementById('mailSubject').value.trim();
       const body = document.getElementById('mailBody').value.trim();
-      const fileInput = document.getElementById('mailAttachment');
       const submitBtn = document.getElementById('btnSubmitMailing');
       const statusBox = document.getElementById('mailingStatusBox');
 
@@ -317,7 +371,7 @@
         `Potwierdzenie uruchomienia mailingu:\n\n` +
         `• Grupa docelowa: ${groupName}\n` +
         `• Temat e-mail: ${subject}\n` +
-        `• Załącznik: ${fileInput.files[0] ? fileInput.files[0].name : 'Brak'}\n\n` +
+        `• Liczba załączników: ${selectedFiles.length}\n\n` +
         `Czy na pewno chcesz wysłać tę wiadomość do wybranej grupy?`
       );
 
@@ -326,7 +380,7 @@
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Przetwarzanie i wysyłka mailingu...';
       statusBox.className = 'mt-6 p-4 rounded-xl border bg-blue-50 border-blue-200 text-blue-800 text-xs block';
-      statusBox.innerHTML = '<i class="fa-solid fa-circle-info mr-2"></i> Trwa pobieranie arkuszy z Google Drive i uruchamianie kolejki wysyłkowej... Proszę nie zamykać tej strony.';
+      statusBox.innerHTML = '<i class="fa-solid fa-circle-info mr-2"></i> Trwa wysyłanie plików i uruchamianie kolejki wysyłkowej... Proszę nie zamykać tej strony.';
 
       try {
         const formData = new FormData();
@@ -334,9 +388,10 @@
         formData.append('subject', subject);
         formData.append('body', body);
 
-        if (fileInput.files && fileInput.files[0]) {
-          formData.append('attachment', fileInput.files[0]);
-        }
+        // Dołączenie każdego pliku z unikalnym indeksem
+        selectedFiles.forEach((file, index) => {
+          formData.append(`attachment_${index}`, file);
+        });
 
         const response = await fetch(N8N_MAILING_WEBHOOK_URL, {
           method: 'POST',
@@ -353,10 +408,11 @@
             </div>
             <p class="font-normal">• Liczba wyselekcjonowanych odbiorców: <strong>${result.sentCount || 'Zrealizowano'}</strong></p>
             <p class="font-normal">• Wybrana grupa: <strong>${groupName}</strong></p>
+            <p class="font-normal">• Dołączone załączniki: <strong>${selectedFiles.length} szt.</strong></p>
             <p class="font-normal">• Odpowiedzi partnerów trafią na: <strong>dzial.handlu@jawor-parkiet.pl</strong></p>
           `;
           document.getElementById('mailingForm').reset();
-          removeAttachment();
+          clearAllAttachments();
         } else {
           throw new Error(result.message || 'Wystąpił błąd po stronie serwera n8n.');
         }
@@ -367,7 +423,7 @@
           <div class="flex items-center gap-2 font-bold mb-1">
             <i class="fa-solid fa-triangle-exclamation text-red-600 text-base"></i> Błąd podczas wysyłki
           </div>
-          <p class="font-normal">${error.message || 'Sprawdź połączenie z n8n oraz czy plik na Dysku Google posiada arkusze DYSTRYBUTORZY i SALONY + STUDIA.'}</p>
+          <p class="font-normal">${error.message || 'Sprawdź połączenie z n8n oraz rozmiar załączników.'}</p>
         `;
       } finally {
         submitBtn.disabled = false;
