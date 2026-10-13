@@ -1,943 +1,210 @@
 <!DOCTYPE html>
-<html lang="pl" class="scroll-smooth">
+<html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jawor.ai – Pulpit Dyrektora Handlowego (DH Executive Suite)</title>
-  
-  <!-- Czcionka Montserrat (Google Fonts) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- FontAwesome 6 Icons CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Marked.js CDN do renderowania Markdown w raportach analitycznych -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            jawor: {
-              green: '#01643d',
-              greenDark: '#014e2a',
-              greenLight: '#018552',
-              black: '#000000',
-              grayBg: '#f4f5f4',
-              grayBorder: '#e0e4e0'
-            }
-          },
-          fontFamily: {
-            sans: ['Montserrat', 'sans-serif'],
-            montserrat: ['Montserrat', 'sans-serif']
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jawor.ai - Chat Agent</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #01643d;
+            --bg-light: #f4f5f4;
+            --text-dark: #333;
         }
-      }
-    }
-  </script>
-  
-  <style>
-    :root {
-      --primary: #01643d;
-      --primary-hover: #014e2a;
-    }
-
-    body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, div, li {
-      font-family: 'Montserrat', sans-serif;
-      color: #1a1a1a;
-    }
-
-    body {
-      background-color: #f4f5f4;
-    }
-
-    .fa-solid, .fa-regular, .fa-brands, [class*="fa-"] {
-      font-family: "Font Awesome 6 Free" !important;
-      font-style: normal !important;
-    }
-
-    .brand-header-font { 
-      font-weight: 700;
-    }
-
-    /* Formatowanie tabel i raportów z Gemini Markdown */
-    .chat-parsed-content h1, .chat-parsed-content h2, .chat-parsed-content h3 {
-      font-weight: 700;
-      color: #000;
-      margin-top: 0.75rem;
-      margin-bottom: 0.35rem;
-    }
-    .chat-parsed-content h2 { font-size: 1.05rem; color: #01643d; border-bottom: 1px solid #e0e4e0; padding-bottom: 0.2rem; }
-    .chat-parsed-content h3 { font-size: 0.95rem; }
-    .chat-parsed-content ul { list-style-type: disc; margin-left: 1.25rem; margin-top: 0.25rem; margin-bottom: 0.5rem; }
-    .chat-parsed-content ol { list-style-type: decimal; margin-left: 1.25rem; margin-top: 0.25rem; margin-bottom: 0.5rem; }
-    .chat-parsed-content p { margin-bottom: 0.45rem; }
-    .chat-parsed-content strong { color: #01643d; font-weight: 600; }
-    .chat-parsed-content table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 0.75rem 0;
-      font-size: 0.8rem;
-      background-color: #ffffff;
-      border-radius: 0.5rem;
-      overflow: hidden;
-      border: 1px solid #e0e4e0;
-    }
-    .chat-parsed-content th {
-      background-color: #01643d;
-      color: #ffffff;
-      font-weight: 600;
-      text-align: left;
-      padding: 0.5rem 0.75rem;
-    }
-    .chat-parsed-content td {
-      padding: 0.5rem 0.75rem;
-      border-bottom: 1px solid #e0e4e0;
-    }
-    .chat-parsed-content tr:nth-child(even) {
-      background-color: #f9fafb;
-    }
-    .chat-parsed-content a {
-      color: #01643d;
-      text-decoration: underline;
-      font-weight: 600;
-    }
-
-    .dragover-active {
-      border-color: #01643d !important;
-      background-color: #ecfdf5 !important;
-      transform: scale(1.01);
-    }
-  </style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .chat-container {
+            width: 100%;
+            max-width: 500px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+            overflow: hidden;
+        }
+        .chat-header {
+            background-color: var(--primary);
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .message.user {
+            background-color: var(--primary);
+            color: #fff;
+            align-self: flex-end;
+        }
+        .message.bot {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            align-self: flex-start;
+        }
+        .chat-input-area {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #ddd;
+            background: #fff;
+            gap: 10px;
+        }
+        .chat-input-area input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+        .file-upload-label {
+            background-color: #e0e4e0;
+            color: var(--primary);
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .file-upload-label input[type="file"] {
+            display: none;
+        }
+        .send-btn {
+            background-color: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .file-indicator {
+            font-size: 11px;
+            color: #666;
+            margin-top: -5px;
+            margin-bottom: 10px;
+            padding: 0 15px;
+        }
+    </style>
 </head>
-<body class="selection:bg-jawor-green selection:text-white min-h-screen flex flex-col justify-between">
+<body>
 
-  <!-- GÓRNY PASEK NAWIGACYJNY -->
-  <header class="sticky top-0 z-50 bg-white border-b border-jawor-grayBorder shadow-xs">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      
-      <!-- Logo Jubileuszowe -->
-      <a href="dh.html" class="flex items-center space-x-3">
-        <img src="Logo JP 35-kopia.png" alt="Jawor-Parkiet Logo" class="h-11 w-auto object-contain">
-        <span class="hidden sm:inline-block bg-jawor-green/10 text-jawor-green text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md border border-jawor-green/20">
-          Executive DH Suite
-        </span>
-      </a>
-
-      <!-- Menu Ekosystemu Jawor.ai -->
-      <nav class="hidden md:flex items-center space-x-6 text-xs font-semibold uppercase tracking-wider">
-        <a href="#executive-chat" class="text-jawor-green hover:text-jawor-greenDark transition flex items-center">
-          <i class="fa-solid fa-microchip mr-1.5"></i> Jawor.ai Executive Core
-        </a>
-        <a href="#pinecone-ingest" class="text-gray-600 hover:text-jawor-green transition flex items-center">
-          <i class="fa-solid fa-database mr-1.5"></i> Zasilanie Pinecone
-        </a>
-        <a href="#ekosystem" class="text-gray-600 hover:text-jawor-green transition flex items-center">
-          <i class="fa-solid fa-network-wired mr-1.5"></i> Narzędzia Jawor.ai
-        </a>
-      </nav>
-
-      <!-- Status Połączenia i Tryb Pracy -->
-      <div class="flex items-center space-x-3">
-        <button onclick="toggleConfigModal()" class="text-gray-400 hover:text-gray-700 text-xs p-2 rounded-lg border border-gray-200" title="Ustawienia Webhooków">
-          <i class="fa-solid fa-gear"></i>
-        </button>
-        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-green-50 text-jawor-green border border-green-200">
-          <span class="w-2 h-2 rounded-full bg-jawor-green animate-pulse mr-2"></span>
-          Deep Research v2.0
-        </span>
-      </div>
+<div class="chat-container">
+    <div class="chat-header">Jawor.ai Asystent</div>
+    <div class="chat-messages" id="chatMessages">
+        <div class="message bot">Dzień dobry! W czym mogę pomóc? Możesz dołączyć plik dokumentu (np. doc, docx, pdf).</div>
     </div>
-  </header>
-
-  <!-- GŁÓWNA STRUKTURA PULPITU DYREKTORSKIEGO -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-8">
     
-    <!-- BANER STRATEGICZNY -->
-    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-jawor-grayBorder shadow-xs flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-      <div>
-        <div class="flex items-center gap-2 mb-2">
-          <span class="bg-black text-white text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded">
-            Dyrektor Handlowy
-          </span>
-          <span class="text-xs font-semibold text-gray-500">Multitasking Autonomous Analytics Core</span>
-        </div>
-        <h1 class="brand-header-font text-2xl sm:text-3xl font-extrabold text-jawor-black">
-          Centrum Decyzyjne & Analityka Rynkowa Jawor.ai
-        </h1>
-        <p class="text-xs sm:text-sm text-gray-600 mt-1 max-w-3xl font-normal leading-relaxed">
-          Zintegrowany panel analityczny łączący podwójną pamięć wektorową Pinecone, silnik Google Trends oraz weryfikację zamówień z systemu Piko w <strong>metrach kwadratowych (m²)</strong>.
-        </p>
-      </div>
-
-      <!-- Kafelki szybkiego statusu -->
-      <div class="flex flex-wrap sm:flex-nowrap gap-3 shrink-0">
-        <div class="p-3 bg-jawor-grayBg rounded-xl border border-jawor-grayBorder text-center min-w-[110px]">
-          <span class="block text-[10px] uppercase font-bold text-gray-400">Pamięć Tech</span>
-          <span class="text-xs font-extrabold text-jawor-green">Aktywna</span>
-        </div>
-        <div class="p-3 bg-jawor-grayBg rounded-xl border border-jawor-grayBorder text-center min-w-[110px]">
-          <span class="block text-[10px] uppercase font-bold text-gray-400">Piko & Raporty</span>
-          <span class="text-xs font-extrabold text-jawor-green">Jednostka: m²</span>
-        </div>
-        <div class="p-3 bg-jawor-grayBg rounded-xl border border-jawor-grayBorder text-center min-w-[110px]">
-          <span class="block text-[10px] uppercase font-bold text-gray-400">Trendy PL</span>
-          <span class="text-xs font-extrabold text-jawor-green">Google Feed</span>
-        </div>
-      </div>
+    <div class="file-indicator" id="fileIndicator">Brak wybranego pliku.</div>
+    
+    <div class="chat-input-area">
+        <label class="file-upload-label">
+            📎
+            <!-- Obsługa plików m m.in. doc, docx, pdf -->
+            <input type="file" id="fileInput" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf">
+        </label>
+        <input type="text" id="chatInput" placeholder="Wpisz wiadomość..." onkeypress="handleEnter(event)">
+        <button class="send-btn" onclick="sendMessage()">Wyślij</button>
     </div>
+</div>
 
-    <!-- GŁÓWNA SIATKA ROBOCZA -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      
-      <!-- KOLUMNA LEWA: AUTONOMICZNY KOMPUTER ANALITYCZNY (LIVE CHAT) -->
-      <section id="executive-chat" class="lg:col-span-7 bg-white rounded-2xl border border-jawor-grayBorder shadow-xs flex flex-col h-[820px] overflow-hidden">
-        
-        <!-- Pasek nagłówka okna czatu -->
-        <div class="bg-white border-b border-jawor-grayBorder p-4 flex items-center justify-between">
-          <div class="flex items-center space-x-3">
-            <div class="w-9 h-9 rounded-xl bg-jawor-green text-white flex items-center justify-center font-bold text-sm shadow-xs">
-              <i class="fa-solid fa-terminal"></i>
-            </div>
-            <div>
-              <h3 class="font-extrabold text-sm text-jawor-black">Jawor.ai Executive Core</h3>
-              <p class="text-[10px] text-gray-400 font-medium">Autonomiczny silnik analityczny dyrekcji handlowej (Webhook POST)</p>
-            </div>
-          </div>
-          <button onclick="resetChatHistory()" title="Wyczyść historię" class="text-gray-400 hover:text-red-600 transition text-xs p-2">
-            <i class="fa-solid fa-trash-can mr-1"></i> Wyczyść
-          </button>
-        </div>
+<script>
+    const N8N_WEBHOOK_URL = 'TUTAJ_ADRES_TWOJEGO_WEBHOOKA'; // <-- Zmień na swój webhook z n8n
+    const fileInput = document.getElementById('fileInput');
+    const fileIndicator = document.getElementById('fileIndicator');
 
-        <!-- Szybkie prompt'y dyrektorskie -->
-        <div class="p-3 bg-jawor-grayBg/60 border-b border-jawor-grayBorder flex items-center gap-2 overflow-x-auto text-[11px] no-scrollbar">
-          <span class="font-bold uppercase text-[9px] text-gray-400 shrink-0">Szybkie analizy:</span>
-          <button onclick="setExecutivePrompt('Porównaj zamówienia z systemu Piko w m² za ostatni miesiąc z trendami rynkowymi i podaj rekomendacje.')" class="shrink-0 bg-white hover:bg-jawor-green hover:text-white transition px-2.5 py-1.5 rounded-lg border border-jawor-grayBorder text-gray-700 font-medium">
-            <i class="fa-solid fa-chart-line text-jawor-green mr-1"></i> Zamówienia Piko m² vs Google Trends
-          </button>
-          <button onclick="setExecutivePrompt('Wylicz w piaskownicy JS dynamikę wykonania planu sprzedaży w m² dla poszczególnych województw.')" class="shrink-0 bg-white hover:bg-jawor-green hover:text-white transition px-2.5 py-1.5 rounded-lg border border-jawor-grayBorder text-gray-700 font-medium">
-            <i class="fa-solid fa-calculator text-jawor-green mr-1"></i> Dynamika m² (JS Sandbox)
-          </button>
-          <button onclick="setExecutivePrompt('Jakie są dopuszczalne odchyłki wilgotności CM i normy PN-EN dla FertigDeski Maxi na podłogówce?')" class="shrink-0 bg-white hover:bg-jawor-green hover:text-white transition px-2.5 py-1.5 rounded-lg border border-jawor-grayBorder text-gray-700 font-medium">
-            <i class="fa-solid fa-book-bookmark text-jawor-green mr-1"></i> Weryfikacja PN-EN i CM
-          </button>
-        </div>
-
-        <!-- Okno wiadomości czatu -->
-        <div class="flex-1 p-4 sm:p-6 overflow-y-auto space-y-4 text-xs sm:text-sm" id="executiveChatWindow">
-          <div class="bg-jawor-grayBg p-4 rounded-xl border border-jawor-grayBorder max-w-[90%] text-xs leading-relaxed text-gray-800">
-            Dzień dobry, Panie Dyrektorze. Jestem gotowy do pracy w trybie <strong>Jawor.ai Executive Core</strong>. Posiadam bezpośredni wgląd do:
-            <ul class="list-disc ml-5 mt-2 space-y-1 font-medium">
-              <li>Bazy wiedzy technologicznej i norm PN-EN 13489.</li>
-              <li>Bazy raportów sprzedaży oraz zamówień z systemu Piko (kalkulacje wyłącznie w <strong>m²</strong>).</li>
-              <li>Rejestru trendów Google z rynku wyposażenia wnętrz i posadzek.</li>
-              <li>Piaskownicy JavaScript do dokładnych obliczeń matematycznych.</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Lista dołączonych plików w czacie -->
-        <div id="chatAttachmentsPanel" class="hidden px-4 py-2 bg-emerald-50/90 border-t border-emerald-200">
-          <div class="flex items-center justify-between mb-1.5">
-            <span class="text-[11px] font-bold text-emerald-900 flex items-center">
-              <i class="fa-solid fa-paperclip mr-1.5 text-jawor-green"></i> Dołączone pliki do zapytania (<span id="chatFilesCount">0</span>):
-            </span>
-            <button onclick="clearAllChatFiles()" class="text-[10px] text-red-600 hover:underline font-semibold">Usuń wszystkie</button>
-          </div>
-          <div id="chatFilesList" class="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto"></div>
-        </div>
-
-        <!-- Panel Wprowadzania Zapytania -->
-        <div class="p-3 bg-white border-t border-jawor-grayBorder">
-          <div class="flex items-center gap-2">
-            <!-- Wybór plików do czatu -->
-            <label for="chatFileInput" title="Dołącz pliki do analizy" class="p-2.5 text-gray-500 hover:text-jawor-green hover:bg-jawor-grayBg rounded-lg transition border border-gray-200 cursor-pointer relative flex items-center justify-center">
-              <i class="fa-solid fa-paperclip text-sm"></i>
-              <span id="chatBadgeDot" class="hidden absolute top-1 right-1 w-2 h-2 bg-jawor-green rounded-full"></span>
-            </label>
-            <input type="file" id="chatFileInput" multiple class="hidden" onchange="handleChatFilesSelect(event)">
-
-            <!-- Input tekstowy -->
-            <input type="text" id="executiveChatInput" placeholder="Wpisz polecenie analityczne lub przeciągnij pliki..." class="flex-1 text-xs sm:text-sm border border-gray-300 rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-jawor-green font-medium" onkeypress="if(event.key==='Enter') sendExecutiveMessage()">
-
-            <!-- Przycisk Wyślij -->
-            <button onclick="sendExecutiveMessage()" id="btnSendExecutive" class="bg-jawor-green hover:bg-jawor-greenDark text-white px-5 py-2.5 rounded-lg text-xs font-bold transition flex items-center shadow-xs">
-              <i class="fa-solid fa-paper-plane mr-1.5"></i> Wyślij
-            </button>
-          </div>
-        </div>
-
-      </section>
-
-      <!-- KOLUMNA PRAWA: ZASILANIE BAZ PINECONE ORAZ EKOSYSTEM JAWOR.AI -->
-      <div class="lg:col-span-5 space-y-8">
-        
-        <!-- MODUŁ 1: ZASILANIE BAZ PINECONE (MASOWY UPLOAD DOKUMENTÓW) -->
-        <section id="pinecone-ingest" class="bg-white p-6 rounded-2xl border border-jawor-grayBorder shadow-xs space-y-5">
-          <div class="flex items-center justify-between border-b border-jawor-grayBorder pb-4">
-            <div class="flex items-center space-x-3">
-              <div class="p-2.5 bg-jawor-green/10 text-jawor-green rounded-xl">
-                <i class="fa-solid fa-cloud-arrow-up text-lg"></i>
-              </div>
-              <div>
-                <h3 class="font-extrabold text-sm text-jawor-black uppercase tracking-wider">Zasilanie Baz Pinecone</h3>
-                <p class="text-[11px] text-gray-500 font-medium">Masowa wektoryzacja plików do wybranej bazy</p>
-              </div>
-            </div>
-            <span id="queueBadge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-gray-100 text-gray-600">Gotowy</span>
-          </div>
-
-          <form id="pineconeUploadForm" onsubmit="handlePineconeUpload(event)" class="space-y-4">
-            <!-- Wybór bazy docelowej -->
-            <div>
-              <label class="block text-[11px] font-bold text-gray-700 uppercase tracking-wider mb-2">Docelowy Namespace / Baza</label>
-              <div class="grid grid-cols-2 gap-2.5">
-                <label class="flex items-start p-3 border rounded-xl cursor-pointer hover:bg-gray-50 transition border-jawor-green bg-green-50/40" id="labelTech">
-                  <input type="radio" name="database_target" value="tech" checked class="mt-0.5 text-jawor-green focus:ring-jawor-green" onchange="updateTargetSelectionStyle()">
-                  <div class="ml-2">
-                    <span class="block text-xs font-bold text-jawor-black">Baza Techniczna</span>
-                    <span class="block text-[10px] text-gray-500 mt-0.5">Karty, normy PN, chemia</span>
-                  </div>
-                </label>
-
-                <label class="flex items-start p-3 border rounded-xl cursor-pointer hover:bg-gray-50 transition border-gray-200" id="labelSales">
-                  <input type="radio" name="database_target" value="monthly_reports" class="mt-0.5 text-jawor-green focus:ring-jawor-green" onchange="updateTargetSelectionStyle()">
-                  <div class="ml-2">
-                    <span class="block text-xs font-bold text-jawor-black">Raporty & Piko</span>
-                    <span class="block text-[10px] text-gray-500 mt-0.5">Wyniki i zamówienia w m²</span>
-                  </div>
-                </label>
-              </div>
-            </div>
-
-            <!-- Strefa Drag & Drop wyboru wielu plików -->
-            <div>
-              <label class="block text-[11px] font-bold text-gray-700 uppercase tracking-wider mb-2">Pliki Źródłowe (Wybierz lub przeciągnij kilka)</label>
-              
-              <!-- Bezpieczny wrapper z natywnym triggerem label -->
-              <label for="pineconeFileInput" id="pineconeDropZone" class="border-2 border-dashed border-gray-300 hover:border-jawor-green transition rounded-xl p-6 text-center cursor-pointer bg-gray-50/60 block">
-                <i class="fa-solid fa-folder-open text-2xl text-jawor-green mb-1.5 block"></i>
-                <p class="text-xs text-gray-700 font-semibold" id="pineconeDropLabel">Kliknij lub upuść pliki tutaj (wiele naraz)</p>
-                <span class="text-[10px] text-gray-400 block mt-0.5">PDF, CSV, XLSX, TXT – automatyczny podział na chunki i wektoryzacja</span>
-              </label>
-              <input type="file" id="pineconeFileInput" multiple class="hidden" onchange="handlePineconeFilesSelect(event)">
-
-              <!-- Lista zaznaczonych plików -->
-              <div id="pineconeFilesContainer" class="hidden mt-3 space-y-1.5">
-                <div class="flex items-center justify-between text-[11px] font-bold text-gray-600">
-                  <span>Pliki do zindeksowania (<span id="pineconeFilesCount">0</span>):</span>
-                  <button type="button" onclick="clearAllPineconeFiles()" class="text-red-600 hover:underline text-[10px]">Wyczyść listę</button>
-                </div>
-                <div id="pineconeFilesList" class="space-y-1 max-h-40 overflow-y-auto pr-1"></div>
-              </div>
-            </div>
-
-            <!-- Pasek postępu wysyłki -->
-            <div id="uploadProgressBarContainer" class="hidden space-y-1.5">
-              <div class="flex justify-between text-[11px] font-semibold text-gray-600">
-                <span id="progressText">Indeksowanie...</span>
-                <span id="progressPercent">0%</span>
-              </div>
-              <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
-                <div id="uploadProgressBar" class="bg-jawor-green h-full w-0 transition-all duration-300"></div>
-              </div>
-            </div>
-
-            <!-- Komunikat statusu uploadu -->
-            <div id="uploadStatusMsg" class="hidden text-xs p-3.5 rounded-xl"></div>
-
-            <!-- Przyciski akcji -->
-            <div class="space-y-2">
-              <button type="submit" id="btnSubmitPinecone" class="w-full bg-jawor-green hover:bg-jawor-greenDark text-white font-bold py-2.5 rounded-xl text-xs uppercase tracking-wider transition flex justify-center items-center shadow-xs cursor-pointer">
-                <span>Zindeksuj Zestaw Plików w Pinecone</span>
-              </button>
-
-              <button type="button" id="btnRetryFailed" onclick="retryFailedUploads()" class="hidden w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 rounded-xl text-xs uppercase tracking-wider transition flex justify-center items-center shadow-xs">
-                <i class="fa-solid fa-rotate-right mr-1.5"></i> Ponów wysyłkę tylko nieudanych plików
-              </button>
-            </div>
-          </form>
-        </section>
-
-        <!-- MODUŁ 2: ODNOŚNIKI DO POZOSTAŁYCH NARZĘDZI JAWOR.AI -->
-        <section id="ekosystem" class="bg-white p-6 rounded-2xl border border-jawor-grayBorder shadow-xs space-y-4">
-          <div class="border-b border-jawor-grayBorder pb-3 flex items-center justify-between">
-            <h3 class="font-extrabold text-sm text-jawor-black uppercase tracking-wider">
-              <i class="fa-solid fa-shapes text-jawor-green mr-2"></i> Ekosystem Narzędzi Jawor.ai
-            </h3>
-            <span class="text-[10px] text-gray-400 font-semibold">Szybkie przejścia</span>
-          </div>
-
-          <div class="grid grid-cols-1 gap-2.5 text-xs">
-            
-            <!-- Link: Asystent Techniczny Salonu -->
-            <a href="index.html" class="p-3 rounded-xl border border-jawor-grayBorder bg-jawor-grayBg hover:border-jawor-green hover:bg-white transition flex items-center justify-between group">
-              <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 rounded-lg bg-green-100 text-jawor-green flex items-center justify-center text-sm">
-                  <i class="fa-solid fa-comments"></i>
-                </div>
-                <div>
-                  <strong class="block text-gray-900 group-hover:text-jawor-green transition">Asystent Techniczny (Salon)</strong>
-                  <span class="text-[10px] text-gray-500 font-normal">Wsparcie doradców, zapytania o kolekcje i normy PN-EN</span>
-                </div>
-              </div>
-              <i class="fa-solid fa-arrow-up-right-from-square text-gray-400 group-hover:text-jawor-green text-xs"></i>
-            </a>
-
-            <!-- Link: Generator Partnerów Inwestycyjnych (lead.html) -->
-            <a href="lead.html" class="p-3 rounded-xl border border-jawor-grayBorder bg-jawor-grayBg hover:border-jawor-green hover:bg-white transition flex items-center justify-between group">
-              <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-800 flex items-center justify-center text-sm">
-                  <i class="fa-solid fa-map-location-dot"></i>
-                </div>
-                <div>
-                  <strong class="block text-gray-900 group-hover:text-jawor-green transition">Baza Inwestycyjna & Partnerzy</strong>
-                  <span class="text-[10px] text-gray-500 font-normal">Lokalizowanie architektów i deweloperów z Google Maps</span>
-                </div>
-              </div>
-              <i class="fa-solid fa-arrow-up-right-from-square text-gray-400 group-hover:text-jawor-green text-xs"></i>
-            </a>
-
-            <!-- Link: Panel Mailingu B2B (mailing.html) -->
-            <a href="mailing.html" class="p-3 rounded-xl border border-jawor-grayBorder bg-jawor-grayBg hover:border-jawor-green hover:bg-white transition flex items-center justify-between group">
-              <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center text-sm">
-                  <i class="fa-solid fa-envelope"></i>
-                </div>
-                <div>
-                  <strong class="block text-gray-900 group-hover:text-jawor-green transition">Panel Mailingu Działu Handlowego</strong>
-                  <span class="text-[10px] text-gray-500 font-normal">Masowa wysyłka komunikatów i cenników do sieci</span>
-                </div>
-              </div>
-              <i class="fa-solid fa-arrow-up-right-from-square text-gray-400 group-hover:text-jawor-green text-xs"></i>
-            </a>
-
-            <!-- Link: Karty Kolekcji i Cenniki -->
-            <a href="index.html#kolekcje" class="p-3 rounded-xl border border-jawor-grayBorder bg-jawor-grayBg hover:border-jawor-green hover:bg-white transition flex items-center justify-between group">
-              <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center text-sm">
-                  <i class="fa-solid fa-book-open"></i>
-                </div>
-                <div>
-                  <strong class="block text-gray-900 group-hover:text-jawor-green transition">Karty Kolekcji & Wymiary</strong>
-                  <span class="text-[10px] text-gray-500 font-normal">Cennik dopłat, grubości warstw, parametry użytkowe</span>
-                </div>
-              </div>
-              <i class="fa-solid fa-arrow-up-right-from-square text-gray-400 group-hover:text-jawor-green text-xs"></i>
-            </a>
-
-          </div>
-        </section>
-
-      </div>
-
-    </div>
-
-  </main>
-
-  <!-- MODAL USTAWIEŃ ADRESÓW WEBHOOKÓW N8N -->
-  <div id="configModal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-xl border border-gray-200 space-y-4 text-xs">
-      <div class="flex items-center justify-between border-b pb-3">
-        <h4 class="font-bold text-sm text-gray-900 flex items-center">
-          <i class="fa-solid fa-sliders text-jawor-green mr-2"></i> Konfiguracja Webhooków n8n
-        </h4>
-        <button onclick="toggleConfigModal()" class="text-gray-400 hover:text-gray-700">
-          <i class="fa-solid fa-xmark text-sm"></i>
-        </button>
-      </div>
-
-      <div>
-        <label class="block font-bold text-gray-700 uppercase tracking-wider mb-1">Webhook Czatu Dyrektorskiego</label>
-        <input type="text" id="cfgChatWebhook" class="w-full border rounded-lg p-2 font-mono text-[11px] text-gray-700 focus:outline-none focus:border-jawor-green">
-      </div>
-
-      <div>
-        <label class="block font-bold text-gray-700 uppercase tracking-wider mb-1">Webhook Zasilania Pinecone</label>
-        <input type="text" id="cfgPineconeWebhook" class="w-full border rounded-lg p-2 font-mono text-[11px] text-gray-700 focus:outline-none focus:border-jawor-green">
-      </div>
-
-      <div class="bg-amber-50 p-3 rounded-lg border border-amber-200 text-amber-900 text-[11px] leading-relaxed">
-        <strong>Wskazówka:</strong> Jeśli workflow w n8n nie jest jeszcze opublikowany (**Publish** wyłączony), zamień w adresie <code>/webhook/</code> na <code>/webhook-test/</code>.
-      </div>
-
-      <div class="flex justify-end gap-2 pt-2 border-t">
-        <button onclick="toggleConfigModal()" class="px-4 py-2 rounded-lg border text-gray-600 hover:bg-gray-50">Anuluj</button>
-        <button onclick="saveWebhookConfig()" class="px-4 py-2 rounded-lg bg-jawor-green text-white font-bold hover:bg-jawor-greenDark">Zapisz i Zastosuj</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- STOPKA FIRMOWA Z LOGO W NEGATYWIE -->
-  <footer class="bg-jawor-black text-white py-10 border-t border-gray-800 mt-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-xs">
-      <div>
-        <a href="dh.html" class="inline-block mb-4">
-          <img src="Logo JP 35-kopia_n.png" alt="Jawor-Parkiet Logo 35 Lat" class="h-10 w-auto object-contain">
-        </a>
-        <p class="text-gray-400 leading-relaxed font-normal">
-          Jawor-Parkiet Sp. z o.o.<br>
-          ul. Grunwaldzka 87, 13-300 Nowe Miasto Lubawskie<br>
-          NIP: 8771485608 | REGON: 522505664<br>
-          Panel Dyrektorski Jawor.ai – Wersja Produkcyjna 2.0
-        </p>
-      </div>
-
-      <div>
-        <h4 class="font-bold uppercase text-jawor-green tracking-wider mb-3">Dział Handlu i Analiz</h4>
-        <p class="text-gray-400 space-y-1 font-normal">
-          tel.: +48 733 003 003 | +48 733 003 004<br>
-          e-mail: dzial.handlu@jawor-parkiet.pl
-        </p>
-      </div>
-
-      <div>
-        <h4 class="font-bold uppercase text-jawor-green tracking-wider mb-3">Jawor.ai Executive Core</h4>
-        <p class="text-gray-400 leading-relaxed font-normal">
-          Wszystkie analizy zamówień z systemu Piko i wolumenów fabrycznych są liczone w <strong>metrach kwadratowych [m²]</strong>.
-        </p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- SKRYPTY LOGIKI BIZNESOWEJ -->
-  <script>
-    // =============================================================
-    // DOMYŚLNA KONFIGURACJA ADRESÓW WEBHOOKÓW W N8N
-    // =============================================================
-    let N8N_EXECUTIVE_CHAT_WEBHOOK_URL = localStorage.getItem('jawor_chat_webhook') || 'https://n8n.nextgenbiznes.pl/webhook/40633b48-bd8e-46d8-a75a-9c3a35a7f2a1/chat';
-    let N8N_PINECONE_UPLOAD_WEBHOOK_URL = localStorage.getItem('jawor_pinecone_webhook') || 'https://n8n.nextgenbiznes.pl/webhook/dh-upload';
-
-    // PAMIĘĆ LOKALNA PLIKÓW
-    let chatSelectedFiles = [];
-    let pineconeSelectedFiles = [];
-    let pineconeFailedFiles = []; // Przechowuje nieudane pozycje do ponowienia
-
-    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
-    // -------------------------------------------------------------
-    // ZAPOBIEGANIE PRZECHWYTYWANIU PLIKÓW PRZEZ SAFARI (macOS)
-    // -------------------------------------------------------------
-    window.addEventListener('dragover', (e) => e.preventDefault(), false);
-    window.addEventListener('drop', (e) => e.preventDefault(), false);
-
-    // -------------------------------------------------------------
-    // MODAL KONFIGURACYJNY WEBHOOKÓW
-    // -------------------------------------------------------------
-    function toggleConfigModal() {
-      const modal = document.getElementById('configModal');
-      document.getElementById('cfgChatWebhook').value = N8N_EXECUTIVE_CHAT_WEBHOOK_URL;
-      document.getElementById('cfgPineconeWebhook').value = N8N_PINECONE_UPLOAD_WEBHOOK_URL;
-      modal.classList.toggle('hidden');
-    }
-
-    function saveWebhookConfig() {
-      N8N_EXECUTIVE_CHAT_WEBHOOK_URL = document.getElementById('cfgChatWebhook').value.trim();
-      N8N_PINECONE_UPLOAD_WEBHOOK_URL = document.getElementById('cfgPineconeWebhook').value.trim();
-      localStorage.setItem('jawor_chat_webhook', N8N_EXECUTIVE_CHAT_WEBHOOK_URL);
-      localStorage.setItem('jawor_pinecone_webhook', N8N_PINECONE_UPLOAD_WEBHOOK_URL);
-      toggleConfigModal();
-      alert('Zaktualizowano adresy webhooków n8n.');
-    }
-
-    // -------------------------------------------------------------
-    // CZAT: WIELOKROTNE ZAŁĄCZNIKI
-    // -------------------------------------------------------------
-    function setExecutivePrompt(text) {
-      document.getElementById('executiveChatInput').value = text;
-      sendExecutiveMessage();
-    }
-
-    function handleChatFilesSelect(e) {
-      const files = Array.from(e.target.files);
-      if (!files.length) return;
-
-      files.forEach(file => {
-        const exists = chatSelectedFiles.some(f => f.name === file.name && f.size === file.size);
-        if (!exists) chatSelectedFiles.push(file);
-      });
-
-      renderChatFilesPreview();
-      e.target.value = '';
-    }
-
-    function removeChatFile(index) {
-      chatSelectedFiles.splice(index, 1);
-      renderChatFilesPreview();
-    }
-
-    function clearAllChatFiles() {
-      chatSelectedFiles = [];
-      renderChatFilesPreview();
-    }
-
-    function renderChatFilesPreview() {
-      const panel = document.getElementById('chatAttachmentsPanel');
-      const list = document.getElementById('chatFilesList');
-      const countEl = document.getElementById('chatFilesCount');
-      const badgeDot = document.getElementById('chatBadgeDot');
-
-      if (chatSelectedFiles.length === 0) {
-        panel.classList.add('hidden');
-        badgeDot.classList.add('hidden');
-        list.innerHTML = '';
-        return;
-      }
-
-      panel.classList.remove('hidden');
-      badgeDot.classList.remove('hidden');
-      countEl.innerText = chatSelectedFiles.length;
-      list.innerHTML = '';
-
-      chatSelectedFiles.forEach((file, idx) => {
-        const sizeKb = (file.size / 1024).toFixed(1);
-        list.innerHTML += `
-          <div class="inline-flex items-center bg-white border border-emerald-300 rounded-md px-2 py-1 text-[11px] text-gray-800 shadow-2xs">
-            <i class="fa-solid fa-file text-jawor-green mr-1.5 text-[10px]"></i>
-            <span class="truncate max-w-[150px] font-medium" title="${escapeHtml(file.name)}">${escapeHtml(file.name)}</span>
-            <span class="text-gray-400 text-[9px] ml-1">(${sizeKb} KB)</span>
-            <button type="button" onclick="removeChatFile(${idx})" class="ml-1.5 text-red-500 hover:text-red-700 font-bold">
-              <i class="fa-solid fa-xmark"></i>
-            </button>
-          </div>
-        `;
-      });
-    }
-
-    async function sendExecutiveMessage() {
-      const input = document.getElementById('executiveChatInput');
-      const chatWin = document.getElementById('executiveChatWindow');
-      const btnSend = document.getElementById('btnSendExecutive');
-      const userText = input.value.trim();
-
-      if (!userText && chatSelectedFiles.length === 0) return;
-
-      let sessionId = localStorage.getItem('jawor_dh_session');
-      if (!sessionId) {
-        sessionId = 'dh_sess_' + Math.random().toString(36).substring(2, 9);
-        localStorage.setItem('jawor_dh_session', sessionId);
-      }
-
-      let filesBadgesHtml = '';
-      if (chatSelectedFiles.length > 0) {
-        filesBadgesHtml = `<div class="mt-2 pt-2 border-t border-white/20 flex flex-wrap gap-1">`;
-        chatSelectedFiles.forEach(f => {
-          filesBadgesHtml += `<span class="bg-black/20 text-white text-[10px] px-2 py-0.5 rounded flex items-center"><i class="fa-solid fa-paperclip mr-1"></i>${escapeHtml(f.name)}</span>`;
-        });
-        filesBadgesHtml += `</div>`;
-      }
-
-      chatWin.innerHTML += `
-        <div class="bg-jawor-green text-white p-3.5 rounded-xl max-w-[85%] ml-auto text-xs sm:text-sm font-medium shadow-xs">
-          <div>${escapeHtml(userText || 'Przeanalizuj dołączone dokumenty.')}</div>
-          ${filesBadgesHtml}
-        </div>
-      `;
-
-      input.value = '';
-      chatWin.scrollTop = chatWin.scrollHeight;
-
-      const loaderId = 'loader_' + Date.now();
-      chatWin.innerHTML += `
-        <div id="${loaderId}" class="bg-jawor-grayBg p-3.5 rounded-xl border border-jawor-grayBorder max-w-[85%] text-xs text-gray-500 italic flex items-center gap-2">
-          <i class="fa-solid fa-circle-notch fa-spin text-jawor-green"></i>
-          Jawor.ai Executive Core przetwarza dane w m² i weryfikuje bazy Pinecone...
-        </div>
-      `;
-      chatWin.scrollTop = chatWin.scrollHeight;
-
-      btnSend.disabled = true;
-
-      try {
-        let response;
-        if (chatSelectedFiles.length > 0) {
-          const formData = new FormData();
-          formData.append('chatInput', userText);
-          formData.append('sessionId', sessionId);
-          chatSelectedFiles.forEach((file, idx) => {
-            formData.append(`attachment_${idx}`, file);
-            formData.append('data', file);
-          });
-
-          response = await fetch(N8N_EXECUTIVE_CHAT_WEBHOOK_URL, {
-            method: 'POST',
-            body: formData
-          });
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+            fileIndicator.textContent = `Wybrano plik: ${fileInput.files[0].name}`;
         } else {
-          response = await fetch(N8N_EXECUTIVE_CHAT_WEBHOOK_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chatInput: userText, sessionId: sessionId })
-          });
+            fileIndicator.textContent = `Brak wybranego pliku.`;
         }
-
-        const data = await response.json();
-        const loaderEl = document.getElementById(loaderId);
-        if (loaderEl) loaderEl.remove();
-
-        let replyText = "";
-        let responseObj = Array.isArray(data) ? data[0] : data;
-
-        if (typeof responseObj === 'string') {
-          replyText = responseObj;
-        } else if (responseObj && typeof responseObj === 'object') {
-          replyText = responseObj.output || responseObj.text || responseObj.response || responseObj.message || (responseObj.json && (responseObj.json.output || responseObj.json.text)) || JSON.stringify(responseObj, null, 2);
-        } else {
-          replyText = String(data || "Brak odpowiedzi od agenta.");
-        }
-
-        const parsedHtml = (window.marked && typeof window.marked.parse === 'function') 
-          ? window.marked.parse(replyText) 
-          : replyText.replace(/\n/g, '<br>');
-
-        chatWin.innerHTML += `
-          <div class="bg-white p-4 rounded-xl border border-jawor-grayBorder max-w-[90%] text-xs sm:text-sm leading-relaxed chat-parsed-content shadow-xs">
-            ${parsedHtml}
-          </div>
-        `;
-      } catch (err) {
-        const loaderEl = document.getElementById(loaderId);
-        if (loaderEl) loaderEl.remove();
-
-        chatWin.innerHTML += `
-          <div class="bg-red-50 text-red-700 p-3.5 rounded-xl border border-red-200 max-w-[85%] text-xs font-medium">
-            <i class="fa-solid fa-triangle-exclamation mr-1.5"></i>
-            Błąd połączenia z Webhookiem (${err.message}). Upewnij się, że workflow w n8n ma włączony status <strong>Published</strong>.
-          </div>
-        `;
-      } finally {
-        btnSend.disabled = false;
-        clearAllChatFiles();
-        chatWin.scrollTop = chatWin.scrollHeight;
-      }
-    }
-
-    function resetChatHistory() {
-      if (confirm('Czy na pewno chcesz wyczyścić historię bieżącej sesji analitycznej?')) {
-        localStorage.removeItem('jawor_dh_session');
-        document.getElementById('executiveChatWindow').innerHTML = `
-          <div class="bg-jawor-grayBg p-4 rounded-xl border border-jawor-grayBorder max-w-[90%] text-xs leading-relaxed text-gray-800">
-            Sesja zresetowana. Jestem gotowy do nowej analizy w trybie <strong>Jawor.ai Executive Core</strong>.
-          </div>
-        `;
-        clearAllChatFiles();
-      }
-    }
-
-    // -------------------------------------------------------------
-    // PINECONE: DRAG & DROP ORAZ WYSYŁKA PAKIETOWA
-    // -------------------------------------------------------------
-    function updateTargetSelectionStyle() {
-      const isTech = document.querySelector('input[name="database_target"]:checked').value === 'tech';
-      document.getElementById('labelTech').className = isTech 
-        ? 'flex items-start p-3 border rounded-xl cursor-pointer bg-green-50/40 border-jawor-green' 
-        : 'flex items-start p-3 border rounded-xl cursor-pointer border-gray-200 hover:bg-gray-50';
-      document.getElementById('labelSales').className = !isTech 
-        ? 'flex items-start p-3 border rounded-xl cursor-pointer bg-green-50/40 border-jawor-green' 
-        : 'flex items-start p-3 border rounded-xl cursor-pointer border-gray-200 hover:bg-gray-50';
-    }
-
-    function handlePineconeFilesSelect(e) {
-      addPineconeFiles(Array.from(e.target.files));
-      e.target.value = '';
-    }
-
-    function addPineconeFiles(files) {
-      if (!files || !files.length) return;
-      files.forEach(file => {
-        const exists = pineconeSelectedFiles.some(f => f.name === file.name && f.size === file.size);
-        if (!exists) pineconeSelectedFiles.push(file);
-      });
-      renderPineconeFilesList();
-    }
-
-    function removePineconeFile(index) {
-      pineconeSelectedFiles.splice(index, 1);
-      renderPineconeFilesList();
-    }
-
-    function clearAllPineconeFiles() {
-      pineconeSelectedFiles = [];
-      pineconeFailedFiles = [];
-      document.getElementById('btnRetryFailed').classList.add('hidden');
-      renderPineconeFilesList();
-    }
-
-    function renderPineconeFilesList() {
-      const container = document.getElementById('pineconeFilesContainer');
-      const list = document.getElementById('pineconeFilesList');
-      const countEl = document.getElementById('pineconeFilesCount');
-      const label = document.getElementById('pineconeDropLabel');
-
-      if (pineconeSelectedFiles.length === 0) {
-        container.classList.add('hidden');
-        list.innerHTML = '';
-        label.innerText = 'Kliknij lub upuść pliki tutaj (wiele naraz)';
-        return;
-      }
-
-      container.classList.remove('hidden');
-      countEl.innerText = pineconeSelectedFiles.length;
-      label.innerText = `Wybrano ${pineconeSelectedFiles.length} plik(ów) do zindeksowania`;
-      list.innerHTML = '';
-
-      pineconeSelectedFiles.forEach((file, index) => {
-        const sizeMb = (file.size / 1024).toFixed(1);
-        list.innerHTML += `
-          <div class="flex items-center justify-between bg-white border border-gray-200 px-3 py-1.5 rounded-lg text-xs">
-            <div class="flex items-center space-x-2 truncate">
-              <i class="fa-solid fa-file-pdf text-jawor-green"></i>
-              <span class="font-medium truncate max-w-[210px]" title="${escapeHtml(file.name)}">${escapeHtml(file.name)}</span>
-              <span class="text-[10px] text-gray-400">(${sizeMb} KB)</span>
-            </div>
-            <button type="button" onclick="removePineconeFile(${index})" class="text-red-500 hover:text-red-700 ml-2 font-bold">
-              <i class="fa-solid fa-trash-can"></i>
-            </button>
-          </div>
-        `;
-      });
-    }
-
-    // Inicjalizacja przeciągania na strefę zrzutu
-    const dropZone = document.getElementById('pineconeDropZone');
-    ['dragenter', 'dragover'].forEach(name => {
-      dropZone.addEventListener(name, (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        dropZone.classList.add('dragover-active');
-      }, false);
-    });
-    ['dragleave', 'drop'].forEach(name => {
-      dropZone.addEventListener(name, (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        dropZone.classList.remove('dragover-active');
-      }, false);
-    });
-    dropZone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      if (e.dataTransfer && e.dataTransfer.files) {
-        addPineconeFiles(Array.from(e.dataTransfer.files));
-      }
     });
 
-    // Sekwencyjna wysyłka plików do Pinecone z obsługą błędów HTTP i rate-limit
-    async function handlePineconeUpload(e) {
-      if (e) e.preventDefault();
-      await executeFilesUploadQueue(pineconeSelectedFiles);
+    function handleEnter(e) {
+        if (e.key === 'Enter') sendMessage();
     }
 
-    async function retryFailedUploads() {
-      if (pineconeFailedFiles.length === 0) return;
-      await executeFilesUploadQueue(pineconeFailedFiles);
-    }
+    async function sendMessage() {
+        const inputField = document.getElementById('chatInput');
+        const text = inputField.value.trim();
+        const file = fileInput.files[0];
 
-    async function executeFilesUploadQueue(filesToUpload) {
-      const btn = document.getElementById('btnSubmitPinecone');
-      const retryBtn = document.getElementById('btnRetryFailed');
-      const statusDiv = document.getElementById('uploadStatusMsg');
-      const progressBox = document.getElementById('uploadProgressBarContainer');
-      const progressBar = document.getElementById('uploadProgressBar');
-      const progressText = document.getElementById('progressText');
-      const progressPercent = document.getElementById('progressPercent');
-      const target = document.querySelector('input[name="database_target"]:checked').value;
+        if (!text && !file) return;
 
-      if (!filesToUpload.length) {
-        alert("Wybierz przynajmniej jeden plik do zindeksowania!");
-        return;
-      }
-
-      btn.disabled = true;
-      retryBtn.classList.add('hidden');
-      progressBox.classList.remove('hidden');
-      statusDiv.className = 'text-xs p-3.5 rounded-xl bg-blue-50 text-blue-800 border border-blue-200 block font-medium';
-      
-      let successCount = 0;
-      let failedList = [];
-
-      for (let i = 0; i < filesToUpload.length; i++) {
-        const file = filesToUpload[i];
-        const pct = Math.round(((i) / filesToUpload.length) * 100);
+        const chatMessages = document.getElementById('chatMessages');
         
-        progressBar.style.width = `${pct}%`;
-        progressPercent.innerText = `${pct}%`;
-        progressText.innerText = `Indeksowanie ${i + 1}/${filesToUpload.length}: ${file.name.substring(0, 25)}...`;
+        // Dodaj wiadomość użytkownika do widoku
+        let userMsg = text;
+        if (file) userMsg += `<br><i>📎 Dołączono plik: ${file.name}</i>`;
+        chatMessages.innerHTML += `<div class="message user">${userMsg || '<i>Przesłano plik</i>'}</div>`;
         
-        statusDiv.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-jawor-green mr-1.5"></i> Wektoryzowanie pliku ${i + 1} z ${filesToUpload.length}: <strong>${escapeHtml(file.name)}</strong>...`;
-
+        inputField.value = '';
+        fileIndicator.textContent = 'Brak wybranego pliku.';
+        
+        // Utwórz FormData do wysłania tekstu i pliku
         const formData = new FormData();
-        formData.append('data', file);
-        formData.append('database_target', target);
+        formData.append('chatInput', text);
+        formData.append('sessionId', localStorage.getItem('jawor_session') || 'sesja_' + Date.now());
+        if (file) {
+            formData.append('attachment', file);
+        }
+
+        // Czyść input pliku po załadowaniu do formularza
+        fileInput.value = '';
+
+        // Komunikat ładowania
+        const loaderId = 'loader_' + Date.now();
+        chatMessages.innerHTML += `<div id="${loaderId}" class="message bot">Przetwarzanie...</div>`;
+        chatMessages.scrollTop = chatMessages.scrollHeight;
 
         try {
-          const res = await fetch(N8N_PINECONE_UPLOAD_WEBHOOK_URL, {
-            method: 'POST',
-            body: formData
-          });
+            const response = await fetch(N8N_WEBHOOK_URL, {
+                method: 'POST',
+                body: formData // Wysyłamy jako multipart/form-data
+            });
 
-          if (!res.ok) {
-            let detail = res.status === 404 
-              ? 'HTTP 404 (Workflow w n8n nie jest aktywny - kliknij Publish)' 
-              : `HTTP ${res.status} (${res.statusText})`;
-            throw new Error(detail);
-          }
-          successCount++;
-        } catch (err) {
-          console.error(`Błąd wektoryzacji pliku ${file.name}:`, err);
-          failedList.push({ file: file, reason: err.message });
+            const data = await response.json();
+            const loader = document.getElementById(loaderId);
+            if (loader) {
+                // Załóżmy, że odpowiedź z n8n wraca w polu 'output'
+                loader.innerHTML = data.output || "Otrzymano odpowiedź, ale format jest nierozpoznany.";
+            }
+        } catch (error) {
+            console.error('Błąd:', error);
+            const loader = document.getElementById(loaderId);
+            if (loader) loader.innerHTML = "Wystąpił błąd komunikacji z agentem n8n.";
         }
-
-        // Bufor 1.2s zabezpieczający limit Gemini API (Rate-Limit)
-        if (i < filesToUpload.length - 1) {
-          await sleep(1200);
-        }
-      }
-
-      progressBar.style.width = '100%';
-      progressPercent.innerText = '100%';
-
-      // Obsługa rezultatów
-      if (failedList.length === 0) {
-        statusDiv.className = 'text-xs p-3.5 rounded-xl bg-green-50 text-green-800 border border-green-200 block font-medium';
-        statusDiv.innerHTML = `<i class="fa-solid fa-circle-check text-jawor-green mr-1.5"></i> Sukces: Zindeksowano pomyślnie wszystkie <strong>${successCount}</strong> pliki w przestrzeni <strong>${target === 'tech' ? 'Baza Techniczna' : 'Raporty & Piko (m²)'}</strong>.`;
-        clearAllPineconeFiles();
-      } else {
-        pineconeFailedFiles = failedList.map(item => item.file);
-        retryBtn.classList.remove('hidden');
         
-        const errorsListHtml = failedList.map(it => `<li><strong>${escapeHtml(it.file.name)}</strong>: <span class="text-red-700">${it.reason}</span></li>`).join('');
-
-        statusDiv.className = 'text-xs p-3.5 rounded-xl bg-amber-50 text-amber-900 border border-amber-200 block font-medium';
-        statusDiv.innerHTML = `
-          <div class="flex items-center gap-1.5 mb-1.5 text-amber-800 font-bold">
-            <i class="fa-solid fa-triangle-exclamation"></i> Zindeksowano ${successCount} z ${filesToUpload.length} plików.
-          </div>
-          <p class="mb-1 text-[11px]">Błąd wystąpił dla poniższych pozycji:</p>
-          <ul class="list-disc pl-4 space-y-0.5 text-[10px] text-gray-700 max-h-32 overflow-y-auto">
-            ${errorsListHtml}
-          </ul>
-          <p class="mt-2 text-[10px] text-gray-500 font-normal">Upewnij się, że workflow w n8n ma włączony zielony przełącznik <strong>Published</strong> i kliknij przycisk poniżej, aby ponowić próbę.</p>
-        `;
-      }
-
-      btn.disabled = false;
-      btn.innerHTML = '<span>Zindeksuj Zestaw Plików w Pinecone</span>';
-      updateTargetSelectionStyle();
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-
-    function escapeHtml(text) {
-      if (!text) return '';
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
+    
+    // Zapisz sesję, aby n8n miał ciągłość konwersacji
+    if (!localStorage.getItem('jawor_session')) {
+        localStorage.setItem('jawor_session', 'sesja_' + Math.random().toString(36).substr(2, 9));
     }
-  </script>
+</script>
+
 </body>
 </html>
